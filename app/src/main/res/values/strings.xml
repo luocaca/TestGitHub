@@ -200,15 +200,16 @@
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="login">登录</string>
-    <string name="input_username_or_phone_number">请输入手机号码/用户名</string>
+    <string name="input_username_or_phone_number">请输入用户名/手机号码</string>
     <string name="input_phone_number">请输入11位手机号码</string>
     <string name="input_new_phone_number">请输入11位的新手机号码</string>
-    <string name="input_passward">密码须在6—15位字符</string>
-    <string name="register">免费注册</string>
-    <string name="find_passward">找回密码</string>
+    <string name="input_passward">请填写6-15位登录密码</string>
+    <string name="register_quick">快速注册</string>
+    <string name="loss_passward">忘记密码</string>
     <string name="register_account">注册账户</string>
     <string name="phone_code">手机验证码</string>
     <string name="get_code">获取验证码</string>
+    <string name="get_code_again">重新获取(54s)</string>
     <string name="inventer_phone">邀请人手机（选填）</string>
     <string name="already_had_acount">已有账号，马上登录></string>
     <string name="already_read">我已阅读</string>
@@ -238,5 +239,11 @@
 2. 关于用户
 
 关于用户定位其实有很多可以划分的地方。比如说我们去看一些类似于《About face》的书时，会发现它们把用户分成了新手用户、中间用户和专</string>
+    <string name="login_note">短信登录</string>
+    <string name="login_pwd">密码登录</string>
+    <string name="input_phone_number_for_note">请输入手机号码</string>
+    <string name="input_varify_code">请输入短信中的验证码</string>
+    <string name="i_am_readed">点击登录即表示您已同意</string>
+    <string name="tcp">《花木易购服务协议》</string>
 
 </resources>

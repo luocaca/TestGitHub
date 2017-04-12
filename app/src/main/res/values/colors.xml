@@ -17,6 +17,7 @@
     <color name="cl_snappingstepper_button_press">#1f567b</color>
     <color name="cl_snappingstepper_text_bg">#2b8ccd</color>
     <color name="cl_snappingstepper_text">#000000</color>
+    <color name="login_input_color">#111111</color>
     <color name="bg_color">#EDEDED</color>
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
@@ -252,6 +253,17 @@
     <color name="skyblue">#87ceeb</color>
     <!-- 天蓝色 -->
     <color name="gray">#808080</color>
+
+    <!-- 线条灰 -->
+    <color name="line_gray">#FFCCCCCC</color>
+
+
+  <!--已经阅读字色-->
+    <color name="readed_gray">#FF8C8C8C</color>
+
+
+
+
     <!-- 灰色 -->
     <color name="olive">#808000</color>
     <!-- 橄榄色 -->
@@ -485,11 +497,13 @@
     <color name="material_deep_teal_20">#ff80cbc4</color>
     <color name="material_deep_teal_50">#ff009688</color>
     <color name="main_color">#35b558</color>
+    <color name="color_submit">#348136</color>
+    <color name="main_color_half">#FFA5D9B3</color>
     <color name="dove_gray">#ff767676</color>
     <color name="gray_bg">#f3f3f3</color>
     <color name="light_gray">#494a4c</color>
     <color name="light_gray1">#ffebebeb</color>
-    <color name="register_gray">#757575</color>
+    <color name="register_gray">#666666</color>
     <color name="gray_line">#CCCCCC</color>
     <color name="home_tab_txt_checked">#E95543</color>
     <color name="home_tab_txt">#999999</color>
@@ -530,5 +544,6 @@
     <color name="message_checked">#90918f</color>
     <color name="message_no_check">#323232</color>
     <color name="stick_color_bg">#e2e2e2</color>
+    <color name="text_login_type">#999999</color>
 
 </resources>

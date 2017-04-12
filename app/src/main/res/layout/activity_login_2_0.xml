@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -37,153 +36,64 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y108"
+                android:layout_height="@dimen/y110"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/iv_login_logo"
                     android:layout_width="@dimen/x150"
-                    android:layout_height="@dimen/y39"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/denglu_logo"
-                    android:gravity="center" />
-            </LinearLayout>
+                    android:layout_height="@dimen/y40"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/y23"
+                    android:background="@drawable/denglu_logo" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/y34"
-                android:layout_marginLeft="@dimen/x35"
-                android:layout_marginRight="@dimen/x35"
-                android:background="@drawable/loginbtn_selector_gray"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/x20"
-                android:paddingRight="@dimen/x20">
 
-                <ImageView
-                    android:layout_width="@dimen/x20"
-                    android:layout_height="@dimen/x20"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/login_phone" />
+                <RadioGroup
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y25"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/y5"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:background="@drawable/login_bottom_line"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <EditText
-                    android:id="@+id/et_phone"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_weight="1.0"
-                    android:background="@color/transparent"
-                    android:hint="@string/input_username_or_phone_number"
-                    android:minHeight="@dimen/x20"
-                    android:singleLine="true"
-                    android:textColorHint="@color/gray_edit_hint"
-                    android:textSize="@dimen/y11" />
-
-                <ImageButton
-                    android:id="@+id/btn_clear_num"
-                    android:layout_width="40.0dip"
-                    android:layout_height="40.0dip"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/transparent"
-                    android:padding="10.0dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/clear_icon"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/y34"
-                android:layout_marginLeft="@dimen/x35"
-                android:layout_marginRight="@dimen/x35"
-                android:layout_marginTop="@dimen/y17"
-                android:background="@drawable/loginbtn_selector_gray"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/x20"
-                android:paddingRight="@dimen/x20">
-
-                <ImageView
-                    android:layout_width="@dimen/x20"
-                    android:layout_height="@dimen/x20"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/login_passward" />
-
-                <EditText
-                    android:id="@+id/et_passward"
-                    android:layout_width="0.0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_weight="1.0"
-                    android:background="@color/transparent"
-                    android:hint="@string/input_passward"
-                    android:inputType="textPassword"
-                    android:maxLength="15"
-                    android:minHeight="@dimen/x20"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_edit_hint"
-                    android:textColorHint="@color/gray_edit_hint"
-                    android:textSize="@dimen/y11" />
-
-                <ImageButton
-                    android:id="@+id/btn_clear_password"
-                    android:layout_width="40.0dip"
-                    android:layout_height="40.0dip"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/transparent"
-                    android:padding="10.0dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/clear_icon"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <com.neopixl.pixlui.components.textview.TextView
-                android:id="@+id/login"
-                style="@style/NoActionBarTheme.TextHuaWenXiHei"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/y34"
-                android:layout_marginLeft="@dimen/x35"
-                android:layout_marginRight="@dimen/x35"
-                android:layout_marginTop="@dimen/y17"
-                android:background="@drawable/loginbtn_selector_green"
-                android:enabled="false"
-                android:gravity="center"
-                android:text="@string/login"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"
-                android:textSize="@dimen/y11" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x35"
-                android:layout_marginRight="@dimen/x35"
-                android:layout_marginTop="@dimen/x10">
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/reg"
-                    style="@style/NoActionBarTheme.TextHuaWenXiHei"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/register"
-                    android:textColor="@color/register_gray" />
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/find_passward"
-                    style="@style/NoActionBarTheme.TextHuaWenXiHei"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/find_passward"
-                    android:textColor="@color/register_gray" />
+                    <RadioButton
+                        android:id="@+id/rb_login_note_left"
+                        style="@style/login_rb"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:checked="false"
+                        android:onClick="showNoteLogin"
+                        android:text="@string/login_note" />
+                    <RadioButton
+                        android:id="@+id/rb_login_pwd_right"
+                        style="@style/login_rb"
+                        android:layout_marginRight="@dimen/x15"
+                        android:checked="true"
+                        android:onClick="showPwdLogin"
+                        android:text="@string/login_pwd" />
+                </RadioGroup>
             </RelativeLayout>
+
+
+            <!--密码登录-->
+            <include
+                android:id="@+id/include_login_pwd"
+                layout="@layout/include_login_pwd"
+                android:visibility="visible" />
+
+            <!--短信登录-->
+            <include
+                android:id="@+id/include_login_note"
+                layout="@layout/include_login_note"
+                android:visibility="gone" />
+
+
         </LinearLayout>
     </ScrollView>
 

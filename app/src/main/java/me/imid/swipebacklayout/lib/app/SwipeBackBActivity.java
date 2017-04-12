@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.hldj.hmyg.util.StartBarUtils;
+
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
 
@@ -14,7 +16,11 @@ public class SwipeBackBActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		/**
+		 * 控制状态栏为黑色  miui flyme
+		 */
+		StartBarUtils.FlymeSetStatusBarLightMode(getWindow(),true);
+		StartBarUtils.MIUISetStatusBarLightMode(getWindow(),true);
 
 		mHelper = new SwipeBackActivityHelper(this);
 		mHelper.onActivityCreate();

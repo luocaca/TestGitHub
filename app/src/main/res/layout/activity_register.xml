@@ -227,7 +227,7 @@
                 android:background="@drawable/register_btn_selector"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="@string/register"
+                android:text="@string/register_quick"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/main_color"
                 android:textSize="@dimen/y11" />
