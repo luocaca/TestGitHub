@@ -737,8 +737,8 @@ public class EActivity extends LoginActivity implements PlatformActionListener {
 										jsonObject, "data");
 								String headImage = JsonGetInfo.getJsonString(
 										data, "headImage");
-								e.putString("headImage", headImage);
-								e.commit();
+								editor.putString("headImage", headImage);
+								editor.commit();
 								if (!"".equals(MyApplication.Userinfo
 										.getString("headImage", ""))) {
 									ImageLoader.getInstance().displayImage(
