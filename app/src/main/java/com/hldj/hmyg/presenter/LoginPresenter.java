@@ -1,12 +1,23 @@
 package com.hldj.hmyg.presenter;
 
 import android.content.SharedPreferences;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hldj.hmyg.application.MyApplication;
+import com.hldj.hmyg.util.D;
 import com.hy.utils.JsonGetInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 登录注册的逻辑代码放这里来写
@@ -16,7 +27,44 @@ import org.json.JSONObject;
 public class LoginPresenter {
 
 
+    public static class MyTextWatcher implements TextWatcher {
+        EditText editText;
+        ImageView imageView;
+        TextView tv_get_code_note;
 
+        public MyTextWatcher(final EditText editText, ImageButton imageView, final TextView tv_get_code_note) {
+            this.editText = editText;
+            this.imageView = imageView;
+            this.tv_get_code_note = tv_get_code_note;
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editText.setText("");
+                }
+            });
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if (s.length() == 0) imageView.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+
+            if (s.length() == 11) tv_get_code_note.setSelected(true);
+            tv_get_code_note.setSelected(false);
+
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    }
 
 
     public static void Save2Sp(SharedPreferences.Editor editor, String json) {
@@ -152,4 +200,68 @@ public class LoginPresenter {
             e.printStackTrace();
         }
     }
+
+
+    static int count;
+    static boolean flag = true;
+
+    /**
+     * 获取验证码
+     *
+     * @param tv_get_code_note
+     */
+    public static void getCode(final TextView tv_get_code_note, int my_count) {
+
+        count = my_count;
+        while (flag)
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    D.e("==count=" + count);
+                    tv_get_code_note.setText("重新获取(" + count-- + "s)");
+                    if (count == 0) tv_get_code_note.setSelected(false);
+                    flag = false;
+                }
+            }, 1000);
+
+    }
+
+
+
+
+//     TextWatcher watcher_note= new TextWatcher() {
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before,
+//                                  int count) {
+//            // TODO Auto-generated method stub
+//            if (s.length() > 0) {
+//                holderPwd.btn_clear_password.setVisibility(View.VISIBLE);
+//                if (holderPwd.et_phone.getText().toString().length() > 1
+//                        && holderPwd.et_passward.getText().toString().length() > 5) {
+//                    holderPwd.login.setEnabled(true);
+//                    holderPwd.login.setTextColor(getResources().getColor(R.color.white));
+//                }
+//            } else {
+//                holderPwd.btn_clear_password.setVisibility(View.GONE);
+//                holderPwd.login.setEnabled(false);
+//                holderPwd.login.setTextColor(getResources().getColor(R.color.white));
+//            }
+//        }
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count,
+//                                      int after) {
+//            // TODO Auto-generated method stub
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//    };
+
+
 }

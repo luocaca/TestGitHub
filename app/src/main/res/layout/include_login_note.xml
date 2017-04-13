@@ -60,7 +60,7 @@
             android:paddingLeft="@dimen/x8"
             android:singleLine="true"
             android:text="@string/get_code"
-            android:textColor="@color/main_color"
+            android:textColor="@color/get_code_selector"
             android:textSize="@dimen/y10" />
 
         <!--<ImageButton-->

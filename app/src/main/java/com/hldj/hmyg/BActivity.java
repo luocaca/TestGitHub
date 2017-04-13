@@ -739,6 +739,7 @@ public class BActivity extends BaseSecondActivity implements
         params.put("latitude", MyApplication.Userinfo.getString("latitude", ""));
         params.put("longitude",
                 MyApplication.Userinfo.getString("longitude", ""));
+
         finalHttp.post(GetServerUrl.getUrl() + "seedling/list", params,
                 new AjaxCallBack<Object>() {
 

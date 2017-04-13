@@ -546,4 +546,9 @@
     <color name="stick_color_bg">#e2e2e2</color>
     <color name="text_login_type">#999999</color>
 
+    <color name="get_code_color">#FFCECECE</color>
+
+
+
+
 </resources>
