@@ -21,7 +21,6 @@ import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.bean.LoginGsonBean;
 import com.hldj.hmyg.bean.UserInfoGsonBean;
 import com.hldj.hmyg.presenter.LoginPresenter;
-import com.hldj.hmyg.presenter.SaveSeedlingPresenter;
 import com.hldj.hmyg.util.ConstantState;
 import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
@@ -128,7 +127,7 @@ public class LoginActivity extends BaseActivity {
     public void toLoginWithNote(String phone, String smsCode) {
 
         //登录操作
-        SaveSeedlingPresenter.toLoginWithNote(phone, smsCode, new ResultCallBack<LoginGsonBean>() {
+        LoginPresenter.toLoginWithNote(phone, smsCode, new ResultCallBack<LoginGsonBean>() {
             @Override
             public void onSuccess(LoginGsonBean loginGsonBean) {
 

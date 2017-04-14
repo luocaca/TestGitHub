@@ -41,7 +41,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hhl.library.FlowTagLayout;
 import com.hhl.library.OnTagSelectListener;
-import com.hldj.hmyg.CallBack.ResultCallBack;
 import com.hldj.hmyg.ManagerListActivity;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
@@ -54,9 +53,6 @@ import com.hldj.hmyg.bean.PicValiteIsUtils;
 import com.hldj.hmyg.bean.SaveSeedingGsonBean;
 import com.hldj.hmyg.bean.Type;
 import com.hldj.hmyg.buy.bean.StorageSave;
-import com.hldj.hmyg.presenter.SaveSeedlingPresenter;
-import com.hldj.hmyg.util.ConstantState;
-import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
@@ -105,7 +101,13 @@ import java.util.List;
 import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 import me.next.tagview.TagCloudView.OnTagClickListener;
 
-public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
+import static com.hldj.hmyg.R.id.ll_04;
+
+/**
+ * 发布苗木管理
+ */
+
+public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
         OnTagClickListener, KeyBordStateListener {
     private String[] days = {"30", "90", "180"};
 
@@ -200,7 +202,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
     private FlowTagLayout mMobileFlowTagLayout;
 
     private TagAdapter<String> mSizeTagAdapter;
-
+    private TagAdapter<String> mtypeListAdapter;
     private com.zhy.view.flowlayout.TagAdapter<String> tagadapter;
     int tag_a = 0;
 
@@ -257,7 +259,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
 
     private RefreshHandler handler;
     private FlowerInfoPhotoChoosePopwin2 popwin;
-    public static SaveSeedlingActivity instance;
+    public static SaveSeedlingActivity3_0 instance;
     private KProgressHUD hud_numHud;
     FinalHttp finalHttp = new FinalHttp();
     public int a = 0;
@@ -274,14 +276,15 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save_seedling);
+        //布局
+        setContentView(R.layout.activity_save_seedling_3_0);
         mCache = ACache.get(this);
-        hud_numHud = KProgressHUD.create(SaveSeedlingActivity.this)
+        hud_numHud = KProgressHUD.create(SaveSeedlingActivity3_0.this)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
                 .setLabel("上传中，请等待...").setMaxProgress(100)
                 .setCancellable(true);
         instance = this;
-        DBOpenHelper dbOpenHelper = new DBOpenHelper(SaveSeedlingActivity.this,
+        DBOpenHelper dbOpenHelper = new DBOpenHelper(SaveSeedlingActivity3_0.this,
                 DB_NAME, null, DB_VERSION);
         try {
             db = dbOpenHelper.getWritableDatabase();
@@ -289,9 +292,9 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
             db = dbOpenHelper.getReadableDatabase();
         }
         // 执行SQL语句
-        SystemSetting.getInstance(SaveSeedlingActivity.this).choosePhotoDirId = "";
+        SystemSetting.getInstance(SaveSeedlingActivity3_0.this).choosePhotoDirId = "";
 
-        hud = KProgressHUD.create(SaveSeedlingActivity.this)
+        hud = KProgressHUD.create(SaveSeedlingActivity3_0.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("上传中，请等待...").setMaxProgress(100)
                 .setCancellable(true).setDimAmount(0.5f);
@@ -306,14 +309,14 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
         MultipleClickProcess multipleClickProcess = new MultipleClickProcess();
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
         photoGv = (MeasureGridView) findViewById(R.id.publish_flower_info_gv);
-        adapter = new PublishFlowerInfoPhotoAdapter(SaveSeedlingActivity.this,
+        adapter = new PublishFlowerInfoPhotoAdapter(SaveSeedlingActivity3_0.this,
                 urlPaths);
         photoGv.setAdapter(adapter);
         PhotoGvOnItemClickListener itemClickListener = new PhotoGvOnItemClickListener();
         photoGv.setOnItemClickListener(itemClickListener);
         handler = new RefreshHandler(this.getMainLooper());
         mainView = (View) findViewById(R.id.ll_mainView);
-        com.yunpay.app.KeyboardLayout3 resizeLayout = (com.yunpay.app.KeyboardLayout3) findViewById(R.id.ll_mainView);
+        KeyboardLayout3 resizeLayout = (KeyboardLayout3) findViewById(R.id.ll_mainView);
         // 获得要控制隐藏和显示的区域
         resizeLayout.setKeyBordStateListener(this);// 设置回调方法
         mSizeFlowTagLayout = (FlowTagLayout) findViewById(R.id.size_flow_layout);
@@ -333,10 +336,10 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                         sb.append(parent.getAdapter().getItem(i));
                         sb.append(":");
                     }
-                    ToastUtil.showShortToast(SaveSeedlingActivity.this, "移动研发:"
+                    ToastUtil.showShortToast(SaveSeedlingActivity3_0.this, "移动研发:"
                             + sb.toString());
                 } else {
-                    ToastUtil.showShortToast(SaveSeedlingActivity.this,
+                    ToastUtil.showShortToast(SaveSeedlingActivity3_0.this,
                             "没有选择标签");
                 }
             }
@@ -356,22 +359,22 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                         sb.append(parent.getAdapter().getItem(i));
                         sb.append(":");
                     }
-                    ToastUtil.showShortToast(SaveSeedlingActivity.this, "移动研发:"
+                    ToastUtil.showShortToast(SaveSeedlingActivity3_0.this, "移动研发:"
                             + sb.toString());
                 } else {
-                    ToastUtil.showShortToast(SaveSeedlingActivity.this,
+                    ToastUtil.showShortToast(SaveSeedlingActivity3_0.this,
                             "没有选择标签");
                 }
             }
         });
 
         mFlowLayout = (TagFlowLayout) findViewById(R.id.id_flowlayout);
-        mFlowLayout.setMaxSelectCount(1);//最多选择一个
+        mFlowLayout.setMaxSelectCount(1);
 
         LinearLayout ll_01 = (LinearLayout) findViewById(R.id.ll_01);
-        LinearLayout ll_02 = (LinearLayout) findViewById(R.id.ll_02);
+//		LinearLayout ll_02 = (LinearLayout) findViewById(R.id.ll_02);
         LinearLayout ll_03 = (LinearLayout) findViewById(R.id.ll_03);
-        LinearLayout ll_04 = (LinearLayout) findViewById(R.id.ll_04);
+//		LinearLayout ll_04 = (LinearLayout) findViewById(R.id.ll_04);
         LinearLayout ll_04_un = (LinearLayout) findViewById(R.id.ll_04_un);
         ll_05 = (LinearLayout) findViewById(R.id.ll_05);
         LinearLayout ll_06 = (LinearLayout) findViewById(R.id.ll_06);
@@ -463,12 +466,8 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
 
         } else {
             // 从缓存中取
-            if (mCache.getAsString("saveseedling") != null
-                    && !"".equals(mCache.getAsString("saveseedling"))) {
-                StorageSave fromJson = gson.fromJson(
-                        mCache.getAsString("saveseedling"),
-                        com.hldj.hmyg.buy.bean.StorageSave.class);
-
+            if (mCache.getAsString("saveseedling") != null && !"".equals(mCache.getAsString("saveseedling"))) {
+                StorageSave fromJson = gson.fromJson(mCache.getAsString("saveseedling"), StorageSave.class);
                 id = fromJson.getId();
                 storage_save_id = fromJson.getStorage_save_id();
                 urlPaths = fromJson.getUrlPaths();
@@ -529,31 +528,13 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
 
         }
 
-//       initDataGetFirstType();
-        SaveSeedlingPresenter.getAllDatas(new ResultCallBack<SaveSeedingGsonBean>() {
-            @Override
-            public void onSuccess(SaveSeedingGsonBean saveSeedingGsonBean) {
-
-                List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen = saveSeedingGsonBean.getData().getTypeList();
-                //动态添加标签
-
-                SaveSeedlingPresenter.initAutoLayout(mFlowLayout,saveSeedingGsonBean);
-
-
-            }
-
-            @Override
-            public void onFailure(Throwable t, int errorNo, String strMsg) {
-
-            }
-        });
-
+        initDataGetFirstType();
 
         btn_back.setOnClickListener(multipleClickProcess);
         ll_01.setOnClickListener(multipleClickProcess);
-        ll_02.setOnClickListener(multipleClickProcess);
+//		ll_02.setOnClickListener(multipleClickProcess);
         ll_03.setOnClickListener(multipleClickProcess);
-        ll_04.setOnClickListener(multipleClickProcess);
+//		ll_04.setOnClickListener(multipleClickProcess);
         ll_04_un.setOnClickListener(multipleClickProcess);
         ll_05.setOnClickListener(multipleClickProcess);
         ll_06.setOnClickListener(multipleClickProcess);
@@ -568,7 +549,6 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
             ll_FloorPrice.setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public void stateChange(int state) {
@@ -621,15 +601,12 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     public void onSuccess(Object t) {
                         // TODO Auto-generated method stub
                         try {
-                            SaveSeedingGsonBean gsonBean = GsonUtil.formateJson2Bean(t.toString(), SaveSeedingGsonBean.class);
-                            D.e("==========" + gsonBean.toString());
-                            gsonBean.getData().getTypeList();//有5个  乔木 灌木  观景  棕榈/苏铁  地被
-                            if (gsonBean.getCode().equals(ConstantState.SUCCEED_CODE)) {
-                                //成功
-                                D.e("===成功===");
-                            } else {
-                                D.e("===失败===");
-                            }
+
+
+                            SaveSeedingGsonBean saveSeedingGsonBean = GsonUtil.formateJson2Bean(t.toString(), SaveSeedingGsonBean.class);
+                            saveSeedingGsonBean.getData().getPlantTypeList();
+                            saveSeedingGsonBean.getData().getTypeList();
+
 
 
                             JSONObject jsonObject = new JSONObject(t.toString());
@@ -646,8 +623,6 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                         data, "typeList");
                                 JSONArray plantTypeList = JsonGetInfo
                                         .getJsonArray(data, "plantTypeList");
-                                /**  "text": "地栽苗",    "text": "移植苗",    "text": "假植苗",    "text": "容器苗",
-                                 */
                                 JSONObject nursery = JsonGetInfo.getJSONObject(
                                         data, "nursery");
                                 if ("".equals(addressId)) {
@@ -742,10 +717,8 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                             .getJsonInt(jsonObject2,
                                                     "defaultValidity"));
                                     typeLists.add(hMap);
-
                                     str_typeLists.add(JsonGetInfo
                                             .getJsonString(jsonObject2, "name"));
-
                                     str_typeList_ids_s.add(JsonGetInfo
                                             .getJsonString(jsonObject2, "id"));
                                     if (i == 0
@@ -770,12 +743,13 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                     }
                                 }
                                 if (typeLists.size() > 0) {
-                                    mtypeListAdapter.onlyAddAll(str_typeLists);//显示所有的标签.有几个就动态加载几个标签
+                                    mtypeListAdapter.onlyAddAll(str_typeLists);
                                     tagadapter = new com.zhy.view.flowlayout.TagAdapter<String>(
                                             str_typeLists) {
 
                                         @Override
-                                        public View getView(FlowLayout parent,  int position, String s) {
+                                        public View getView(FlowLayout parent,
+                                                            int position, String s) {
                                             TextView tv = (TextView) getLayoutInflater()
                                                     .inflate(R.layout.tv,
                                                             mFlowLayout, false);
@@ -783,21 +757,42 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                             return tv;
                                         }
                                     };
-                                    mFlowLayout.setAdapter(tagadapter);//自动换行layout
+                                    mFlowLayout.setAdapter(tagadapter);
                                     mFlowLayout
                                             .setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                                                 @Override
-                                                public boolean onTagClick(View view, int position, FlowLayout parent) {
-                                                    firstSeedlingTypeId = typeLists.get(position).get("id").toString();
-                                                    firstSeedlingTypeName = str_typeLists.get(position);
-                                                    seedlingParams = typeLists.get(position).get("seedlingParams").toString();
-                                                    tv_firstSeedlingTypeName.setText(firstSeedlingTypeName);
-                                                    unitType = typeLists.get(position).get("defaultUnit").toString();
-                                                    validity = typeLists.get(position).get("defaultValidity").toString();
-                                                    if ("plant".equals(unitType)) {
-                                                        tv_unitType.setText("株");
-                                                    } else if ("crowd".equals(unitType)) {
-                                                        tv_unitType.setText("丛");
+                                                public boolean onTagClick(
+                                                        View view,
+                                                        int position,
+                                                        FlowLayout parent) {
+                                                    firstSeedlingTypeId = typeLists
+                                                            .get(position)
+                                                            .get("id")
+                                                            .toString();
+                                                    firstSeedlingTypeName = str_typeLists
+                                                            .get(position);
+                                                    seedlingParams = typeLists
+                                                            .get(position)
+                                                            .get("seedlingParams")
+                                                            .toString();
+                                                    tv_firstSeedlingTypeName
+                                                            .setText(firstSeedlingTypeName);
+                                                    unitType = typeLists
+                                                            .get(position)
+                                                            .get("defaultUnit")
+                                                            .toString();
+                                                    validity = typeLists
+                                                            .get(position)
+                                                            .get("defaultValidity")
+                                                            .toString();
+                                                    if ("plant"
+                                                            .equals(unitType)) {
+                                                        tv_unitType
+                                                                .setText("株");
+                                                    } else if ("crowd"
+                                                            .equals(unitType)) {
+                                                        tv_unitType
+                                                                .setText("丛");
                                                     } else if ("jin"
                                                             .equals(unitType)) {
                                                         tv_unitType
@@ -830,7 +825,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                                 .equals(str_typeList_ids_s
                                                         .get(i))) {
                                             tag_a = i;
-                                            tagadapter.setSelectedList(tag_a);//缓存中去除 tag 位置 渲染后赋值
+                                            tagadapter.setSelectedList(tag_a);
                                         } else {
                                         }
 
@@ -888,7 +883,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     public void onFailure(Throwable t, int errorNo,
                                           String strMsg) {
                         // TODO Auto-generated method stub
-                        Toast.makeText(SaveSeedlingActivity.this,
+                        Toast.makeText(SaveSeedlingActivity3_0.this,
                                 R.string.error_net, Toast.LENGTH_SHORT).show();
                         super.onFailure(t, errorNo, strMsg);
                     }
@@ -1009,19 +1004,19 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     onBackPressed();
                 } else if (view.getId() == R.id.ll_01) {
                     Intent toChooseFirstTypeActivity = new Intent(
-                            SaveSeedlingActivity.this,
+                            SaveSeedlingActivity3_0.this,
                             ChooseFirstTypeActivity.class);
                     startActivityForResult(toChooseFirstTypeActivity, 1);
                     overridePendingTransition(R.anim.slide_in_left,
                             R.anim.slide_out_right);
-                } else if (view.getId() == R.id.ll_04) {
+                } else if (view.getId() == ll_04) {
                     if ("".equals(firstSeedlingTypeId)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先选择分类",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先选择分类",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Intent toChooseParamsActivity = new Intent(
-                            SaveSeedlingActivity.this,
+                            SaveSeedlingActivity3_0.this,
                             ChooseParamsActivity.class);
                     toChooseParamsActivity.putStringArrayListExtra(
                             "str_plantTypeLists", str_plantTypeLists);
@@ -1049,7 +1044,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             R.anim.slide_out_right);
                 } else if (view.getId() == R.id.list_item_adress) {
                     Intent toAdressListActivity1 = new Intent(
-                            SaveSeedlingActivity.this, AdressListActivity.class);
+                            SaveSeedlingActivity3_0.this, AdressListActivity.class);
                     toAdressListActivity1.putExtra("addressId", addressId);
                     toAdressListActivity1.putExtra("from",
                             "SaveSeedlingActivity");
@@ -1058,7 +1053,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             R.anim.slide_out_right);
                 } else if (view.getId() == R.id.ll_05) {
                     Intent toAdressListActivity = new Intent(
-                            SaveSeedlingActivity.this, AdressListActivity.class);
+                            SaveSeedlingActivity3_0.this, AdressListActivity.class);
                     toAdressListActivity.putExtra("addressId", addressId);
                     toAdressListActivity.putExtra("from",
                             "SaveSeedlingActivity");
@@ -1067,7 +1062,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             R.anim.slide_out_right);
                 } else if (view.getId() == R.id.ll_06) {
                     CustomDaysPickPopwin daysPopwin = new CustomDaysPickPopwin(
-                            SaveSeedlingActivity.this, new DayChangeListener() {
+                            SaveSeedlingActivity3_0.this, new DayChangeListener() {
 
                         @Override
                         public void onDayChange(int dayType, int pos) {
@@ -1091,7 +1086,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             | Gravity.CENTER, 0, 0);
                 } else if (view.getId() == R.id.ll_07) {
                     Intent toUpdataImageActivity = new Intent(
-                            SaveSeedlingActivity.this,
+                            SaveSeedlingActivity3_0.this,
                             UpdataImageActivity.class);
                     Bundle bundleObject = new Bundle();
                     final PicSerializableMaplist myMap = new PicSerializableMaplist();
@@ -1116,7 +1111,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
 
                 } else if (view.getId() == R.id.ll_08) {
                     Intent toParamsListActivity = new Intent(
-                            SaveSeedlingActivity.this, ParamsListActivity.class);
+                            SaveSeedlingActivity3_0.this, ParamsListActivity.class);
                     toParamsListActivity.putExtra("seedlingTypeId",
                             firstSeedlingTypeId);
                     startActivityForResult(toParamsListActivity, 1);
@@ -1124,75 +1119,75 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             R.anim.slide_out_right);
                 } else if (view.getId() == R.id.save) {
                     if ("".equals(firstSeedlingTypeId)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先选择分类",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先选择分类",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(et_name.getText().toString())) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先输入品名",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先输入品名",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(et_price.getText().toString())) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先输入单价",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先输入单价",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     if (Double.parseDouble(et_price.getText().toString()) <= 0) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请输入超过0的价格",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请输入超过0的价格",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (MyApplication.Userinfo.getBoolean("isDirectAgent",
                             false)) {
                         if ("".equals(et_FloorPrice.getText().toString())) {
-                            Toast.makeText(SaveSeedlingActivity.this, "请先输入底价",
+                            Toast.makeText(SaveSeedlingActivity3_0.this, "请先输入底价",
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (Double.parseDouble(et_FloorPrice.getText()
                                 .toString()) <= 0) {
-                            Toast.makeText(SaveSeedlingActivity.this,
+                            Toast.makeText(SaveSeedlingActivity3_0.this,
                                     "请输入超过0的底价", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (Double.parseDouble(et_FloorPrice.getText()
                                 .toString()) > Double.parseDouble(et_price
                                 .getText().toString())) {
-                            Toast.makeText(SaveSeedlingActivity.this,
+                            Toast.makeText(SaveSeedlingActivity3_0.this,
                                     "输入底价不能超过苗木价格", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
                     if ("".equals(et_count.getText().toString())) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先输入数量",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先输入数量",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(validity)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先选择发布有效期",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先选择发布有效期",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(addressId)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请先选择苗源地址",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请先选择苗源地址",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(plantType)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请选择种植类型",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请选择种植类型",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if ("".equals(unitType)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请选择单位",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请选择单位",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     if (urlPaths.size() == 0) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请选择图片上传",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请选择图片上传",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -1287,7 +1282,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                 } else if (view.getId() == R.id.iv_ready_save) {
 
                     if (urlPaths.size() == 0) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请选择图片上传",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请选择图片上传",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -1339,7 +1334,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     cValue.put("storage_save_id", storage_save_id);
                     // 调用insert()方法插入数据
                     db.insert(DB_TABLE, null, cValue);
-                    ToastUtil.showShortToast(SaveSeedlingActivity.this,
+                    ToastUtil.showShortToast(SaveSeedlingActivity3_0.this,
                             "已成功存入草稿箱，请尽快上传。");
                     mCache.remove("saveseedling");
                     setResult(1);
@@ -1348,12 +1343,12 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                 } else if (view.getId() == R.id.id_tv_edit_all) {
                     mCache.remove("saveseedling");
                     finish();
-                    startActivity(new Intent(SaveSeedlingActivity.this,
-                            SaveSeedlingActivity.class));
+                    startActivity(new Intent(SaveSeedlingActivity3_0.this,
+                            SaveSeedlingActivity3_0.class));
                     //
                     // 清空
                 } else if (view.getId() == R.id.ll_04_un) {
-                    new ActionSheetDialog(SaveSeedlingActivity.this)
+                    new ActionSheetDialog(SaveSeedlingActivity3_0.this)
                             .builder()
                             .setCancelable(false)
                             .setCanceledOnTouchOutside(false)
@@ -1430,7 +1425,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
     }
 
     public void hudProgress() {
-        if (hud_numHud != null && !SaveSeedlingActivity.this.isFinishing()) {
+        if (hud_numHud != null && !SaveSeedlingActivity3_0.this.isFinishing()) {
             hud_numHud.setProgress(a * 100 / urlPaths.size());
             hud_numHud.setProgressText("上传中(" + a + "/" + urlPaths.size()
                     + "张)");
@@ -1438,13 +1433,13 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
         if (a == urlPaths.size()) {
             if (urlPaths.size() > 0) {
                 if (hud_numHud != null
-                        && !SaveSeedlingActivity.this.isFinishing()) {
+                        && !SaveSeedlingActivity3_0.this.isFinishing()) {
                     hud_numHud.dismiss();
                 }
 
                 if (urlPaths.size() > 0) {
                     if (!PicValiteIsUtils.needPicValite(urlPaths)) {
-                        Toast.makeText(SaveSeedlingActivity.this, "请上传完为上传的图片",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请上传完为上传的图片",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -1456,7 +1451,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     }
                     seedlingSave();
                 } else {
-                    Toast.makeText(SaveSeedlingActivity.this, "请选择图片上传",
+                    Toast.makeText(SaveSeedlingActivity3_0.this, "请选择图片上传",
                             Toast.LENGTH_SHORT).show();
 
                 }
@@ -1515,7 +1510,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                             String msg = JsonGetInfo.getJsonString(jsonObject,
                                     "msg");
                             if (!"".equals(msg)) {
-                                Toast.makeText(SaveSeedlingActivity.this, msg,
+                                Toast.makeText(SaveSeedlingActivity3_0.this, msg,
                                         Toast.LENGTH_SHORT).show();
                             }
                             if ("1".equals(code)) {
@@ -1535,7 +1530,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                 setResult(1);
                                 finish();
                                 Intent toManagerListActivity = new Intent(
-                                        SaveSeedlingActivity.this,
+                                        SaveSeedlingActivity3_0.this,
                                         ManagerListActivity.class);
                                 startActivity(toManagerListActivity);
                                 overridePendingTransition(R.anim.slide_in_left,
@@ -1558,7 +1553,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                     public void onFailure(Throwable t, int errorNo,
                                           String strMsg) {
                         // TODO Auto-generated method stub
-                        Toast.makeText(SaveSeedlingActivity.this,
+                        Toast.makeText(SaveSeedlingActivity3_0.this,
                                 R.string.error_net, Toast.LENGTH_SHORT).show();
                         super.onFailure(t, errorNo, strMsg);
                         if (hud != null) {
@@ -1686,27 +1681,26 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                                 long id) {
             if (position == adapter.getUrlPathsCount()) {
                 boolean requestCamerPermissions = new PermissionUtils(
-                        SaveSeedlingActivity.this).requestCamerPermissions(200);
+                        SaveSeedlingActivity3_0.this).requestCamerPermissions(200);
                 if (!requestCamerPermissions) {
-                    Toast.makeText(SaveSeedlingActivity.this, "您未同意拍照权限",
+                    Toast.makeText(SaveSeedlingActivity3_0.this, "您未同意拍照权限",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
                 boolean requestReadSDCardPermissions = new PermissionUtils(
-                        SaveSeedlingActivity.this)
+                        SaveSeedlingActivity3_0.this)
                         .requestReadSDCardPermissions(200);
                 if (!requestReadSDCardPermissions) {
-                    Toast.makeText(SaveSeedlingActivity.this, "您未同意应用读取SD卡权限",
+                    Toast.makeText(SaveSeedlingActivity3_0.this, "您未同意应用读取SD卡权限",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                popwin = new FlowerInfoPhotoChoosePopwin2(
-                        SaveSeedlingActivity.this, SaveSeedlingActivity.this);
+//                popwin = new FlowerInfoPhotoChoosePopwin2();
                 popwin.showAtLocation(mainView, Gravity.BOTTOM
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
             } else {
                 EditGalleryImageActivity.startEditGalleryImageActivity(
-                        SaveSeedlingActivity.this,
+                        SaveSeedlingActivity3_0.this,
                         EditGalleryImageActivity.TO_EDIT_PUBLISH_IMAGE,
                         position, adapter.getDataList());
             }
@@ -1722,17 +1716,17 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
         String photostatus = Environment.getExternalStorageState();
         Log.e("toTakePic", photostatus);
         if (photostatus.equals(Environment.MEDIA_MOUNTED)) {
-            if (!ZzyUtil.ToastForSdcardSpaceEnough(SaveSeedlingActivity.this,
+            if (!ZzyUtil.ToastForSdcardSpaceEnough(SaveSeedlingActivity3_0.this,
                     true)) {
                 // SD卡空间不足
-                Toast.makeText(SaveSeedlingActivity.this,
+                Toast.makeText(SaveSeedlingActivity3_0.this,
                         R.string.sdcard_is_full, Toast.LENGTH_SHORT).show();
                 return;
             }
             doTakePhoto();
             Log.e("toTakePic", "photostatus2");
         } else {
-            Toast.makeText(SaveSeedlingActivity.this,
+            Toast.makeText(SaveSeedlingActivity3_0.this,
                     R.string.sdcard_is_unmount, Toast.LENGTH_SHORT).show();
             Log.e("toTakePic", "photostatus3");
         }
@@ -1752,7 +1746,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
             startActivityForResult(intent, TO_TAKE_PIC);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(SaveSeedlingActivity.this,
+            Toast.makeText(SaveSeedlingActivity3_0.this,
                     R.string.cannot_select_pic, Toast.LENGTH_SHORT).show();
 
         }
@@ -1765,11 +1759,11 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
     public void toChoosePic() {
         String picstatus = Environment.getExternalStorageState();
         if (picstatus.equals(Environment.MEDIA_MOUNTED)) {
-            if (SystemSetting.getInstance(SaveSeedlingActivity.this).choosePhotoDirId
+            if (SystemSetting.getInstance(SaveSeedlingActivity3_0.this).choosePhotoDirId
                     .length() > 0
                     && SystemSetting.isAlbumHasPhoto(
-                    SaveSeedlingActivity.this.getContentResolver(),
-                    SaveSeedlingActivity.this)) {
+                    SaveSeedlingActivity3_0.this.getContentResolver(),
+                    SaveSeedlingActivity3_0.this)) {
                 // UpdataImageActivity
                 // .startPhotoActivity(
                 // UpdataImageActivity.this,
@@ -1780,17 +1774,17 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
                 // adapter.getUrlPathsCount(),
                 // PhotoActivity.INTENT_NOT_NEED_FOR_RESULT);
                 PhotoAlbumActivity.startPhotoAlbumActivity(
-                        SaveSeedlingActivity.this,
+                        SaveSeedlingActivity3_0.this,
                         PhotoActivity.PHOTO_TYPE_PUBLISH_SEED_ATTACH,
                         adapter.getUrlPathsCount());
             } else {
                 PhotoAlbumActivity.startPhotoAlbumActivity(
-                        SaveSeedlingActivity.this,
+                        SaveSeedlingActivity3_0.this,
                         PhotoActivity.PHOTO_TYPE_PUBLISH_SEED_ATTACH,
                         adapter.getUrlPathsCount());
             }
         } else {
-            Toast.makeText(SaveSeedlingActivity.this,
+            Toast.makeText(SaveSeedlingActivity3_0.this,
                     R.string.sdcard_is_unmount, Toast.LENGTH_SHORT).show();
         }
     }
@@ -1833,7 +1827,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
         /** 如果不是GIF图片 */
         if (!isGif) {
             // SD卡空间足够才压缩
-            if (ZzyUtil.ToastForSdcardSpaceEnough(SaveSeedlingActivity.this,
+            if (ZzyUtil.ToastForSdcardSpaceEnough(SaveSeedlingActivity3_0.this,
                     false)) {
                 image_path = CompressAndSaveImg(file, degree, sourchImagePath);
                 file = new File(image_path);
@@ -1888,7 +1882,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements
             super.handleMessage(msg);
             switch (msg.what) {
                 case LOAD_PIC_FAILURE:
-                    Toast.makeText(SaveSeedlingActivity.this,
+                    Toast.makeText(SaveSeedlingActivity3_0.this,
                             R.string.image_load_failed, Toast.LENGTH_SHORT).show();
                     break;
                 case ADD_NEW_PIC:

@@ -39,6 +39,42 @@ import org.json.JSONObject;
 public class LoginPresenter {
 
 
+
+
+    public static void toLoginWithNote(String phone, String smsCode, final ResultCallBack<LoginGsonBean> resultCallBack) {
+
+        FinalHttp finalHttp = new FinalHttp();
+        GetServerUrl.addHeaders(finalHttp, false);
+        AjaxParams params = new AjaxParams();
+        params.put("phone", phone);//手机号
+        params.put("smsCode", smsCode);//短信验证码
+
+        AjaxCallBack ajaxCallBack = new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String json) {
+
+                //解析json  返回
+                LoginGsonBean loginGsonBean = GsonUtil.formateJson2Bean(json, LoginGsonBean.class);
+                resultCallBack.onSuccess(loginGsonBean);
+                if (!loginGsonBean.getCode().equals(ConstantState.SUCCEED_CODE))
+                    resultCallBack.onFailure(null, Integer.parseInt(loginGsonBean.getCode()), loginGsonBean.getMsg());
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                D.e("");
+
+            }
+        };
+        finalHttp.post(GetServerUrl.getUrl() + "/user/smslogin", params, ajaxCallBack);
+
+    }
+
+
+    public void sayHellowWorld() {
+        ToastUtil.showShortToast(MyApplication.getInstance(), "hellow world");
+    }
+
     public static class MyTextWatcher implements TextWatcher {
         EditText editText;
         ImageView imageView;
