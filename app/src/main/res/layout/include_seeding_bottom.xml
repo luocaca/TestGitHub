@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@drawable/feedback_content_edittext_shape"
+        android:paddingLeft="@dimen/x9"
+        android:paddingRight="@dimen/x9"
+        android:paddingTop="@dimen/y10">
+
+        <TextView
+            android:id="@+id/tv_price_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="价格"
+            android:textSize="@dimen/x15" />
+
+        <LinearLayout
+            android:layout_width="@dimen/x180"
+            android:layout_height="@dimen/y14"
+            android:layout_toRightOf="@+id/tv_price_"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/x20">
+            <!--android:paddingLeft="@dimen/x14"-->
+            <!--android:paddingRight="@dimen/x14"-->
+
+            <EditText style="@style/edit_seeding_imput" />
+
+            <TextView style="@style/text_Seeding_line" />
+
+            <EditText style="@style/edit_seeding_imput" />
+
+
+        </LinearLayout>
+
+        <TextView style="@style/text_seeding_cm" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@drawable/feedback_content_edittext_shape"
+        android:paddingLeft="@dimen/x9"
+        android:paddingRight="@dimen/x9"
+        android:paddingTop="@dimen/y10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="库存"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x9"
+            android:text="株"
+            android:textSize="@dimen/x15" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@drawable/feedback_content_edittext_shape"
+        android:paddingLeft="@dimen/x9"
+        android:paddingRight="@dimen/x9"
+        android:paddingTop="@dimen/y10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="单位"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x9"
+            android:text="株"
+            android:textSize="@dimen/x15" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@drawable/feedback_content_edittext_shape"
+        android:paddingLeft="@dimen/x9"
+        android:paddingRight="@dimen/x9"
+        android:paddingTop="@dimen/y10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="苗源地"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x9"
+            android:text="株"
+            android:textSize="@dimen/x15" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@drawable/feedback_content_edittext_shape"
+        android:paddingLeft="@dimen/x9"
+        android:paddingRight="@dimen/x9"
+        android:paddingTop="@dimen/y10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="有效期"
+            android:textSize="@dimen/x15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x9"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/ic_right_icon"
+            android:text="90天"
+            android:textSize="@dimen/x15" />
+    </RelativeLayout>
+
+
+    <RelativeLayout style="@style/rl_seeding_commom">
+
+        <TextView
+            android:id="@+id/tv_seeding_beizhu"
+            style="@style/text_left_name_style"
+            android:text="备注" />
+
+        <EditText
+            android:id="@+id/et_remark"
+            style="@style/et_seeding_common"
+            android:layout_toRightOf="@+id/tv_seeding_beizhu"
+            android:hint="请填写备注信息" />
+    </RelativeLayout>
+
+</LinearLayout>

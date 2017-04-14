@@ -2,8 +2,10 @@ package com.hldj.hmyg.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.hldj.hmyg.R;
 import com.white.utils.SystemSetting;
@@ -13,8 +15,6 @@ import com.white.utils.SystemSetting;
  * Created by Administrator on 2017/4/10.
  */
 public class MyUtil {
-
-
 
 
     public static int getScreenHeight(boolean islandscape, Context context) {
@@ -72,6 +72,16 @@ public class MyUtil {
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         //出
         //0  --- 100
+    }
+
+
+    public static String getStrWithView(TextView textView) {
+
+        if (TextUtils.isEmpty(textView.getText().toString()))
+            return "";
+
+        return textView.getText().toString();
+
     }
 
 }

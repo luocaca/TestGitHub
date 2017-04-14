@@ -15,15 +15,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hldj.hmyg.CallBack.ResultCallBack;
 import com.hldj.hmyg.application.Data;
 import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.bean.LoginGsonBean;
 import com.hldj.hmyg.bean.UserInfoGsonBean;
 import com.hldj.hmyg.presenter.LoginPresenter;
+import com.hldj.hmyg.presenter.SaveSeedlingPresenter;
 import com.hldj.hmyg.util.ConstantState;
 import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
 import com.hldj.hmyg.util.JpushUtil;
+import com.hldj.hmyg.util.MyUtil;
 import com.hldj.hmyg.util.SPUtil;
 import com.hy.utils.GetServerUrl;
 import com.loginjudge.LoginJudge;
@@ -79,7 +82,7 @@ public class LoginActivity extends BaseActivity {
             //短信登录手机号码
             this.et_phone_note = (EditText) findViewById(R.id.et_phone_note);
             //清楚号码按钮
-            this.btn_clear_password_note = (ImageButton) findViewById(R.id.btn_clear_password_note);
+            this.btn_clear_password_note = (ImageButton) findViewById(R.id.btn_clear_phone_note);
             //获取验证码
             this.tv_get_code_note = (TextView) findViewById(R.id.tv_get_code_note);
             this.tv_get_code_note.setOnClickListener(new OnClickListener() {
@@ -87,28 +90,82 @@ public class LoginActivity extends BaseActivity {
                 public void onClick(View v) {
                     D.e("======hehe======");
                     //获取验证码，倒计时，变色，不可点
-                    LoginPresenter.getCode(tv_get_code_note,20);
+                    LoginPresenter.getCode(MyUtil.getStrWithView(holderNote.et_phone_note), holderNote.tv_get_code_note, 20, new ResultCallBack<LoginGsonBean>() {
+                        @Override
+                        public void onSuccess(LoginGsonBean loginGsonBean) {
+                            D.e("======短信发送成功=========id=");
+                            holderNote.login_note.setSelected(true);
+                            holderNote.login_note.setClickable(true);
+                            //通过id 获取个人 信息 userinfo
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t, int errorNo, String strMsg) {
+                            D.e("===============");
+                        }
+                    });
 
                 }
             });
-            TextWatcher mTextWatcher = new LoginPresenter.MyTextWatcher(this.et_phone_note, this.btn_clear_password_note,this.tv_get_code_note);
+            TextWatcher mTextWatcher = new LoginPresenter.MyTextWatcher(this.et_phone_note, this.btn_clear_password_note, this.tv_get_code_note);
             this.et_phone_note.addTextChangedListener(mTextWatcher);
 
             //验证码输入框
             this.et_passward_note = (EditText) findViewById(R.id.et_passward_note);
             //登录按钮
             this.login_note = (TextView) findViewById(R.id.login_note);
-            this.login_note.setText("hellow world");
             this.login_note.setOnClickListener(new MultipleClickProcess() {
                 @Override
                 public void onClick(View view) {
                     showToast("hellow world");
+                    toLoginWithNote("" + holderNote.et_phone_note.getText(), "" + holderNote.et_passward_note.getText());
                 }
             });
         }
 
     }
 
+    public void toLoginWithNote(String phone, String smsCode) {
+
+        //登录操作
+        SaveSeedlingPresenter.toLoginWithNote(phone, smsCode, new ResultCallBack<LoginGsonBean>() {
+            @Override
+            public void onSuccess(LoginGsonBean loginGsonBean) {
+
+                //获取个人信息
+                getUserInfo(loginGsonBean);
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+
+            }
+        });
+
+
+    }
+    //获取个人信息
+    public void getUserInfo(LoginGsonBean loginGsonBean) {
+        D.e("========登录成功，返回id===========" + loginGsonBean.toString());
+        //获取个人信息操作
+        LoginPresenter.getUserInfo(loginGsonBean.getData().getUserId(), new ResultCallBack<UserInfoGsonBean>() {
+            @Override
+            public void onSuccess(UserInfoGsonBean userInfoGsonBean) {
+                D.e("个人信息获取成功"+userInfoGsonBean.toString());
+
+                finish();
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+
+            }
+        });
+    }
+
+    ;;
 
     //密码登录控件管理
     public void initHolderPwd() {

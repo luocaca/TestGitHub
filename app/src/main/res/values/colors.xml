@@ -547,8 +547,7 @@
     <color name="text_login_type">#999999</color>
 
     <color name="get_code_color">#FFCECECE</color>
-
-
+    <color name="hint_text_color">#cccccc</color>
 
 
 </resources>
