@@ -167,7 +167,7 @@
 
 
 
-            <!--<include layout="@layout/include_seeding_auto_show"/>-->
+            <include layout="@layout/include_seeding_auto_show"/>
 
             <FrameLayout
                 android:layout_width="match_parent"

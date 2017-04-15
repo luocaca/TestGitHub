@@ -44,7 +44,7 @@ public class SaveSeedingGsonBean {
 
     public static class DataBean {
         private List<TypeListBean> typeList;
-        private List<PlantTypeListBeanX> plantTypeList;
+        private List<TypeListBean.PlantTypeListBean> plantTypeList;
 
         public List<TypeListBean> getTypeList() {
             return typeList;
@@ -54,11 +54,11 @@ public class SaveSeedingGsonBean {
             this.typeList = typeList;
         }
 
-        public List<PlantTypeListBeanX> getPlantTypeList() {
+        public List<TypeListBean.PlantTypeListBean> getPlantTypeList() {
             return plantTypeList;
         }
 
-        public void setPlantTypeList(List<PlantTypeListBeanX> plantTypeList) {
+        public void setPlantTypeList(List<TypeListBean.PlantTypeListBean> plantTypeList) {
             this.plantTypeList = plantTypeList;
         }
 
@@ -102,6 +102,30 @@ public class SaveSeedingGsonBean {
             private List<PlantTypeListBean> plantTypeList;
             private List<QualityTypeListBean> qualityTypeList;
             private List<QualityGradeListBean> qualityGradeList;
+
+            @Override
+            public String toString() {
+                return "TypeListBean{" +
+                        "id='" + id + '\'' +
+                        ", createBy='" + createBy + '\'' +
+                        ", createDate='" + createDate + '\'' +
+                        ", name='" + name + '\'' +
+                        ", aliasName='" + aliasName + '\'' +
+                        ", parentId='" + parentId + '\'' +
+                        ", level=" + level +
+                        ", firstPinyin='" + firstPinyin + '\'' +
+                        ", fullPinyin='" + fullPinyin + '\'' +
+                        ", seedlingParams='" + seedlingParams + '\'' +
+                        ", sort=" + sort +
+                        ", defaultUnit='" + defaultUnit + '\'' +
+                        ", defaultValidity=" + defaultValidity +
+                        ", mainSpec='" + mainSpec + '\'' +
+                        ", paramsList=" + paramsList +
+                        ", plantTypeList=" + plantTypeList +
+                        ", qualityTypeList=" + qualityTypeList +
+                        ", qualityGradeList=" + qualityGradeList +
+                        '}';
+            }
 
             public String getId() {
                 return id;
@@ -256,6 +280,14 @@ public class SaveSeedingGsonBean {
                 private String value;
                 private boolean required;
 
+                @Override
+                public String toString() {
+                    return "ParamsListBean{" +
+                            "value='" + value + '\'' +
+                            ", required=" + required +
+                            '}';
+                }
+
                 public String getValue() {
                     return value;
                 }
@@ -352,30 +384,30 @@ public class SaveSeedingGsonBean {
             }
         }
 
-        public static class PlantTypeListBeanX {
-            /**
-             * text : 地栽苗
-             * value : planted
-             */
-
-            private String text;
-            private String value;
-
-            public String getText() {
-                return text;
-            }
-
-            public void setText(String text) {
-                this.text = text;
-            }
-
-            public String getValue() {
-                return value;
-            }
-
-            public void setValue(String value) {
-                this.value = value;
-            }
-        }
+//        public static class PlantTypeListBeanX {
+//            /**
+//             * text : 地栽苗
+//             * value : planted
+//             */
+//
+//            private String text;
+//            private String value;
+//
+//            public String getText() {
+//                return text;
+//            }
+//
+//            public void setText(String text) {
+//                this.text = text;
+//            }
+//
+//            public String getValue() {
+//                return value;
+//            }
+//
+//            public void setValue(String value) {
+//                this.value = value;
+//            }
+//        }
     }
 }

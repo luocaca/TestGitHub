@@ -434,9 +434,11 @@
         <item name="android:background">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:hint">0</item>
-        <item name="android:scrollbars">vertical</item>
-    </style>
+        <item name="android:textColorHint">@color/hint_text_color</item>
+        <item name="android:maxLines">1</item>
 
+    </style>
+    <!--<item name="android:scrollbars">vertical</item>-->
 
     <style name="text_seeding_cm">
         <item name="android:layout_width">wrap_content</item>
@@ -487,8 +489,17 @@
     </style>
 
 
+    <style name="View_line_green">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@drawable/line</item>
+    </style>
 
-
+  <style name="View_line_gray">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">@color/gray_bg</item>
+    </style>
 
 
 

@@ -7,28 +7,32 @@ import com.zzy.flowers.widget.popwin.BottomPopwin;
 
 public class FlowerInfoPhotoChoosePopwin2 extends BottomPopwin {
 
-	private SaveSeedlingActivity upimg;
 
-	public FlowerInfoPhotoChoosePopwin2(Context context,
-			SaveSeedlingActivity upimg) {
-		super(new int[] { R.string.photo_take_pic, R.string.photo_album_title,
-				R.string.cancel }, upimg);
-		this.upimg = upimg;
+    public FlowerInfoPhotoChoosePopwin2(Context context,  onPhotoStateChangeListener onPhotoState) {
+        super(new int[]{R.string.photo_take_pic, R.string.photo_album_title, R.string.cancel}, context);
+    }
 
-	}
+    @Override
+    protected void handleClickListener(int pos) {
+        switch (pos) {
+            case 0:
 
-	@Override
-	protected void handleClickListener(int pos) {
-		switch (pos) {
-		case 0:
-			upimg.toTakePic();
-			break;
-		case 1:
-			upimg.toChoosePic();
-			break;
-		default:
-			break;
-		}
-	}
+                break;
+            case 1:
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    public interface onPhotoStateChangeListener {
+        void onTakePic();
+
+        void onChoosePic();
+
+        void onCancle();
+
+    }
 
 }

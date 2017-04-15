@@ -28,6 +28,7 @@ public class KeyboardLayout3 extends LinearLayout {
 			@Override
 			public void run() {
 				if (oldh - h > SOFTKEYPAD_MIN_HEIGHT) {
+					if (keyBordStateListener!= null)
 					keyBordStateListener.stateChange(KEYBORAD_SHOW);
 				} else {
 					if (keyBordStateListener != null) {

@@ -232,8 +232,7 @@
         <activity
             android:name="com.hldj.hmyg.StoreActivity_bak"
             android:screenOrientation="portrait"
-            android:theme="@style/e_activity_theme"
-            />
+            android:theme="@style/e_activity_theme" />
         <activity
             android:name="com.hldj.hmyg.store.StoreTypeActivity"
             android:screenOrientation="portrait"></activity>
@@ -373,6 +372,7 @@
         <activity
             android:name="com.hldj.hmyg.saler.SaveSeedlingActivity"
             android:screenOrientation="portrait"></activity>
+        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"-->
         <activity
             android:name="com.hldj.hmyg.saler.SubscribeManagerListActivity"
             android:screenOrientation="portrait"></activity>

@@ -85,7 +85,7 @@ public class SaveSeedlingPresenter {
 
     private static TagAdapter<String> mtypeListAdapter;
 
-    public static void initAutoLayout(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity Activity) {
+    public static void initAutoLayout(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity Activity, TagFlowLayout.OnTagClickListener onTagClickListener) {
 
         final List str_typeLists = getListNames(saveSeedingGsonBean);
 
@@ -102,14 +102,7 @@ public class SaveSeedlingPresenter {
 
         mFlowLayout.setMaxSelectCount(1);
 
-        mFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-
-
-                return true;
-            }
-        });
+        mFlowLayout.setOnTagClickListener(onTagClickListener);
 
 
 //        tagadapter = new com.zhy.view.flowlayout.TagAdapter<String>(
@@ -166,6 +159,19 @@ public class SaveSeedlingPresenter {
 //                });
     }
 
+
+    private static List getListWithKey(List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> list_enter) {
+        int mSize = list_enter.size();
+        List<String> lisWithtKey = new ArrayList();
+        if (mSize > 0) {
+            for (int i = 0; i < mSize; i++) {
+                lisWithtKey.add(list_enter.get(i).getText());//获取所有名称
+            }
+        }
+        return lisWithtKey;
+
+    }
+
     private static List getListNames(SaveSeedingGsonBean saveSeedingGsonBean) {
         int mSize = saveSeedingGsonBean.getData().getTypeList().size();
         List list = new ArrayList();
@@ -175,6 +181,36 @@ public class SaveSeedlingPresenter {
             }
         }
         return list;
+
+    }
+
+    //     * plantTypeList : [{"text":"地栽苗","value":"planted"},{"text":"移植苗","value":"transplant"},{"text":"假植苗","value":"heelin"},{"text":"容器苗","value":"container"}]
+    public static void initAutoLayout(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity saveSeedlingActivity) {
+
+        final List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList = saveSeedingGsonBean.getData().getPlantTypeList();
+
+        com.zhy.view.flowlayout.TagAdapter tagAdapter = new com.zhy.view.flowlayout.TagAdapter(plantTypeList) {
+            @Override
+            public View getView(FlowLayout parent, int position, Object o) {
+                TextView tv = (TextView) saveSeedlingActivity.getLayoutInflater().inflate(R.layout.tv, mFlowLayout, false);
+                tv.setText(plantTypeList.get(position).getText());
+                return tv;
+            }
+        };
+
+        mFlowLayout.setAdapter(tagAdapter);
+
+        mFlowLayout.setMaxSelectCount(1);
+
+        mFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                D.e("===position=====" + position);
+                D.e("===name=====" + plantTypeList.get(position).getValue());
+                return true;
+            }
+        });
+
 
     }
 }

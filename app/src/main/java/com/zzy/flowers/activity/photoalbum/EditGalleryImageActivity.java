@@ -1,16 +1,11 @@
 package com.zzy.flowers.activity.photoalbum;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +23,6 @@ import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicSerializableMaplist;
 import com.hldj.hmyg.broker.AddCarActivity;
 import com.hldj.hmyg.broker.SaveMarketPriceActivity;
-import com.hldj.hmyg.buyer.SerializableMaplist;
 import com.hldj.hmyg.jimiao.SaveMiaoActivity;
 import com.hldj.hmyg.saler.CoreActivity;
 import com.hldj.hmyg.saler.SaveSeedlingActivity;
@@ -37,6 +31,10 @@ import com.white.utils.ExpandViewTouchUtil;
 import com.zzy.common.widget.galleryView.ImageGalleryView;
 import com.zzy.common.widget.galleryView.SingleTapListener;
 import com.zzy.flowers.activity.imageedit.EditImageGalleryPageAdapter;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EditGalleryImageActivity extends CoreActivity implements
 		OnTouchListener, SingleTapListener {
@@ -137,8 +135,9 @@ public class EditGalleryImageActivity extends CoreActivity implements
 					if (UpdataImageActivity.instance != null) {
 						UpdataImageActivity.instance.removePicUrls(currentPage);
 					} else if (SaveSeedlingActivity.instance != null) {
-						SaveSeedlingActivity.instance
-								.removePicUrls(currentPage);
+
+						SaveSeedlingActivity.instance .removePicUrls(currentPage);
+
 					} else if (SaveMiaoActivity.instance != null) {
 						SaveMiaoActivity.instance.removePicUrls(currentPage);
 					}else if (SaveMarketPriceActivity.instance != null) {

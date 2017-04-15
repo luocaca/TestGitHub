@@ -57,5 +57,6 @@
     <dimen name="top_padding_statu">1dp</dimen>
 
     <dimen name="loadingbar_icon">40dp</dimen>
+    <dimen name="title_top_default">38dp</dimen>
 
 </resources>

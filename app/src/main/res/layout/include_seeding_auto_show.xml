@@ -58,7 +58,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/y6"
-            android:orientation="horizontal">
+            android:orientation="horizontal" android:visibility="visible">
 
             <RadioButton style="@style/radio_seedling_common" />
 
