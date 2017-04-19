@@ -1,21 +1,5 @@
 package com.hldj.hmyg.broker;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -50,13 +34,10 @@ import com.google.gson.Gson;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
 import com.hldj.hmyg.application.Data;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicValiteIsUtils;
-import com.hldj.hmyg.saler.FlowerInfoPhotoChoosePopwin2;
 import com.hldj.hmyg.saler.FlowerInfoPhotoChoosePopwin5;
-import com.hldj.hmyg.saler.SaveSeedlingActivity;
 import com.hldj.hmyg.saler.UpdataImageActivity;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
@@ -71,6 +52,23 @@ import com.zzy.common.widget.MeasureGridView;
 import com.zzy.flowers.activity.photoalbum.EditGalleryImageActivity;
 import com.zzy.flowers.activity.photoalbum.PhotoActivity;
 import com.zzy.flowers.activity.photoalbum.PhotoAlbumActivity;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 
 public class AddCarActivity extends NeedSwipeBackActivity {
 
@@ -1018,7 +1016,7 @@ public class AddCarActivity extends NeedSwipeBackActivity {
 	/**
 	 * 如果是静态图片，则进行压缩处理 压缩并存储临时文件至Image目录
 	 * 
-	 * @param rotate
+	 * @param file
 	 */
 	private String CompressAndSaveImg(File file, int degree,
 			String sourceImgPath) throws IOException {

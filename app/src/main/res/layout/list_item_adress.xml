@@ -41,7 +41,9 @@
                     android:singleLine="true"
                     android:text="[默认地址]"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/y10" />
+                    android:textSize="@dimen/y10"
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/tv_address_name"

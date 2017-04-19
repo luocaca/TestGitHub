@@ -432,10 +432,14 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/x14</item>
         <item name="android:gravity">center</item>
         <item name="android:hint">0</item>
         <item name="android:textColorHint">@color/hint_text_color</item>
         <item name="android:maxLines">1</item>
+        <item name="android:maxLength">4</item>
+        <item name="android:inputType">number</item>
+
 
     </style>
     <!--<item name="android:scrollbars">vertical</item>-->
@@ -464,7 +468,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/x15</item>
+        <item name="android:textSize">@dimen/x14</item>
     </style>
 
 
@@ -475,8 +479,17 @@
         <item name="android:background">@null</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:textColorHint">@color/hint_text_color</item>
-        <item name="android:textSize">@dimen/x13</item>
+        <item name="android:textSize">@dimen/x14</item>
     </style>
+
+
+    <style name="tv_seeding_include_bottom_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/x14</item>
+    </style>
+
 
 
     <style name="rl_seeding_commom">
@@ -495,12 +508,11 @@
         <item name="android:background">@drawable/line</item>
     </style>
 
-  <style name="View_line_gray">
+    <style name="View_line_gray">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">10dp</item>
         <item name="android:background">@color/gray_bg</item>
     </style>
-
 
 
 </resources>

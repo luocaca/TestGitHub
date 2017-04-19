@@ -1,31 +1,10 @@
 package com.hldj.hmyg;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
-import me.kaede.tagview.OnTagDeleteListener;
-import me.kaede.tagview.Tag;
-import me.kaede.tagview.TagView;
-import me.maxwin.view.XListView;
-import me.maxwin.view.XListView.IXListViewListener;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputFilter.AllCaps;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -40,12 +19,34 @@ import com.barryzhang.temptyview.TViewUtil;
 import com.cn2che.androids.swipe.ListViewSwipeGesture;
 import com.hldj.hmyg.adapter.ProductListAdapterForManager;
 import com.hldj.hmyg.adapter.ProductListAdapterForManager.OnGoodsCheckedChangeListener;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.saler.SearchActivity;
 import com.hldj.hmyg.saler.StorageSaveActivity;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
 
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
+import me.kaede.tagview.OnTagDeleteListener;
+import me.kaede.tagview.Tag;
+import me.kaede.tagview.TagView;
+import me.maxwin.view.XListView;
+import me.maxwin.view.XListView.IXListViewListener;
+
+/**
+ * 苗木管理界面
+ */
 @SuppressLint("ClickableViewAccessibility")
 public class ManagerListActivity extends NeedSwipeBackActivity implements
 		IXListViewListener,

@@ -39,33 +39,28 @@ public class AutoAddRelative extends RelativeLayout {
 
 
     public void setDatas(SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean paramsListBean) {
-        viewHolder_add.tv_auto_add_left1.setText(funnel(paramsListBean.getValue()));
-        if (!paramsListBean.isRequired())
+        viewHolder_add.tv_auto_add_left1.setText(paramsListBean.getName());
+        requiredis = paramsListBean.isRequired();
+        if (!requiredis)
             viewHolder_add.tv_auto_add_left2.setText("(选填)");//不是必须的话 写选填
     }
 
-    private String funnel(String value) {
-        switch (value) {
-            case "crown":
-                return "冠幅";
-            case "diameter":
-                return "胸径";
-            case "height":
-                return "高度";
-            case "dbh":
-                return "土球";
-            case "offbarHeight":
-                return "土球";
+    //是否必填
+    boolean requiredis = true;
 
-        }
-        return value;
-
+    public boolean isRequiredis() {
+        return requiredis;
     }
 
-    public void setDatas_rd(SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean paramsListBean) {
-        viewHolder_rd.tv_auto_add_left1.setText(paramsListBean.getValue());
+    public AutoAddRelative setDatas_rd(SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean paramsListBean) {
+        viewHolder_rd.tv_auto_add_left1.setText(paramsListBean.getName());
+        requiredis = paramsListBean.isRequired();
+        if (!requiredis)
+            viewHolder_rd.tv_auto_add_left2.setText("(选填)");//不是必须的话 写选填
 //        if (!paramsListBean.isRequired())
 //            viewHolder_rd.tv_auto_add_left2.setText("(选填)");//不是必须的话 写选填
+
+        return this;
     }
 
 //    int layoutId;
@@ -105,7 +100,68 @@ public class AutoAddRelative extends RelativeLayout {
     }
 
 
-    private static class ViewHolder {
+    private String mTag = "";
+
+    public void setMTag(String str) {
+        this.mTag = str;
+    }
+
+    public String getMTag() {
+        return mTag;
+    }
+
+
+    /**
+     * 获取 上传大小的种类
+     *
+     * @return
+     */
+    public String getDiameterType() {
+        if (getMTag().equals("dbh")) {
+
+
+            if (viewHolder_rd.rb_auto_add_left.isChecked()) {
+                return "size30";
+            }
+            if (viewHolder_rd.rb_auto_add_center.isChecked()) {
+                return "size100";
+            }
+            if (viewHolder_rd.rb_auto_add_right.isChecked()) {
+                return "size130";
+            }
+        } else if (getMTag().equals("diameter")) {
+            if (viewHolder_rd.rb_auto_add_left.isChecked()) {
+                return "size0";
+            }
+            if (viewHolder_rd.rb_auto_add_center.isChecked()) {
+                return "size10";
+            }
+            if (viewHolder_rd.rb_auto_add_right.isChecked()) {
+                return "size30";
+            }
+        }
+        return "";
+    }
+
+
+    public void setSizeWithTag(String tag) {
+        switch (tag) {
+            case "dbh":
+                viewHolder_rd.rb_auto_add_left.setText("0.3M量");
+                viewHolder_rd.rb_auto_add_center.setText("1.0M量");
+                viewHolder_rd.rb_auto_add_right.setText("1.3M量");
+                break;
+            case "diameter":
+                viewHolder_rd.rb_auto_add_left.setText("出土量");
+                viewHolder_rd.rb_auto_add_center.setText("0.1M量");
+                viewHolder_rd.rb_auto_add_right.setText("0.3M量");
+                break;
+        }
+        setMTag(tag);
+    }
+
+
+    public class ViewHolder {
         public View rootView;
         public TextView tv_auto_add_left1;
         public TextView tv_auto_add_left2;
@@ -126,7 +182,7 @@ public class AutoAddRelative extends RelativeLayout {
 
     }
 
-    public static class ViewHolder_rd {
+    public class ViewHolder_rd {
         public View rootView;
         public TextView tv_auto_add_left1;
         public TextView tv_auto_add_left2;
@@ -149,6 +205,29 @@ public class AutoAddRelative extends RelativeLayout {
             this.rb_auto_add_left = (RadioButton) rootView.findViewById(R.id.rb_auto_add_left);
             this.rb_auto_add_center = (RadioButton) rootView.findViewById(R.id.rb_auto_add_center);
             this.rb_auto_add_right = (RadioButton) rootView.findViewById(R.id.rb_auto_add_right);
+            initListener();
+        }
+
+        private void initListener() {
+            this.rb_auto_add_left.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewHolder_rd.tv_auto_add_left1.setText("地径");
+                }
+            });
+            this.rb_auto_add_center.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewHolder_rd.tv_auto_add_left1.setText("米径");
+                }
+            });
+            this.rb_auto_add_right.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewHolder_rd.tv_auto_add_left1.setText("胸径");
+                }
+            });
+
         }
 
     }

@@ -32,6 +32,17 @@ public class CommonToastUtil {
         }
     }
 
+    public static void showShortToast(int resId) {
+        if (AndroidUtil.isClientRunTop(MyApplication.getInstance())) {// 前台运行
+            if (t == null) {
+                t = Toast.makeText(MyApplication.getInstance(), MyApplication.getInstance().getString(resId), Toast.LENGTH_SHORT);
+            } else {
+                t.setText(MyApplication.getInstance().getString(resId));
+            }
+            t.show();
+        }
+    }
+
     public static void showShortToast_All(Context context, String text) {
         if (t == null) {
             t = Toast.makeText(context, text, Toast.LENGTH_SHORT);

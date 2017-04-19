@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:text="胸径"
+        android:text="地径"
         android:textSize="@dimen/x15" />
 
     <TextView
@@ -55,23 +55,37 @@
     <RadioGroup
         android:layout_width="@dimen/x160"
         android:layout_height="@dimen/y17"
+        android:layout_alignLeft="@+id/linearLayout2"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/y6"
+        android:layout_alignStart="@+id/linearLayout2"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <RadioButton
             android:id="@+id/rb_auto_add_left"
-            style="@style/radio_seedling_common" />
+            style="@style/radio_seedling_common"
+            android:checked="true"
+
+            android:background="@drawable/rb_left_selecteor"
+            android:textColor="@color/rb_left_selecteor" />
 
         <RadioButton
             android:id="@+id/rb_auto_add_center"
-            style="@style/radio_seedling_common" />
+            style="@style/radio_seedling_common"
+            android:layout_marginLeft="-1px"
+            android:background="@drawable/rb_center_selecteor"
+            android:text="1.0M量"
+            android:textColor="@color/rb_left_selecteor" />
 
         <RadioButton
             android:id="@+id/rb_auto_add_right"
-            style="@style/radio_seedling_common" />
+            style="@style/radio_seedling_common"
+            android:background="@drawable/rb_right_selecteor"
+            android:text="1.3M量"
+            android:textColor="@color/rb_left_selecteor"
+
+            />
 
 
     </RadioGroup>

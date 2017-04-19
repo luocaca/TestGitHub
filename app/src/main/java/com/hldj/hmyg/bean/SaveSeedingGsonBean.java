@@ -273,17 +273,29 @@ public class SaveSeedingGsonBean {
 
             public static class ParamsListBean {
                 /**
+                 * name : "胸径"
                  * value : dbh
                  * required : true
+                 * <p>
+                 * "name": "高度",
+                 * "value": "height",
+                 * "required": false
+                 * <p>
+                 * "name": "冠幅",
+                 * "value": "crown",
+                 * "required": false
                  */
 
                 private String value;
+                private String name;
                 private boolean required;
+
 
                 @Override
                 public String toString() {
                     return "ParamsListBean{" +
                             "value='" + value + '\'' +
+                            ", name='" + name + '\'' +
                             ", required=" + required +
                             '}';
                 }
@@ -302,6 +314,14 @@ public class SaveSeedingGsonBean {
 
                 public void setRequired(boolean required) {
                     this.required = required;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
                 }
             }
 

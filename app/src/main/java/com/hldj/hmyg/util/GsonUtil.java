@@ -1,6 +1,7 @@
 package com.hldj.hmyg.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Created by Administrator on 2017/4/12.
@@ -21,9 +22,12 @@ public class GsonUtil<T> {
 
     public static Gson getGson() {
         if (gson == null) {
-            gson = new Gson();
-        }
+            GsonBuilder gb = new GsonBuilder();
+            gb.registerTypeAdapter(String.class, new StringConverter());
+            gson = gb.create();
 
+            //gson 非空统一解决
+        }
         return gson;
     }
 
@@ -41,6 +45,14 @@ public class GsonUtil<T> {
 
 
         return (E) getGson().fromJson(json, cls);
+    }
+
+
+    public static String Bean2Json(Object object) {
+        String json = "";
+//        System.out.println(t.getClass());
+        json =  getGson().toJson(object);
+        return json;
     }
 
 

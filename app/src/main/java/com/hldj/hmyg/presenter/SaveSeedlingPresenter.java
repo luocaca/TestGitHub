@@ -6,12 +6,15 @@ import android.widget.TextView;
 
 import com.hldj.hmyg.CallBack.ResultCallBack;
 import com.hldj.hmyg.R;
+import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.SaveSeedingGsonBean;
+import com.hldj.hmyg.bean.UpImageBackGsonBean;
 import com.hldj.hmyg.util.ConstantState;
 import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.TagAdapter;
+import com.white.utils.StringUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -19,6 +22,8 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,7 +190,7 @@ public class SaveSeedlingPresenter {
     }
 
     //     * plantTypeList : [{"text":"地栽苗","value":"planted"},{"text":"移植苗","value":"transplant"},{"text":"假植苗","value":"heelin"},{"text":"容器苗","value":"container"}]
-    public static void initAutoLayout(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity saveSeedlingActivity) {
+    public static void initAutoLayout2(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity saveSeedlingActivity, TagFlowLayout.OnTagClickListener onTagClickListener) {
 
         final List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList = saveSeedingGsonBean.getData().getPlantTypeList();
 
@@ -202,16 +207,54 @@ public class SaveSeedlingPresenter {
 
         mFlowLayout.setMaxSelectCount(1);
 
-        mFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                D.e("===position=====" + position);
-                D.e("===name=====" + plantTypeList.get(position).getValue());
-                return true;
-            }
-        });
+        mFlowLayout.setOnTagClickListener(onTagClickListener);
 
 
     }
+
+    public void upLoad(ArrayList<Pic> dataList, ResultCallBack<UpImageBackGsonBean> resultCallBack) {
+
+        int list_size = dataList.size();
+
+        FinalHttp finalHttp = new FinalHttp();
+
+        for (int i = 0; i < list_size; i++) {
+            if (!StringUtil.isHttpUrlPicPath(dataList.get(i).getUrl())) {
+                GetServerUrl.addHeaders(finalHttp, true);
+                finalHttp.addHeader("Content-Type", "application/octet-stream");
+                AjaxParams params1 = new AjaxParams();
+                params1.put("sourceId", "");
+                File file1 = new File(dataList.get(i).getUrl());
+                try {
+                    params1.put("file", file1);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                params1.put("imagType", "seedling");
+                finalHttp.post(GetServerUrl.getUrl() + "admin/file/image", params1, new AjaxCallBack<String>() {
+                    @Override
+                    public void onSuccess(String json) {
+                        D.e("===========json=====上传图片成功==========" + json);
+                        UpImageBackGsonBean imageBackGsonBean = GsonUtil.formateJson2Bean(json, UpImageBackGsonBean.class);
+                        resultCallBack.onSuccess(imageBackGsonBean);
+//                        urlPaths.add(a, new Pic(imageBackGsonBean.getData().getImage().getId(), false, imageBackGsonBean.getData().getImage().getOssMediumImagePath(), a));
+                        D.e("==========暂时使用中等大小图片==============");
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t, int errorNo, String strMsg) {
+                        D.e("===========json=====失败==========" + errorNo + "  " + strMsg + " " + t.getMessage());
+
+                    }
+                });
+
+
+            }
+        }
+
+    }
+
+
+
 }
 

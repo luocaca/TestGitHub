@@ -840,6 +840,15 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.hldj.hmyg.fileProvider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true" />-->
+
+
     </application>
 
 </manifest>

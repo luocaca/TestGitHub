@@ -12,10 +12,12 @@ import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.saler.FlowerInfoPhotoChoosePopwin2;
-import com.hldj.hmyg.util.D;
+import com.hldj.hmyg.saler.SaveSeedlingActivity;
+import com.hldj.hmyg.util.TakePhotoUtil;
 import com.hy.utils.ToastUtil;
 import com.zzy.flowers.activity.photoalbum.EditGalleryImageActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MeasureGridView extends GridView {
@@ -23,7 +25,7 @@ public class MeasureGridView extends GridView {
     /**
      * 照片适配器
      */
-    private static PublishFlowerInfoPhotoAdapter adapter;
+    private PublishFlowerInfoPhotoAdapter adapter;
 
     public MeasureGridView(Context context, AttributeSet attrs,
                            int defStyle) {
@@ -46,18 +48,20 @@ public class MeasureGridView extends GridView {
 
     }
 
-    String usrl = "https://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=dce89ee56a81800a6eb0810a84051fcc/5243fbf2b2119313bdce98da63380cd790238dce.jpg";
+//    public static final String usrl = "https://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D450%2C600/sign=dce89ee56a81800a6eb0810a84051fcc/5243fbf2b2119313bdce98da63380cd790238dce.jpg";
+    public static final String usrl = "/storage/emulated/0/tencent/MicroMsg/WeiXin/wx_camera_1492170878634.jpg";
+    public static final String usrl1 = "/storage/emulated/0/Flowers/image/flower_info_1492490890982.png";
 
     static PhotoGvOnItemClickListener gvOnItemClickListener;
 
-    public void init(Context context, ArrayList<Pic> urlPaths, PhotoGvOnItemClickListener gvOnItemClickListener) {
+    public void init(Context context, ArrayList<Pic> urlPaths, SaveSeedlingActivity.ViewHolder viewHolder, FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener listener) {
 
 
         adapter = new PublishFlowerInfoPhotoAdapter(context, urlPaths);
         this.setAdapter(adapter);
 
-        this.gvOnItemClickListener = gvOnItemClickListener;
-        this.setOnItemClickListener(gvOnItemClickListener);
+
+        this.setOnItemClickListener(new PhotoGvOnItemClickListener(viewHolder.ll_mainView, listener));
 
 
     }
@@ -77,11 +81,13 @@ public class MeasureGridView extends GridView {
     private static FlowerInfoPhotoChoosePopwin2 popwin;
 
     //自定义点击事件
-    public static class PhotoGvOnItemClickListener implements OnItemClickListener {
+    public class PhotoGvOnItemClickListener implements OnItemClickListener {
         View mainView;
+        FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener listener;
 
-        public PhotoGvOnItemClickListener(View mainView) {
+        public PhotoGvOnItemClickListener(View mainView, FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener listener) {
             this.mainView = mainView;
+            this.listener = listener;
         }
 
         @Override
@@ -97,25 +103,7 @@ public class MeasureGridView extends GridView {
                     ToastUtil.showShortToast("您未同意应用读取SD卡权限");
                     return;
                 }
-                popwin = new FlowerInfoPhotoChoosePopwin2((Activity) context, new FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener() {
-                    @Override
-                    public void onTakePic() {
-                        D.e("=======拍照=======");
-                        gvOnItemClickListener.onItemClick(parent, view, position, id);
-                    }
-
-                    @Override
-                    public void onChoosePic() {
-                        D.e("=======相册=======");
-                        gvOnItemClickListener.onItemClick(parent, view, position, id);
-                    }
-
-                    @Override
-                    public void onCancle() {
-                        D.e("=======取消=======");
-                        gvOnItemClickListener.onItemClick(parent, view, position, id);
-                    }
-                });
+                popwin = new FlowerInfoPhotoChoosePopwin2((Activity) context, listener);
                 popwin.showAtLocation(mainView, Gravity.BOTTOM
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
             } else {
@@ -126,6 +114,33 @@ public class MeasureGridView extends GridView {
             }
 
         }
+    }
+
+    public PublishFlowerInfoPhotoAdapter getAdapter() {
+
+        return adapter;
+    }
+
+
+    /**
+     * 添加图片
+     *
+     * @param sourchImagePath
+     */
+    public void addImageItem(String sourchImagePath) throws IOException {
+
+        int return_code = TakePhotoUtil.checkGif(sourchImagePath, context);
+
+        if (return_code == TakePhotoUtil.ADD_NEW_PIC) {
+
+            Pic pic = new Pic("", false, sourchImagePath, 0);
+            adapter.addItem(pic);
+
+        } else {
+            ToastUtil.showShortToast("error");
+        }
+
+
     }
 
 

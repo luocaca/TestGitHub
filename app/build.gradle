@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin:'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -37,10 +38,11 @@ android {
         multiDexEnabled true
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
     useLibrary 'org.apache.http.legacy'
 
@@ -69,6 +71,8 @@ android {
 //    }
 
 dependencies {
+
+
     compile 'com.google.code.gson:gson:2.2.4'
     //    compile ('com.android.support:appcompat-v7:23.0.0')
     compile files('libs/afinal_0.5.1_bin.jar')

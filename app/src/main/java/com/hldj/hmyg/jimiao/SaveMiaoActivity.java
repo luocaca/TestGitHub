@@ -51,7 +51,6 @@ import com.google.gson.reflect.TypeToken;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
 import com.hldj.hmyg.application.Data;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicSerializableMaplist;

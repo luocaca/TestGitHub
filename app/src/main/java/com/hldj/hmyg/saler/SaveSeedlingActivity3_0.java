@@ -1237,11 +1237,7 @@ public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
                                                             "image");
                                                     urlPaths.set(
                                                             a,
-                                                            new Pic(
-                                                                    JsonGetInfo
-                                                                            .getJsonString(
-                                                                                    image,
-                                                                                    "id"),
+                                                            new Pic( JsonGetInfo  .getJsonString(  image,  "id"),
                                                                     false,
                                                                     JsonGetInfo
                                                                             .getJsonString(
@@ -1439,7 +1435,7 @@ public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
 
                 if (urlPaths.size() > 0) {
                     if (!PicValiteIsUtils.needPicValite(urlPaths)) {
-                        Toast.makeText(SaveSeedlingActivity3_0.this, "请上传完为上传的图片",
+                        Toast.makeText(SaveSeedlingActivity3_0.this, "请上传完未上传的图片",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }

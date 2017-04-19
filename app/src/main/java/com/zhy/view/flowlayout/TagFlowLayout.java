@@ -135,10 +135,10 @@ public class TagFlowLayout extends FlowLayout implements TagAdapter.OnDataChange
             } else
             {
                 MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                lp.setMargins(dip2px(getContext(), 5),
-                        dip2px(getContext(), 5),
-                        dip2px(getContext(), 5),
-                        dip2px(getContext(), 5));
+                lp.setMargins(dip2px(getContext(), 3),
+                        dip2px(getContext(), 3),
+                        dip2px(getContext(), 3),
+                        dip2px(getContext(), 3));
                 tagViewContainer.setLayoutParams(lp);
             }
             tagViewContainer.addView(tagView);

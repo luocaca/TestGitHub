@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,11 +39,9 @@ import android.widget.Toast;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
 import com.hldj.hmyg.application.Data;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicSerializableMaplist;
-import com.hldj.hmyg.jimiao.SaveMiaoActivity;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -588,7 +585,7 @@ public class UpdataImageActivity extends Activity {
 	/**
 	 * 如果是静态图片，则进行压缩处理 压缩并存储临时文件至Image目录
 	 * 
-	 * @param rotate
+	 * @param degree
 	 */
 	private String CompressAndSaveImg(File file, int degree,
 			String sourceImgPath) throws IOException {
