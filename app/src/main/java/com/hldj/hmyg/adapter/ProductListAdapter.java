@@ -1,16 +1,5 @@
 package com.hldj.hmyg.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import net.tsz.afinal.FinalBitmap;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -32,12 +21,24 @@ import com.example.weixin_friendcircle.TitlePopup.OnItemOnClickListener;
 import com.example.weixin_friendcircle.Util;
 import com.hldj.hmyg.FlowerDetailActivity;
 import com.hldj.hmyg.R;
-import com.hldj.hmyg.application.Data;
-import com.hldj.hmyg.application.MyApplication;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
 import com.hy.utils.ValueGetInfo;
 
+import net.tsz.afinal.FinalBitmap;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * 商城主界面 适配器
+ */
 @SuppressLint("ResourceAsColor")
 public class ProductListAdapter extends BaseAdapter {
 	private static final String TAG = "ProductListAdapter";
@@ -77,7 +78,7 @@ public class ProductListAdapter extends BaseAdapter {
 		ChildHolder childHolder = null;
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
-					R.layout.list_view_seedling, null);
+					R.layout.list_view_seedling_new, null);
 			childHolder = new ChildHolder();
 			childHolder.iv_img = (ImageView) convertView
 					.findViewById(R.id.iv_img);
@@ -107,60 +108,60 @@ public class ProductListAdapter extends BaseAdapter {
 			childHolder.tv_status_05 = (TextView) convertView
 					.findViewById(R.id.tv_status_05);
 
-			childHolder.sc_ziying = (ImageView) convertView
-					.findViewById(R.id.sc_ziying);
-			childHolder.sc_fuwufugai = (ImageView) convertView
-					.findViewById(R.id.sc_fuwufugai);
-			childHolder.sc_hezuoshangjia = (ImageView) convertView
-					.findViewById(R.id.sc_hezuoshangjia);
-			childHolder.sc_huodaofukuan = (ImageView) convertView
-					.findViewById(R.id.sc_huodaofukuan);
+//			childHolder.sc_ziying = (ImageView) convertView
+//					.findViewById(R.id.sc_ziying);
+//			childHolder.sc_fuwufugai = (ImageView) convertView
+//					.findViewById(R.id.sc_fuwufugai);
+//			childHolder.sc_hezuoshangjia = (ImageView) convertView
+//					.findViewById(R.id.sc_hezuoshangjia);
+//			childHolder.sc_huodaofukuan = (ImageView) convertView
+//					.findViewById(R.id.sc_huodaofukuan);
 			convertView.setTag(childHolder);
 		} else {
 			childHolder = (ChildHolder) convertView.getTag();
 		}
 
-		if (data.get(position).get("tagList").toString().contains(Data.ZIYING)) {
-			childHolder.sc_ziying.setVisibility(View.VISIBLE);
-		} else {
-			childHolder.sc_ziying.setVisibility(View.GONE);
-		}
-		if (data.get(position).get("tagList").toString().contains(Data.FUWU)) {
-			childHolder.sc_fuwufugai.setVisibility(View.VISIBLE);
-		} else {
-			childHolder.sc_fuwufugai.setVisibility(View.GONE);
-		}
-		if (data.get(position).get("tagList").toString()
-				.contains(Data.HEZUOSHANGJIA)) {
-			childHolder.sc_hezuoshangjia.setVisibility(View.VISIBLE);
-		} else {
-			childHolder.sc_hezuoshangjia.setVisibility(View.GONE);
-		}
-		if (data.get(position).get("tagList").toString()
-				.contains(Data.ZIJINDANBAO)) {
-			childHolder.sc_huodaofukuan.setVisibility(View.VISIBLE);
-		} else {
-			childHolder.sc_huodaofukuan.setVisibility(View.GONE);
-		}
+//		if (data.get(position).get("tagList").toString().contains(Data.ZIYING)) {
+//			childHolder.sc_ziying.setVisibility(View.VISIBLE);
+//		} else {
+//			childHolder.sc_ziying.setVisibility(View.GONE);
+//		}
+//		if (data.get(position).get("tagList").toString().contains(Data.FUWU)) {
+//			childHolder.sc_fuwufugai.setVisibility(View.VISIBLE);
+//		} else {
+//			childHolder.sc_fuwufugai.setVisibility(View.GONE);
+//		}
+//		if (data.get(position).get("tagList").toString()
+//				.contains(Data.HEZUOSHANGJIA)) {
+//			childHolder.sc_hezuoshangjia.setVisibility(View.VISIBLE);
+//		} else {
+//			childHolder.sc_hezuoshangjia.setVisibility(View.GONE);
+//		}
+//		if (data.get(position).get("tagList").toString()
+//				.contains(Data.ZIJINDANBAO)) {
+//			childHolder.sc_huodaofukuan.setVisibility(View.VISIBLE);
+//		} else {
+//			childHolder.sc_huodaofukuan.setVisibility(View.GONE);
+//		}
 
-		if (data.get(position).get("isSelfSupport").toString().contains("true")) {
-			childHolder.tv_status_01.setVisibility(View.VISIBLE);
-		}
-		if (data.get(position).get("freeValidatePrice").toString()
-				.contains("true")) {
-			childHolder.tv_status_02.setVisibility(View.VISIBLE);
-		}
-		if (data.get(position).get("cashOnDelivery").toString()
-				.contains("true")) {
-			childHolder.tv_status_03.setVisibility(View.VISIBLE);
-		}
-		if (data.get(position).get("freeDeliveryPrice").toString()
-				.contains("true")) {
-			childHolder.tv_status_04.setVisibility(View.VISIBLE);
-		}
-		if (data.get(position).get("freeValidate").toString().contains("true")) {
-			childHolder.tv_status_05.setVisibility(View.VISIBLE);
-		}
+//		if (data.get(position).get("isSelfSupport").toString().contains("true")) {
+//			childHolder.tv_status_01.setVisibility(View.VISIBLE);
+//		}
+//		if (data.get(position).get("freeValidatePrice").toString()
+//				.contains("true")) {
+//			childHolder.tv_status_02.setVisibility(View.VISIBLE);
+//		}
+//		if (data.get(position).get("cashOnDelivery").toString()
+//				.contains("true")) {
+//			childHolder.tv_status_03.setVisibility(View.VISIBLE);
+//		}
+//		if (data.get(position).get("freeDeliveryPrice").toString()
+//				.contains("true")) {
+//			childHolder.tv_status_04.setVisibility(View.VISIBLE);
+//		}
+//		if (data.get(position).get("freeValidate").toString().contains("true")) {
+//			childHolder.tv_status_05.setVisibility(View.VISIBLE);
+//		}
 		if (data.get(position).get("isRecommend").toString().contains("true")) {
 			childHolder.iv_like.setImageResource(R.drawable.tuijian_lv);
 		} else {
@@ -219,9 +220,13 @@ public class ProductListAdapter extends BaseAdapter {
 						+ data.get(position).get("closeDate").toString());
 			}
 		} else if ("seedling_list".equals(data.get(position).get("show_type")
-				.toString())) {
-			childHolder.tv_05.setText("地区："
+				.toString())) {//商城主页列表
+			//地区：
+			childHolder.tv_03.setText(""
 					+ data.get(position).get("fullName").toString());
+			//高度冠幅  ：
+			childHolder.tv_04.setText(""
+					+ data.get(position).get("specText").toString());
 			if (!"".equals(data.get(position).get("companyName").toString())) {
 				childHolder.tv_06.setText("发布人："
 						+ data.get(position).get("companyName").toString());
@@ -252,7 +257,7 @@ public class ProductListAdapter extends BaseAdapter {
 		childHolder.tv_04
 				.setText(data.get(position).get("specText").toString());
 		childHolder.tv_07.setText(ValueGetInfo.doubleTrans1(Double.parseDouble(data.get(position).get("price").toString())));
-		childHolder.tv_08.setText("元/"
+		childHolder.tv_08.setText("  /"
 				+ data.get(position).get("unitTypeName").toString());
 		childHolder.tv_09.setText("库存："
 				+ data.get(position).get("count").toString());
@@ -352,10 +357,10 @@ public class ProductListAdapter extends BaseAdapter {
 		TextView tv_status_03;
 		TextView tv_status_04;
 		TextView tv_status_05;
-		ImageView sc_ziying;
-		ImageView sc_fuwufugai;
-		ImageView sc_hezuoshangjia;
-		ImageView sc_huodaofukuan;
+//		ImageView sc_ziying;
+//		ImageView sc_fuwufugai;
+//		ImageView sc_hezuoshangjia;
+//		ImageView sc_huodaofukuan;
 	}
 
 	public void notify(ArrayList<HashMap<String, Object>> data) {

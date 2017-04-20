@@ -2,14 +2,14 @@
 <resources>
     <color name="srl_colorPrimary">#3F51B5</color>
 
-<color name="srl_colorPrimaryDark">#303F9F</color>
+    <color name="srl_colorPrimaryDark">#303F9F</color>
 
-<color name="srl_colorAccent">#515151</color>
+    <color name="srl_colorAccent">#515151</color>
 
-<color name="srl_text_color">#515151</color>
+    <color name="srl_text_color">#515151</color>
 
-<color name="srl_pull_background">#FFFFFF</color>
-  <color name="colorStepperButtonNormal">#cc482c</color>
+    <color name="srl_pull_background">#FFFFFF</color>
+    <color name="colorStepperButtonNormal">#cc482c</color>
     <color name="colorStepperButtonPress">#92011d</color>
     <color name="colorStepperContentBg">#f95b3a</color>
     <color name="colorStepperText">#ffffff</color>
@@ -126,7 +126,7 @@
     <color name="magenta">#ff00ff</color>
     <!-- 红紫色 -->
     <color name="red">#ff0000</color>
-        <color name="validate_red">#ff6600</color>
+    <color name="validate_red">#ff6600</color>
     <!-- 红色 -->
     <color name="oldlace">#fdf5e6</color>
     <!-- 老花色 -->
@@ -258,10 +258,8 @@
     <color name="line_gray">#FFCCCCCC</color>
 
 
-  <!--已经阅读字色-->
+    <!--已经阅读字色-->
     <color name="readed_gray">#FF8C8C8C</color>
-
-
 
 
     <!-- 灰色 -->
@@ -461,6 +459,7 @@
     <color name="divider_color">#d6d6d6</color>
     <color name="little_gray">#494a4c</color>
     <color name="little_black">#C0000000</color>
+    <color name="little_black_sm">#858585</color>
     <color name="little_gray1">#ffebebeb</color>
     <color name="fabu_yellow">#FFCC00</color>
     <color name="province_line_border">#C7C7C7</color>
@@ -548,6 +547,12 @@
 
     <color name="get_code_color">#FFCECECE</color>
     <color name="hint_text_color">#cccccc</color>
+    <color name="alpha_main_color_60">#5035b558</color>
+    <color name="black_color_60">#50242625</color>
 
+
+    <color name="text_color666">#666666</color>
+    <color name="text_color333">#333333</color>
+    <color name="text_color999">#999999</color>
 
 </resources>

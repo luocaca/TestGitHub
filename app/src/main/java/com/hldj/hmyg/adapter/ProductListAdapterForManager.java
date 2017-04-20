@@ -1,20 +1,7 @@
 package com.hldj.hmyg.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import net.tsz.afinal.FinalBitmap;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,16 +16,23 @@ import com.example.weixin_friendcircle.ActionItem;
 import com.example.weixin_friendcircle.TitlePopup;
 import com.example.weixin_friendcircle.TitlePopup.OnItemOnClickListener;
 import com.example.weixin_friendcircle.Util;
-import com.hldj.hmyg.FlowerDetailActivity;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.application.Data;
 import com.hldj.hmyg.application.MyApplication;
-import com.hldj.hmyg.buyer.BuyerValidateExpandableListAdapter.OnCheckHasGoodsListener;
-import com.hldj.hmyg.buyer.BuyerValidateExpandableListAdapter.OnEditingTvChangeListener;
-import com.hldj.hmyg.buyer.BuyerValidateExpandableListAdapter.OnGoodsCheckedChangeListener;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
 import com.hy.utils.ValueGetInfo;
+
+import net.tsz.afinal.FinalBitmap;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressLint("ResourceAsColor")
 public class ProductListAdapterForManager extends BaseAdapter {
@@ -85,6 +79,7 @@ public class ProductListAdapterForManager extends BaseAdapter {
 		TextView tv_02 = (TextView) inflate.findViewById(R.id.tv_02);
 		TextView tv_03 = (TextView) inflate.findViewById(R.id.tv_03);
 		TextView tv_04 = (TextView) inflate.findViewById(R.id.tv_04);
+//		TextView tv_04_1 = (TextView) inflate.findViewById(R.id.tv_04_1);//多出一个 -1
 		TextView tv_05 = (TextView) inflate.findViewById(R.id.tv_05);
 		TextView tv_06 = (TextView) inflate.findViewById(R.id.tv_06);
 		TextView tv_07 = (TextView) inflate.findViewById(R.id.tv_07);
@@ -230,6 +225,7 @@ public class ProductListAdapterForManager extends BaseAdapter {
 
 		tv_02.setText(data.get(position).get("name").toString());
 		tv_04.setText(data.get(position).get("specText").toString());
+//		tv_04_1.setText(data.get(position).get("specText").toString());
 		tv_07.setText(ValueGetInfo.doubleTrans1(Double.parseDouble(data.get(position).get("price").toString())));
 		tv_08.setText("元/" + data.get(position).get("unitTypeName").toString());
 		tv_09.setText(data.get(position).get("count").toString()

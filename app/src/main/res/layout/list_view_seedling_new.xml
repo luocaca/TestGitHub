@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/btn_my_list"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -13,11 +13,11 @@
         android:paddingBottom="@dimen/y2"
         android:paddingLeft="@dimen/y8"
         android:paddingRight="@dimen/y8"
-        android:paddingTop="@dimen/y2" >
+        android:paddingTop="@dimen/y2">
 
         <RelativeLayout
             android:layout_width="@dimen/x85"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/iv_img"
@@ -28,13 +28,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_marginLeft="@dimen/x5"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_03"
@@ -44,8 +44,8 @@
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/y9" />
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/y8" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <com.neopixl.pixlui.components.textview.TextView
                         android:id="@+id/tv_01"
@@ -67,6 +67,7 @@
                         android:id="@+id/tv_02"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
                         android:gravity="center_vertical"
                         android:singleLine="true"
                         android:textColor="@color/main_color"
@@ -74,10 +75,11 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <!--冠幅 高度 思密达-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" >
+                android:layout_weight="2">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_04"
@@ -85,30 +87,33 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:singleLine="true"
-                    android:textColor="@color/little_gray"
-                    android:textSize="@dimen/y9" />
+                    android:textColor="@color/little_black_sm"
+                    android:textSize="@dimen/y8" />
             </LinearLayout>
 
+
+            <!--地区移到右上角tv_04-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" >
+                android:layout_weight="0"
+                android:visibility="gone">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_05"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                     
+
                     android:singleLine="true"
-                    android:textColor="@color/little_gray"
-                    android:textSize="@dimen/y9" />
+                    android:textColor="@color/little_black_sm"
+                    android:textSize="@dimen/y8" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="2" >
+                android:layout_weight="1">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_06"
@@ -116,127 +121,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:singleLine="true"
-                    android:textColor="@color/little_gray"
-                    android:textSize="@dimen/y9" />
+                    android:textColor="@color/little_black_sm"
+                    android:textSize="@dimen/y8" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="0"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone" >
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/tv_status_01"
-                    android:layout_width="@dimen/y20"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="@dimen/x1"
-                    android:background="@drawable/r_o_status01"
-                    android:gravity="center"
-                    android:text="自营"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/y7"
-                    android:visibility="gone" />
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/tv_status_02"
-                    android:layout_width="@dimen/y10"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="@dimen/x1"
-                    android:background="@drawable/r_o_status02"
-                    android:gravity="center"
-                    android:text="返"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/y7"
-                    android:visibility="gone" />
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/tv_status_03"
-                    android:layout_width="@dimen/y10"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="@dimen/x1"
-                    android:background="@drawable/r_o_status03"
-                    android:gravity="center"
-                    android:text="担"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/y7"
-                    android:visibility="gone" />
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/tv_status_04"
-                    android:layout_width="@dimen/y10"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="@dimen/x1"
-                    android:background="@drawable/r_o_status04"
-                    android:gravity="center"
-                    android:text="免"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/y7"
-                    android:visibility="gone" />
-
-                <com.neopixl.pixlui.components.textview.TextView
-                    android:id="@+id/tv_status_05"
-                    android:layout_width="@dimen/y10"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="@dimen/x1"
-                    android:background="@drawable/r_o_status02"
-                    android:gravity="center"
-                    android:text="免"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/y7"
-                    android:visibility="invisible" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="1px"
-                    android:layout_height="@dimen/y10" />
-
-                <ImageView
-                    android:id="@+id/sc_ziying"
-                    android:layout_width="@dimen/y22"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="2.5dip"
-                    android:src="@drawable/sc_ziying"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/sc_fuwufugai"
-                    android:layout_width="@dimen/y46"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="2.5dip"
-                    android:src="@drawable/sc_fuwufugai"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/sc_hezuoshangjia"
-                    android:layout_width="@dimen/y46"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="2.5dip"
-                    android:src="@drawable/sc_hezuoshangjia"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/sc_huodaofukuan"
-                    android:layout_width="@dimen/y46"
-                    android:layout_height="@dimen/y10"
-                    android:layout_margin="2.5dip"
-                    android:src="@drawable/sc_huodaofukuan"
-                    android:visibility="gone" />
-            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" >
+                android:layout_weight="1">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_07"
@@ -246,7 +139,8 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="20.00"
-                    android:textColor="#FA0000" />
+                    android:textColor="#FA0000"
+                    android:textSize="@dimen/y11" />
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_09"
@@ -257,8 +151,8 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="200株"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/y7" />
+                    android:textColor="@color/little_black_sm"
+                    android:textSize="@dimen/y8" />
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_08"
@@ -269,8 +163,8 @@
                     android:layout_toRightOf="@+id/tv_07"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="元/株"
-                    android:textColor="@color/gray"
+                    android:text="/株"
+                    android:textColor="@color/little_black_sm"
                     android:textSize="@dimen/y7" />
             </RelativeLayout>
 
@@ -279,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <com.neopixl.pixlui.components.textview.TextView
                     android:id="@+id/tv_floorPrice"

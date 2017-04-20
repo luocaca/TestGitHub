@@ -6,7 +6,7 @@
     <com.javis.ab.view.AbSlidingPlayView
         android:id="@+id/viewPager_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="#00000000" />
 
     <TextView
@@ -17,7 +17,7 @@
         android:background="@color/little_gray"
         android:gravity="center"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"

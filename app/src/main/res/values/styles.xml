@@ -514,5 +514,29 @@
         <item name="android:background">@color/gray_bg</item>
     </style>
 
+    <style name="table_row_left">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">@dimen/x9</item>
+        <item name="android:background">@drawable/table_row_left</item>
+        <item name="android:textColor">@color/text_color666</item>
+        <item name="android:textSize">@dimen/y8</item>
+        <item name="android:padding">@dimen/y3</item>
+    </style>
+
+    <style name="table_row_right">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/table_row_right</item>
+        <item name="android:textColor">@color/text_color999</item>
+        <item name="android:textSize">@dimen/y8</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:enabled">true</item>
+    </style>
+
 
 </resources>

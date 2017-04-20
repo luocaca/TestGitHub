@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.hldj.hmyg.FlowerDetailActivity;
 import com.hldj.hmyg.R;
-import com.hldj.hmyg.application.Data;
 import com.hy.utils.ValueGetInfo;
 
 import net.tsz.afinal.FinalBitmap;
@@ -29,11 +28,6 @@ import static com.hldj.hmyg.R.id.tv_03;
 import static com.hldj.hmyg.R.id.tv_07;
 import static com.hldj.hmyg.R.id.tv_08;
 import static com.hldj.hmyg.R.id.tv_09;
-import static com.hldj.hmyg.R.id.tv_status_01;
-import static com.hldj.hmyg.R.id.tv_status_02;
-import static com.hldj.hmyg.R.id.tv_status_03;
-import static com.hldj.hmyg.R.id.tv_status_04;
-import static com.hldj.hmyg.R.id.tv_status_05;
 
 @SuppressLint("ResourceAsColor")
 public class ProductGridAdapter extends BaseAdapter {
@@ -83,55 +77,55 @@ public class ProductGridAdapter extends BaseAdapter {
             holder.tv_08 = (TextView) view.findViewById(tv_08);
             holder.tv_09 = (TextView) view.findViewById(tv_09);
 
-            holder.tv_status_01 = (TextView) view.findViewById(tv_status_01);
-            holder.tv_status_02 = (TextView) view.findViewById(tv_status_02);
-            holder.tv_status_03 = (TextView) view.findViewById(tv_status_03);
-            holder.tv_status_04 = (TextView) view.findViewById(tv_status_04);
-            holder.tv_status_05 = (TextView) view.findViewById(tv_status_05);
+//            holder.tv_status_01 = (TextView) view.findViewById(tv_status_01);
+//            holder.tv_status_02 = (TextView) view.findViewById(tv_status_02);
+//            holder.tv_status_03 = (TextView) view.findViewById(tv_status_03);
+//            holder.tv_status_04 = (TextView) view.findViewById(tv_status_04);
+//            holder.tv_status_05 = (TextView) view.findViewById(tv_status_05);
 
-            holder.sc_ziying = (ImageView) view.findViewById(R.id.sc_ziying);
-            holder.sc_fuwufugai = (ImageView) view.findViewById(R.id.sc_fuwufugai);
-            holder.sc_hezuoshangjia = (ImageView) view.findViewById(R.id.sc_hezuoshangjia);
-            holder.sc_huodaofukuan = (ImageView) view.findViewById(R.id.sc_huodaofukuan);
+//            holder.sc_ziying = (ImageView) view.findViewById(R.id.sc_ziying);
+//            holder.sc_fuwufugai = (ImageView) view.findViewById(R.id.sc_fuwufugai);
+//            holder.sc_hezuoshangjia = (ImageView) view.findViewById(R.id.sc_hezuoshangjia);
+//            holder.sc_huodaofukuan = (ImageView) view.findViewById(R.id.sc_huodaofukuan);
 
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        if (data.get(position).get("tagList").toString().contains(Data.ZIYING)) {
-            holder.sc_ziying.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("tagList").toString().contains(Data.FUWU)) {
-            holder.sc_fuwufugai.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("tagList").toString()
-                .contains(Data.HEZUOSHANGJIA)) {
-            holder.sc_hezuoshangjia.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("tagList").toString()
-                .contains(Data.ZIJINDANBAO)) {
-            holder.sc_huodaofukuan.setVisibility(View.VISIBLE);
-        }
+//        if (data.get(position).get("tagList").toString().contains(Data.ZIYING)) {
+//            holder.sc_ziying.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("tagList").toString().contains(Data.FUWU)) {
+//            holder.sc_fuwufugai.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("tagList").toString()
+//                .contains(Data.HEZUOSHANGJIA)) {
+//            holder.sc_hezuoshangjia.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("tagList").toString()
+//                .contains(Data.ZIJINDANBAO)) {
+//            holder.sc_huodaofukuan.setVisibility(View.VISIBLE);
+//        }
 
-        if (data.get(position).get("isSelfSupport").toString().contains("true")) {
-            holder.tv_status_01.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("freeValidatePrice").toString()
-                .contains("true")) {
-            holder.tv_status_02.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("cashOnDelivery").toString()
-                .contains("true")) {
-            holder.tv_status_03.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("freeDeliveryPrice").toString()
-                .contains("true")) {
-            holder.tv_status_04.setVisibility(View.VISIBLE);
-        }
-        if (data.get(position).get("freeValidate").toString().contains("true")) {
-            holder.tv_status_05.setVisibility(View.VISIBLE);
-        }
+//        if (data.get(position).get("isSelfSupport").toString().contains("true")) {
+//            holder.tv_status_01.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("freeValidatePrice").toString()
+//                .contains("true")) {
+//            holder.tv_status_02.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("cashOnDelivery").toString()
+//                .contains("true")) {
+//            holder.tv_status_03.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("freeDeliveryPrice").toString()
+//                .contains("true")) {
+//            holder.tv_status_04.setVisibility(View.VISIBLE);
+//        }
+//        if (data.get(position).get("freeValidate").toString().contains("true")) {
+//            holder.tv_status_05.setVisibility(View.VISIBLE);
+//        }
 
         if (data.get(position).get("plantType").toString().contains("planted")) {
             holder.tv_01.setBackgroundResource(R.drawable.icon_seller_di);
@@ -152,7 +146,7 @@ public class ProductGridAdapter extends BaseAdapter {
             holder.tv_03.setTextColor(Color.parseColor("#6cd8b0"));
         } else if ("published".equals(data.get(position).get("status")
                 .toString())) {
-            holder.tv_03.setTextColor(Color.parseColor("#fa7600"));
+//            holder.tv_03.setTextColor(Color.parseColor("#fa7600"));
         } else if ("outline"
                 .equals(data.get(position).get("status").toString())) {
             holder.tv_03.setTextColor(Color.parseColor("#93c5fc"));
@@ -167,7 +161,7 @@ public class ProductGridAdapter extends BaseAdapter {
         holder.tv_08.setText("元/" + data.get(position).get("unitTypeName").toString());
         // tv_09.setText(data.get(position).get("count").toString()
         // + data.get(position).get("unitTypeName").toString());
-        holder.tv_09.setText(data.get(position).get("fullName").toString());
+        holder.tv_03.setText(data.get(position).get("fullName").toString());
         fb.display(holder.iv_img, data.get(position).get("imageUrl").toString());
         view.setOnClickListener(new OnClickListener() {
 
@@ -204,17 +198,17 @@ public class ProductGridAdapter extends BaseAdapter {
         TextView tv_09;
 
 
-        TextView tv_status_01;
-        TextView tv_status_02;
-        TextView tv_status_03;
-        TextView tv_status_04;
-        TextView tv_status_05;
+//        TextView tv_status_01;
+//        TextView tv_status_02;
+//        TextView tv_status_03;
+//        TextView tv_status_04;
+//        TextView tv_status_05;
 
 
-        ImageView sc_ziying;
-        ImageView sc_fuwufugai;
-        ImageView sc_hezuoshangjia;
-        ImageView sc_huodaofukuan;
+//        ImageView sc_ziying;
+//        ImageView sc_fuwufugai;
+//        ImageView sc_hezuoshangjia;
+//        ImageView sc_huodaofukuan;
 
     }
 
