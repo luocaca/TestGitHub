@@ -19,7 +19,7 @@ import com.hldj.hmyg.V.SaveSeedlingV;
 import com.hldj.hmyg.application.Data;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.SaveSeedingGsonBean;
-import com.hldj.hmyg.bean.UpImageBackGsonBean;
+import com.hldj.hmyg.bean.SimpleGsonBean;
 import com.hldj.hmyg.presenter.SaveSeedlingPresenter;
 import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
@@ -43,6 +43,10 @@ import java.util.List;
 
 import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 
+
+/**
+ * 发布苗木资源
+ */
 public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveSeedlingV {
     private ACache mCache;
     public static SaveSeedlingActivity instance;
@@ -53,12 +57,19 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
     ViewHolder viewHolder;//控件管理类
     private java.util.ArrayList<com.hldj.hmyg.bean.Pic> urlPaths = new ArrayList<>();
 
+    SaveSeedingGsonBean saveSeedingGsonBean;
+    private ArrayList<Pic> arrayList2Adapter = new ArrayList(); // 传入 适配器的图片列表
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_seedling);
+
+
 //step 1
         {
+            //初始化 本届面固定 写死的界面
             viewHolder = new ViewHolder();
             initListener(viewHolder);
             mCache = ACache.get(this);
@@ -70,37 +81,165 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
         }
 //step 2
         {
-            //传入初始化 的图片资源
-            ArrayList<Pic> arrayList = new ArrayList<>();
-            arrayList.add(new Pic("hellow", true, MeasureGridView.usrl, 1));
-            arrayList.add(new Pic("hellows", true, MeasureGridView.usrl1, 12));
-            urlPaths.addAll(arrayList);
-            viewHolder.publish_flower_info_gv.init(this, arrayList, viewHolder, new FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener() {
-                @Override
-                public void onTakePic() {
-                    D.e("===========onTakePic=============");
-                    if (TakePhotoUtil.toTakePic(SaveSeedlingActivity.this))//检查 存储空间
-                        flowerInfoPhotoPath = TakePhotoUtil.doTakePhoto(SaveSeedlingActivity.this, TakePhotoUtil.TO_TAKE_PIC);//照相
-                }
+            initGvTop();
+        }
+//step 2.5
+        {
+            //获取其他界面传过来的对象，，，用于修改信息并重新提交
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                saveSeedingGsonBean = (SaveSeedingGsonBean) bundle.getSerializable("saveSeedingGsonBean");
 
-                @Override
-                public void onChoosePic() {
-                    D.e("===========onChoosePic=============");
-                    //通过本界面 addPicUrls 方法回调
-                    TakePhotoUtil.toChoosePic(SaveSeedlingActivity.this, viewHolder.publish_flower_info_gv.getAdapter());
-                }
+                initExtra(saveSeedingGsonBean);
 
-                @Override
-                public void onCancle() {
-                    D.e("===========onCancle=============");
-                }
-            });
+                return; //直接通过传过来的数据进行 绘制界面  不需要再 请求接口数据进行初始化
+
+            }
         }
 
 //step 3
         {
-            getAllData();
+            getAllData();//获取数据进行动态布局
         }
+
+
+    }
+
+
+    //传入初始化 的图片资源  初始化顶部  图片列表控件
+    private void initGvTop() {
+        arrayList2Adapter.clear();
+//            arrayList.add(new Pic("hellow", true, MeasureGridView.usrl, 1));
+//            arrayList.add(new Pic("hellows", true, MeasureGridView.usrl1, 12));
+
+        viewHolder.publish_flower_info_gv.init(this, arrayList2Adapter, viewHolder, new FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener() {
+            @Override
+            public void onTakePic() {
+                D.e("===========onTakePic=============");
+                if (TakePhotoUtil.toTakePic(SaveSeedlingActivity.this))//检查 存储空间
+                    flowerInfoPhotoPath = TakePhotoUtil.doTakePhoto(SaveSeedlingActivity.this, TakePhotoUtil.TO_TAKE_PIC);//照相
+            }
+
+            @Override
+            public void onChoosePic() {
+                D.e("===========onChoosePic=============");
+                //通过本界面 addPicUrls 方法回调
+                TakePhotoUtil.toChoosePic(SaveSeedlingActivity.this, viewHolder.publish_flower_info_gv.getAdapter());
+            }
+
+            @Override
+            public void onCancle() {
+                D.e("===========onCancle=============");
+            }
+        });
+
+    }
+
+    private void initExtra(SaveSeedingGsonBean saveSeedingGsonBean) {
+
+        List<SaveSeedingGsonBean.DataBean.SeedlingBean.ImagesJsonBean> imagesJsonBeans = saveSeedingGsonBean.getData().getSeedling().getImagesJson();
+
+        if (null != imagesJsonBeans) {
+            for (int i = 0; i < imagesJsonBeans.size(); i++) {
+                arrayList2Adapter.add(new Pic(imagesJsonBeans.get(i).getId(), imagesJsonBeans.get(i).isIsCover(), imagesJsonBeans.get(i).getUrl(), imagesJsonBeans.get(i).getSort()));
+            }
+        }
+
+        viewHolder.publish_flower_info_gv.getAdapter().notifyDataSetChanged();
+        urlPaths.addAll(arrayList2Adapter);
+
+//        initAutoLayout(saveSeedingGsonBean.getData().getTypeList());
+
+        SaveSeedingGsonBean.DataBean.SeedlingBean seedling = saveSeedingGsonBean.getData().getSeedling();
+
+        tag_ID = seedling.getFirstSeedlingTypeId();
+        initAutoLayout(saveSeedingGsonBean.getData().getTypeList());
+
+        tag_ID1 = seedling.getPlantType();
+        initAutoLayout2(saveSeedingGsonBean.getData().getPlantTypeList());
+
+
+        /**
+         *   /**
+         *   AutoAddRelative.ViewHolder_top viewHolder_top;
+         AutoAddRelative.ViewHolder_rd viewHolder_rd;
+         ArrayList<AutoAddRelative> arrayList_holders = new ArrayList();//共同的 holder 集合
+         AutoAddRelative autoAddRelative_rd;
+         */
+        viewHolder_top.tv_auto_add_name.setText(seedling.getName());
+        if (viewHolder_rd != null) {
+
+
+            //根据种类选择 0.3  1.0  1.3  哪个被选中
+            if (autoAddRelative_rd.getMTag().equals("dbh")) {
+                viewHolder_rd.et_auto_add_min.setText(seedling.getMinDbh() + "");
+                viewHolder_rd.et_auto_add_max.setText(seedling.getMaxDbh() + "");
+                autoAddRelative_rd.setDiameterTypeWithSize(seedling.getDbhType() + "");
+            } else {
+                viewHolder_rd.et_auto_add_min.setText(seedling.getMinDiameter() + "");
+                viewHolder_rd.et_auto_add_max.setText(seedling.getMaxDiameter() + "");
+                autoAddRelative_rd.setDiameterTypeWithSize(seedling.getDiameterType() + "");
+            }
+
+
+        }
+
+        for (int i = 0; i < arrayList_holders.size(); i++) {
+            AutoAddRelative autoAddRelative = arrayList_holders.get(i);
+
+            if (arrayList_holders.get(i).getTag().equals("高度")) {
+                //有高度 参数
+                autoAddRelative.getViewHolder().et_auto_add_min.setText(seedling.getMinHeight() + "");
+                autoAddRelative.getViewHolder().et_auto_add_max.setText(seedling.getMaxHeight() + "");
+            }
+
+            if (arrayList_holders.get(i).getTag().equals("冠幅")) {
+                autoAddRelative.getViewHolder().et_auto_add_min.setText(seedling.getMinCrown() + "");
+                autoAddRelative.getViewHolder().et_auto_add_max.setText(seedling.getMaxCrown() + "");
+            }
+            if (arrayList_holders.get(i).getTag().equals("脱杆高")) {
+                autoAddRelative.getViewHolder().et_auto_add_min.setText(seedling.getMinOffbarHeight() + "");
+                autoAddRelative.getViewHolder().et_auto_add_max.setText(seedling.getMaxOffbarHeight() + "");
+            }
+            if (arrayList_holders.get(i).getTag().equals("长度")) {
+                autoAddRelative.getViewHolder().et_auto_add_min.setText(seedling.getMinLength() + "");
+                autoAddRelative.getViewHolder().et_auto_add_max.setText(seedling.getMaxLength() + "");
+            }
+
+
+        }
+
+
+        D.e("===========继续完成其他==========" + seedling);
+        D.e("===========先完成底部区域===价格  库存  单位 苗原地  备注等等======" + seedling);
+
+
+        SaveSeedingGsonBean.DataBean.SeedlingBean seedlingBean = saveSeedingGsonBean.getData().getSeedling();
+
+        SaveSeedingBottomLinearLayout.upLoadDatas upLoadDatas = new SaveSeedingBottomLinearLayout.upLoadDatas();
+//        upLoadDatas.price_max =seedlingBean.get ;
+        upLoadDatas.price_min = seedling.getMinPrice() + "";
+        upLoadDatas.price_max = seedling.getMaxPrice() + "";
+        upLoadDatas.isMeet = seedling.isIsNego();
+
+
+        upLoadDatas.repertory_num = seedling.getCount() + "";
+        upLoadDatas.unit = seedling.getUnitTypeName();
+
+        //地址对象
+        AdressListActivity.Address address = new AdressListActivity.Address();
+        address.addressId = seedling.getNurseryId();
+        address.contactPhone = seedling.getNurseryJson().getPhone();
+        address.contactName = seedling.getNurseryJson().getRealName();
+        address.cityName = seedling.getNurseryJson().getCityName();
+        address.isDefault = seedling.isDefault();
+
+        upLoadDatas.address = address;
+        upLoadDatas.validity = seedlingBean.getValidity() + "";
+        upLoadDatas.remark = seedlingBean.getRemarks();
+
+
+        viewHolder.bottom_ll.setUpLoadDatas(upLoadDatas);
 
 
     }
@@ -146,16 +285,6 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
 
     }
 
-    @Override
-    public void initAutoLayout2(List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList) {
-
-    }
-
-    @Override
-    public void initAutoLayout(List<SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean> paramsListBean) {
-
-    }
-
 
     private class RefreshHandler extends Handler {
 
@@ -189,11 +318,11 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
             @Override
             public void onSuccess(final SaveSeedingGsonBean saveSeedingGsonBean) {
 
-                List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen = saveSeedingGsonBean.getData().getTypeList();
+                initAutoLayout(saveSeedingGsonBean.getData().getTypeList());
 
-                initAutoLayout(saveSeedingGsonBean);
+                initAutoLayout2(saveSeedingGsonBean.getData().getPlantTypeList());
 
-                initAutoLayout2(saveSeedingGsonBean);
+                //传参数的时候   增加 一个 自动添加布局，不需要点击  （乔木  灌木  庄敬  地被  苏铁  。。。。。。）
             }
 
             @Override
@@ -206,33 +335,113 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
 
     }
 
-    //初始化
-    private void initAutoLayout2(SaveSeedingGsonBean saveSeedingGsonBean) {
+    @Override
+    public void initAutoLayout(List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen) {
+        D.e("===============");
+        for (int i = 0; i < typeListBeen.size(); i++) {
+            if (tag_ID.equals(typeListBeen.get(i).getId()) && !TextUtils.isEmpty(tag_ID)) {
+                index = i;
+            }
+        }
         //设置默认
         //动态添加标签
-        SaveSeedlingPresenter.initAutoLayout2(viewHolder.id_flowlayout_2, saveSeedingGsonBean, SaveSeedlingActivity.this, (view, position, parent) -> {
-            tag_ID1 = saveSeedingGsonBean.getData().getPlantTypeList().get(position).getValue();
-            return true;
-        });
-    }
-
-
-    String tag_ID = "";
-    String tag_ID1 = "";
-
-    public void initAutoLayout(final SaveSeedingGsonBean saveSeedingGsonBean) {
-        //设置默认
-        //动态添加标签
-        SaveSeedlingPresenter.initAutoLayout(viewHolder.id_flowlayout, saveSeedingGsonBean, SaveSeedlingActivity.this, (view, position, parent) -> {
-            tag_ID = saveSeedingGsonBean.getData().getTypeList().get(position).getId();
-            saveSeedingGsonBean.getData().getTypeList().get(position).getName();
-            paramsListBean = saveSeedingGsonBean.getData().getTypeList().get(position).getParamsList();
+        SaveSeedlingPresenter.initAutoLayout(viewHolder.id_flowlayout, typeListBeen, index, SaveSeedlingActivity.this, (view, position, parent) -> {
+            tag_ID = typeListBeen.get(position).getId();
+            typeListBeen.get(position).getName();
+            paramsListBean = typeListBeen.get(position).getParamsList();
             D.e("==tag=点击事件=" + paramsListBean.toString());
             //根据参数来 配置布局
             addParamViews(paramsListBean);
+
+
+            //
+            viewHolder.bottom_ll.getHolder().tv_save_seeding_useful.setText(typeListBeen.get(position).getDefaultValidity() );
+
             return true;
         });
+
+        if (index != -1)
+            addParamViews(typeListBeen.get(index).getParamsList());
     }
+
+    /**
+     * 初始化 旧数据
+     *
+     * @param typeListBeen
+     * @param type_id
+     */
+//    public void initAutoLayout(List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen, String type_id) {
+//
+//        //设置默认
+//        //动态添加标签
+//        SaveSeedlingPresenter.initAutoLayout(viewHolder.id_flowlayout, typeListBeen, index, SaveSeedlingActivity.this, (view, position, parent) -> {
+//            tag_ID = typeListBeen.get(position).getId();
+//            typeListBeen.get(position).getName();
+//            paramsListBean = typeListBeen.get(position).getParamsList();
+//            D.e("==tag=点击事件=" + paramsListBean.toString());
+//            //根据参数来 配置布局
+//            addParamViews(paramsListBean);
+//            return true;
+//        });
+//        if (index != -1)
+//            addParamViews(typeListBeen.get(index).getParamsList());
+//        tag_ID = type_id;
+//        //初始化动态加载的布局内容
+//    }
+
+
+    String tag_ID = "";//标签 1
+    String tag_ID1 = "";//标签 2
+
+//    int old_index_2_tag_id1 = -1;
+
+    int index = -1;
+
+    @Override
+    public void initAutoLayout2(List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList) {
+        //设置默认       初始化
+
+        for (int i = 0; i < plantTypeList.size(); i++) {
+            if (plantTypeList.get(i).getValue().equals(tag_ID1) && !TextUtils.isEmpty((tag_ID1))) {
+                index = i;
+            }
+        }
+        //动态添加标签
+        SaveSeedlingPresenter.initAutoLayout2(viewHolder.id_flowlayout_2, plantTypeList, index, SaveSeedlingActivity.this, (view, position, parent) -> {
+            tag_ID1 = plantTypeList.get(position).getValue();//上传值
+            return true;
+        });
+//        else
+//        {
+//            //动态添加标签
+//            SaveSeedlingPresenter.initAutoLayout2(viewHolder.id_flowlayout_2, plantTypeList, SaveSeedlingActivity.this, (view, position, parent) -> {
+//                tag_ID1 = plantTypeList.get(position).getValue();//上传值
+//                return true;
+//            });
+//        }
+
+
+    }
+
+    //    //初始化
+//    private void initAutoLayout2(SaveSeedingGsonBean saveSeedingGsonBean) {
+//
+//    }
+
+
+//    public void initAutoLayout(final SaveSeedingGsonBean saveSeedingGsonBean) {
+//        //设置默认
+//        //动态添加标签
+//        SaveSeedlingPresenter.initAutoLayout(viewHolder.id_flowlayout, saveSeedingGsonBean, SaveSeedlingActivity.this, (view, position, parent) -> {
+//            tag_ID = saveSeedingGsonBean.getData().getTypeList().get(position).getId();
+//            saveSeedingGsonBean.getData().getTypeList().get(position).getName();
+//            paramsListBean = saveSeedingGsonBean.getData().getTypeList().get(position).getParamsList();
+//            D.e("==tag=点击事件=" + paramsListBean.toString());
+//            //根据参数来 配置布局
+//            addParamViews(paramsListBean);
+//            return true;
+//        });
+//    }
 
 
     AutoAddRelative.ViewHolder_top viewHolder_top;
@@ -340,7 +549,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
                 {
                     mCache.remove("saveseedling"); // 清空缓存
                     finish();
-                    startActivity(new Intent(SaveSeedlingActivity.this,SaveSeedlingActivity3_0.class));
+                    startActivity(new Intent(SaveSeedlingActivity.this, SaveSeedlingActivity3_0.class));
                 }
         );
 
@@ -355,6 +564,8 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
                         //检查参数  本地检查
                         return;
                     }
+
+
                     //通过检测  上传图片
                     hud_numHud.show();
 //                    D.e("======== tag============" + tag_name);
@@ -389,17 +600,20 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
 //                    }
 //                    upLoad(holder.publish_flower_info_gv.getAdapter().getDataList());
                     //   上传图片  可能多图片
-                    saveSeedlingPresenter.upLoad(holder.publish_flower_info_gv.getAdapter().getDataList(), new ResultCallBack<UpImageBackGsonBean>() {
+                    saveSeedlingPresenter.upLoad(holder.publish_flower_info_gv.getAdapter().getDataList(), new ResultCallBack<Pic>() {
                         @Override
-                        public void onSuccess(UpImageBackGsonBean imageBackGsonBean) {
-                            urlPaths.add(a, new Pic(imageBackGsonBean.getData().getImage().getId(), false, imageBackGsonBean.getData().getImage().getOssMediumImagePath(), a));
+//                        public void onSuccess(UpImageBackGsonBean imageBackGsonBean) {//
+                        public void onSuccess(Pic pic) {//
+
+                            urlPaths.add(pic);
+                            a = pic.getSort();
                             a++;
                             hudProgress();
                         }
 
                         @Override
                         public void onFailure(Throwable t, int errorNo, String strMsg) {
-
+                            ToastUtil.showShortToast("上传图片失败");
                         }
                     });
 
@@ -497,7 +711,19 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
             @Override
             public void onSuccess(String json) {
                 D.e("=============json==========" + json);
-                ToastUtil.showShortToast("提交完毕");
+
+
+                SimpleGsonBean simpleGsonBean = GsonUtil.formateJson2Bean(json, SimpleGsonBean.class);
+
+                if (simpleGsonBean.code.equals("1")) {
+                    //成功
+                    ToastUtil.showShortToast("提交完毕");
+                    finish();
+                } else {
+                    ToastUtil.showShortToast(simpleGsonBean.msg);
+                }
+
+
                 hud_numHud.dismiss();
 
             }
@@ -556,7 +782,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
         params.put("firstSeedlingTypeId", tag_ID);//乔木大类的id\
         params.put("name", viewHolder_top.tv_auto_add_name.getText().toString());//品名
         params.put("isNego", upLoadDatas.isMeet() + "");//是否面议
-        params.put("minPprice", upLoadDatas.getPrice_min());//最小价格
+        params.put("minPrice", upLoadDatas.getPrice_min());//最小价格
         params.put("maxPrice", upLoadDatas.getPrice_max());//最大价格
         params.put("validity", upLoadDatas.getValidity());//发布有效期
         params.put("nurseryId", upLoadDatas.address.addressId);
@@ -569,11 +795,11 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
         }
         if (autoAddRelative_rd.getMTag().equals("dbh")) {
             params.put("dbhType", autoAddRelative_rd.getDiameterType());
-            params.put("minDdbh", viewHolder_rd.et_auto_add_min.getText().toString());//最小地径
+            params.put("minDbh", viewHolder_rd.et_auto_add_min.getText().toString());//最小地径
             params.put("maxDbh", viewHolder_rd.et_auto_add_max.getText().toString());//最大地径
         } else {
             params.put("diameterType", autoAddRelative_rd.getDiameterType());
-            params.put("minDdiameter", viewHolder_rd.et_auto_add_min.getText().toString());//最小地径
+            params.put("minDiameter", viewHolder_rd.et_auto_add_min.getText().toString());//最小地径
             params.put("maxDiameter", viewHolder_rd.et_auto_add_max.getText().toString());//最大地径
         }
 
@@ -587,30 +813,32 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
 
             if (arrayList_holders.get(i).getTag().equals("高度")) {
                 //有高度 参数
-                params.put("minhHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
+                params.put("minHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
                 params.put("maxHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_max.getText().toString());
             }
             ;
             if (arrayList_holders.get(i).getTag().equals("冠幅")) {
-                params.put("mincCrown", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
+                params.put("minCrown", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
                 params.put("maxCrown", arrayList_holders.get(i).getViewHolder().et_auto_add_max.getText().toString());
 
             }
             if (arrayList_holders.get(i).getTag().equals("脱杆高")) {
-                params.put("minoOffbarHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
+                params.put("minOffbarHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
                 params.put("maxOffbarHeight", arrayList_holders.get(i).getViewHolder().et_auto_add_max.getText().toString());
 
             }
             if (arrayList_holders.get(i).getTag().equals("长度")) {
-                params.put("minlLength", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
+                params.put("minLength", arrayList_holders.get(i).getViewHolder().et_auto_add_min.getText().toString());
                 params.put("maxLength", arrayList_holders.get(i).getViewHolder().et_auto_add_max.getText().toString());
-
             }
 
         }
         params.put("plantType", tag_ID1);//plantType 种类地址秒，移植苗，假植苗，容器苗 对应的type
 
         params.put("unitType", upLoadDatas.getUnit());
+
+
+        params.put("remarks", upLoadDatas.getRemark());
 
         params.put("imagesData", GsonUtil.Bean2Json(urlPaths));
 

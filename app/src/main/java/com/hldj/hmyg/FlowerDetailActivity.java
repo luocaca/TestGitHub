@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,14 +37,17 @@ import com.hldj.hmyg.application.Data;
 import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
-import com.hldj.hmyg.bean.PicSerializableMaplist;
+import com.hldj.hmyg.bean.SaveSeedingGsonBean;
 import com.hldj.hmyg.bean.SeedlingParm;
+import com.hldj.hmyg.bean.SimpleGsonBean;
 import com.hldj.hmyg.saler.SavePriceAndCountAndOutlineActivity;
 import com.hldj.hmyg.saler.SaveSeedlingActivity;
 import com.hldj.hmyg.util.D;
+import com.hldj.hmyg.util.GsonUtil;
 import com.hldj.hmyg.widget.AutoAdd2DetailLinearLayout;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
+import com.hy.utils.ToastUtil;
 import com.hy.utils.ValueGetInfo;
 import com.javis.ab.view.AbOnItemClickListener;
 import com.javis.ab.view.AbSlidingPlayView;
@@ -70,6 +74,8 @@ import java.util.ArrayList;
 
 import me.drakeet.materialdialog.MaterialDialog;
 import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
+
+import static com.hldj.hmyg.FlowerDetailActivity.MultipleClickProcess.CHANGE_DATES;
 
 
 /**
@@ -119,16 +125,16 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
     public String et_num;
     public String days;
     private View mainView;
-
     private int saleCount = 0;
     private int stock = 0;
     private KProgressHUD hud;
+    ;
     private String store_id = "";
     public String displayPhone = "";
     private LinearLayout ll_01;
     private LinearLayout ll_02;
     private TextView tv_01;
-    private TextView tv_02;
+    //    private TextView tv_02;
     private ListView lv_00;
     ArrayList<SeedlingParm> msSeedlingParms = new ArrayList<SeedlingParm>();
     public ArrayList<paramsData> paramsDatas = new ArrayList<paramsData>();
@@ -192,6 +198,12 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
     private LinearLayout ll_open;
     private TextView tv_open;
     private ImageView iv_open;
+    private MyCount myCount;//倒计时线程
+    private SaveSeedingGsonBean saveSeedingGsonBean;
+    private String min_price = "";//最小价格
+    private String max_price = "";//最小价格
+    private boolean isNego;
+    private boolean isFirst; //第一次加载
 
 
     @TargetApi(19)
@@ -288,7 +300,15 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isFirst = true;
         setar();
+
+        hud = KProgressHUD
+                .create(FlowerDetailActivity.this)
+                .setStyle(
+                        KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("努力加载中...").setMaxProgress(100)
+                .setCancellable(true).show();
 
 //		StateBarUtil.setStatusBarIconDark(this,true);
         setContentView(R.layout.activity_flower_detail_test_toobar_3_0);
@@ -310,6 +330,11 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         multipleClickProcess = new MultipleClickProcess();
         mainView = (View) findViewById(R.id.mainView);
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
+
+        btn_back.setOnClickListener(v -> {
+            finish();
+        });
+
         iv_lianxi = (ImageView) findViewById(R.id.iv_lianxi);
         lv_00 = (ListView) findViewById(R.id.lv_00);
 //        lv_00.setDivider(null);
@@ -364,6 +389,8 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         ll_bohao = (LinearLayout) findViewById(R.id.ll_bohao);
         ll_to_d3 = (LinearLayout) findViewById(R.id.ll_to_d3);
         ll_to_d4 = (LinearLayout) findViewById(R.id.ll_to_d4);
+        ll_to_d4.setOnClickListener(multipleClickProcess);
+
         ll_manager_backed = (LinearLayout) findViewById(R.id.ll_manager_backed);
         tv_01_01 = (TextView) findViewById(R.id.tv_01_01);
         tv_01_02 = (TextView) findViewById(R.id.tv_01_02);
@@ -383,23 +410,12 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         ll_01 = (LinearLayout) findViewById(R.id.ll_01);
         ll_02 = (LinearLayout) findViewById(R.id.ll_02);
         tv_01 = (TextView) findViewById(R.id.tv_01);
-        tv_02 = (TextView) findViewById(R.id.tv_02);
-
         if ("manage_list".equals(show_type)) {
             url = "admin/";
         } else if ("seedling_list".equals(show_type)) {
         }
-//
-//        ll_to_d3.setOnClickListener(multipleClickProcess);
-//        ll_to_d4.setOnClickListener(multipleClickProcess);
-//        btn_back.setOnClickListener(multipleClickProcess);
-
-
         initData();
         visitsCount();
-//        ll_01.setOnClickListener(multipleClickProcess);
-//        ll_02.setOnClickListener(multipleClickProcess);
-//        ll_open.setOnClickListener(multipleClickProcess);
 
     }
 
@@ -426,12 +442,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                         // TODO Auto-generated method stub
                         super.onStart();
                         if (!FlowerDetailActivity.this.isFinishing()) {
-                            hud = KProgressHUD
-                                    .create(FlowerDetailActivity.this)
-                                    .setStyle(
-                                            KProgressHUD.Style.SPIN_INDETERMINATE)
-                                    .setLabel("努力加载中...").setMaxProgress(100)
-                                    .setCancellable(true).show();
+
                         }
 
                     }
@@ -458,7 +469,12 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                     }
 
                     private void AcheData(String t) {
+
                         // TODO Auto-generated method stub
+                        saveSeedingGsonBean = GsonUtil.formateJson2Bean(t, SaveSeedingGsonBean.class);
+
+
+                        D.e("================json==============" + t);
                         try {
                             JSONObject jsonObject = new JSONObject(t);
                             String code = JsonGetInfo.getJsonString(jsonObject,
@@ -583,7 +599,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                 {
 
                                     //单位      元/ 株  盆     颗
-                                    tv_unitTypeName.setText("元/" + unitTypeName);
+                                    tv_unitTypeName.setText("/" + unitTypeName);
 
                                     //打电话监听
                                     iv_lianxi.setVisibility(View.VISIBLE);
@@ -591,7 +607,19 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
                                     //价格
                                     price = JsonGetInfo.getJsonDouble(jsonObject2, "price");
-                                    tv_price.setText(ValueGetInfo.doubleTrans1(price));
+
+
+                                    min_price = JsonGetInfo.getJsonString(jsonObject2, "minPrice");
+                                    max_price = JsonGetInfo.getJsonString(jsonObject2, "maxPrice");
+                                    isNego = JsonGetInfo.getJsonBoolean(jsonObject2, "isNego");
+
+
+                                    if (!TextUtils.isEmpty(min_price) && !TextUtils.isEmpty(max_price)) {
+                                        tv_price.setText(min_price + " - " + max_price);
+                                    } else {
+                                        tv_price.setText("面议");
+                                    }
+
 
                                     //库存数量
                                     stock = JsonGetInfo.getJsonInt(jsonObject2, "stock");
@@ -607,7 +635,12 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                     long lastTime = JsonGetInfo.getJsonLong(jsonObject2, "lastTime");
                                     if (lastTime > 0) {
                                         tv_last_time.setVisibility(View.VISIBLE);
-                                        MyCount myCount = new MyCount(lastTime, 1000l);
+
+                                        if (myCount != null) {
+                                            myCount.cancel();
+                                            myCount = null;
+                                        }
+                                        myCount = new MyCount(lastTime, 1000l);
                                         myCount.start();
                                     }
 
@@ -701,11 +734,11 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 //                                }
 
                                 if ("manage_list".equals(show_type)) {
+                                    iv_lianxi.setVisibility(View.GONE);
                                     tv_statusName.setVisibility(View.VISIBLE);
                                     ll_buy_car.setVisibility(View.GONE);
                                     if ("backed".equals(status)) {
-                                        ll_manager_backed
-                                                .setVisibility(View.VISIBLE);
+                                        ll_manager_backed.setVisibility(View.VISIBLE);
                                         JSONObject auditLogJson = JsonGetInfo
                                                 .getJSONObject(jsonObject2,
                                                         "auditLogJson");
@@ -713,18 +746,21 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                                 .getJsonString(auditLogJson,
                                                         "remarks");
                                         tv_01_01.setText("退回原因：" + remarks);
+                                        tv_statusName.setText("");
+                                        setMainColorText(tv_statusName, "被退回");
+
                                     } else if ("unaudit".equals(status)) {
-                                        ll_manager_unaudit
-                                                .setVisibility(View.VISIBLE);
+                                        ll_manager_unaudit.setVisibility(View.VISIBLE);
+                                        setMainColorText(tv_statusName, "审核中");
                                     } else if ("unsubmit".equals(status)) {
-                                        ll_manager_unsubmit
-                                                .setVisibility(View.VISIBLE);
+                                        ll_manager_unsubmit.setVisibility(View.VISIBLE);
+                                        setMainColorText(tv_statusName, "未提交");
                                     } else if ("published".equals(status)) {
-                                        ll_manager_published
-                                                .setVisibility(View.VISIBLE);
+                                        ll_manager_published.setVisibility(View.VISIBLE);
+                                        setMainColorText(tv_statusName, "已发布");
                                     } else if ("outline".equals(status)) {
-                                        ll_manager_outline
-                                                .setVisibility(View.VISIBLE);
+                                        ll_manager_outline.setVisibility(View.VISIBLE);
+                                        setMainColorText(tv_statusName, "已下架");
                                     }
                                     tv_01_01.setOnClickListener(multipleClickProcess); // 退回原因
                                     tv_02_01.setOnClickListener(multipleClickProcess); // 撤回
@@ -826,8 +862,9 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                 uploadDatas.jsonArray = specList;
 
 
-                                ((AutoAdd2DetailLinearLayout) findViewById(R.id.ll_auto_detail)).setDatas(uploadDatas);
-
+                                if (isFirst)
+                                    ((AutoAdd2DetailLinearLayout) findViewById(R.id.ll_auto_detail)).setDatas(uploadDatas);
+                                isFirst = false;
 
                                 // if (specList.length() > 0) {
                                 // for (int i = 0; i < specList.length(); i++) {
@@ -913,7 +950,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                     tv_store_phone.setText(displayPhone);//电话
                                     tv_contanct_name.setText(publicName);//联系人
 
-                                    tv_statusName.setText(fullName);
+//                                    tv_statusName.setText(fullName);
                                 }
 //								if ("".equals(JsonGetInfo.getJsonString(coCity,
 //										"fullName"))) {
@@ -950,7 +987,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                         tv_store_phone.setText(contactPhone);//电话
                                         tv_contanct_name.setText(contactName);//联系人
                                     }
-                                    tv_02.setText("苗圃信息");
+//                                    tv_02.setText("苗圃信息");
                                 }
 
 
@@ -983,6 +1020,11 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
                 });
 
+    }
+
+    private void setMainColorText(TextView tv_statusName, String s) {
+        tv_statusName.setText(s);
+        tv_statusName.setTextColor(getResources().getColor(R.color.main_color));
     }
 
     public void unAddCart() {
@@ -1085,16 +1127,16 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                     case R.id.ll_01:
                         tv_01.setTextColor(getResources().getColor(
                                 R.color.main_color));
-                        tv_02.setTextColor(getResources().getColor(
-                                R.color.light_gray));
+//                        tv_02.setTextColor(getResources().getColor(
+//                                R.color.light_gray));
                         ll_store.setVisibility(View.GONE);
                         lv_00.setVisibility(View.VISIBLE);
                         break;
                     case R.id.ll_02:
                         tv_01.setTextColor(getResources().getColor(
                                 R.color.light_gray));
-                        tv_02.setTextColor(getResources().getColor(
-                                R.color.main_color));
+//                        tv_02.setTextColor(getResources().getColor(
+//                                R.color.main_color));
                         ll_store.setVisibility(View.VISIBLE);
                         lv_00.setVisibility(View.GONE);
                         break;
@@ -1103,10 +1145,10 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                     case R.id.tv_01_02: // 修改信息
                         saveSeedling();
                         break;
-                    case R.id.tv_03_01: // 修改信息
+                    case R.id.tv_03_01: // 修改信息 未提交
                         saveSeedling();
                         break;
-                    case R.id.tv_04_03: // 修改信息
+                    case R.id.tv_04_03: // 修改信息  --- 已发布
                         savePriceAndCountAndOutline();
                         break;
                     case R.id.tv_05_03: // 修改信息
@@ -1145,6 +1187,8 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                                 }
                                             }).show();
                         } else {
+
+
                         }
 
                         break;
@@ -1175,21 +1219,26 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                         }
 
                         break;
-                    case R.id.ll_to_d4: //
-                        if (MyApplication.Userinfo.getBoolean("isLogin", false) == false) {
-                            Intent toLoginActivity = new Intent(
-                                    FlowerDetailActivity.this, LoginActivity.class);
+                    case R.id.ll_to_d4: //收藏
+
+                        D.e("===");
+
+                        if (!MyApplication.Userinfo.getBoolean("isLogin", false)) {
+                            Intent toLoginActivity = new Intent(FlowerDetailActivity.this, LoginActivity.class);
                             startActivityForResult(toLoginActivity, 4);
                             overridePendingTransition(R.anim.slide_in_left,
                                     R.anim.slide_out_right);
                             return;
                         }
-                        Intent toDActivity4 = new Intent(FlowerDetailActivity.this,
-                                DActivity5.class);
-                        toDActivity4.putExtra("type", "1");
-                        startActivity(toDActivity4);
-                        overridePendingTransition(R.anim.slide_in_left,
-                                R.anim.slide_out_right);
+
+                        add2Collect();
+
+//                        Intent toDActivity4 = new Intent(FlowerDetailActivity.this,
+//                                DActivity5.class);
+//                        toDActivity4.putExtra("type", "1");
+//                        startActivity(toDActivity4);
+//                        overridePendingTransition(R.anim.slide_in_left,
+//                                R.anim.slide_out_right);
                         break;
                     case R.id.tv_add_car:
                         if (MyApplication.Userinfo.getBoolean("isLogin", false) == false) {
@@ -1230,48 +1279,62 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
         public void saveSeedling() {
             if (!"".equals(id)) {
-                Intent toSaveSeedlingActivity = new Intent(
-                        FlowerDetailActivity.this, SaveSeedlingActivity.class);
+                Intent toSaveSeedlingActivity = new Intent(FlowerDetailActivity.this, SaveSeedlingActivity.class);
                 Bundle bundleObject = new Bundle();
-                final PicSerializableMaplist myMap = new PicSerializableMaplist();
-                myMap.setMaplist(ossImagePaths);
-                bundleObject.putSerializable("urlPaths", myMap);
+                bundleObject.putSerializable("saveSeedingGsonBean", saveSeedingGsonBean);
                 toSaveSeedlingActivity.putExtras(bundleObject);
-                toSaveSeedlingActivity.putExtra("id", id);
-                toSaveSeedlingActivity.putExtra("name", name);
-                toSaveSeedlingActivity.putExtra("price", price + "");
-                toSaveSeedlingActivity.putExtra("floorPrice", floorPrice + "");
-                toSaveSeedlingActivity.putExtra("count", count + "");
-                toSaveSeedlingActivity.putExtra("lastDay", lastDay + "");
-                toSaveSeedlingActivity.putExtra("firstSeedlingTypeId",
-                        firstSeedlingTypeId);
-                toSaveSeedlingActivity.putExtra("validity", validity + "");
-                toSaveSeedlingActivity.putExtra("addressId", nurseryId);
-                toSaveSeedlingActivity.putExtra("address", address_name);
-                toSaveSeedlingActivity.putExtra("contactName", contactName);
-                toSaveSeedlingActivity.putExtra("contactPhone", contactPhone);
-                toSaveSeedlingActivity.putExtra("isDefault", false);
-                toSaveSeedlingActivity.putExtra("firstSeedlingTypeName",
-                        firstTypeName);
-                toSaveSeedlingActivity.putExtra("seedlingParams",
-                        seedlingParams);
-                toSaveSeedlingActivity.putExtra("diameter", diameter + "");
-                toSaveSeedlingActivity.putExtra("diameterType", diameterType);
-                toSaveSeedlingActivity.putExtra("dbh", dbh + "");
-                toSaveSeedlingActivity.putExtra("dbhType", dbhType);
-                toSaveSeedlingActivity.putExtra("height", height + "");
-                toSaveSeedlingActivity.putExtra("crown", crown + "");
-                toSaveSeedlingActivity.putExtra("offbarHeight", offbarHeight
-                        + "");
-                toSaveSeedlingActivity.putExtra("length", length + "");
-                toSaveSeedlingActivity.putExtra("plantType", plantType);
-                toSaveSeedlingActivity.putExtra("unitType", unitType);
-                toSaveSeedlingActivity.putExtra("paramsData",
-                        gson.toJson(paramsDatas));
-                toSaveSeedlingActivity.putExtra("remarks", remarks);
                 startActivityForResult(toSaveSeedlingActivity, 1);
+
+                /**
+                 *   Bundle bundle = new Bundle();
+                 bundle.putSerializable("User",patientlogin);
+                 veriaktarma.putExtras(bundle);
+                 startActivity(veriaktarma);
+                 */
+
+//                final PicSerializableMaplist myMap = new PicSerializableMaplist();
+//                myMap.setMaplist(ossImagePaths);
+//                bundleObject.putSerializable("urlPaths", myMap);
+//                toSaveSeedlingActivity.putExtras(bundleObject);
+//                toSaveSeedlingActivity.putExtra("id", id);
+//                toSaveSeedlingActivity.putExtra("name", name);
+//                toSaveSeedlingActivity.putExtra("price", price + "");
+//                toSaveSeedlingActivity.putExtra("floorPrice", floorPrice + "");
+//                toSaveSeedlingActivity.putExtra("count", count + "");
+//                toSaveSeedlingActivity.putExtra("lastDay", lastDay + "");
+//                toSaveSeedlingActivity.putExtra("firstSeedlingTypeId",
+//                        firstSeedlingTypeId);
+//                toSaveSeedlingActivity.putExtra("validity", validity + "");
+//                toSaveSeedlingActivity.putExtra("addressId", nurseryId);
+//                toSaveSeedlingActivity.putExtra("address", address_name);
+//                toSaveSeedlingActivity.putExtra("contactName", contactName);
+//                toSaveSeedlingActivity.putExtra("contactPhone", contactPhone);
+//                toSaveSeedlingActivity.putExtra("isDefault", false);
+//                toSaveSeedlingActivity.putExtra("firstSeedlingTypeName",
+//                        firstTypeName);
+//                toSaveSeedlingActivity.putExtra("seedlingParams",
+//                        seedlingParams);
+//                toSaveSeedlingActivity.putExtra("diameter", diameter + "");
+//                toSaveSeedlingActivity.putExtra("diameterType", diameterType);
+//                toSaveSeedlingActivity.putExtra("dbh", dbh + "");
+//                toSaveSeedlingActivity.putExtra("dbhType", dbhType);
+//                toSaveSeedlingActivity.putExtra("height", height + "");
+//                toSaveSeedlingActivity.putExtra("crown", crown + "");
+//                toSaveSeedlingActivity.putExtra("offbarHeight", offbarHeight
+//                        + "");
+//                toSaveSeedlingActivity.putExtra("length", length + "");
+//                toSaveSeedlingActivity.putExtra("plantType", plantType);
+//                toSaveSeedlingActivity.putExtra("unitType", unitType);
+//                toSaveSeedlingActivity.putExtra("paramsData",
+//                        gson.toJson(paramsDatas));
+//                toSaveSeedlingActivity.putExtra("remarks", remarks);
+
+
             }
         }
+
+
+        public static final int CHANGE_DATES = 200;
 
         public void savePriceAndCountAndOutline() {
             if (!"".equals(id)) {
@@ -1279,13 +1342,15 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                         FlowerDetailActivity.this,
                         SavePriceAndCountAndOutlineActivity.class);
                 toSavePriceAndCountAndOutlineActivity.putExtra("id", id);
-                toSavePriceAndCountAndOutlineActivity.putExtra("price", price);
-                toSavePriceAndCountAndOutlineActivity.putExtra("floorPrice",
-                        floorPrice);
+                toSavePriceAndCountAndOutlineActivity.putExtra("min_price", min_price);
+                toSavePriceAndCountAndOutlineActivity.putExtra("max_price", max_price);
+                toSavePriceAndCountAndOutlineActivity.putExtra("isNego", isNego);
+//                toSavePriceAndCountAndOutlineActivity.putExtra("floorPrice",
+//                        floorPrice);
                 toSavePriceAndCountAndOutlineActivity.putExtra("count", count);
                 toSavePriceAndCountAndOutlineActivity.putExtra("lastDay",
                         lastDay);
-                startActivity(toSavePriceAndCountAndOutlineActivity);
+                startActivityForResult(toSavePriceAndCountAndOutlineActivity, 200);
             }
         }
 
@@ -1406,6 +1471,57 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         }
     }
 
+    private void add2Collect() {
+
+        D.e("============store_id==========" + store_id);
+
+        FinalHttp finalHttp = new FinalHttp();
+        GetServerUrl.addHeaders(finalHttp, true);
+        AjaxParams params = new AjaxParams();
+        params.put("sourceId", store_id);
+        params.put("type", "seedling");
+
+
+
+         hud.show();
+
+
+        finalHttp.post(GetServerUrl.getUrl() + "admin/collect/save", params, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+//                {"code":"1","msg":"操作成功","data":{"isCollect":false}}
+                SimpleGsonBean simpleGsonBean = GsonUtil.formateJson2Bean(s, SimpleGsonBean.class);
+                D.e("================");
+                super.onSuccess(s);
+
+                if (simpleGsonBean.code.equals("1")) {
+                    ToastUtil.showShortToast("修改成功");
+
+                    if (simpleGsonBean.getData().isCollect()) {
+                        findViewById(R.id.iv_shou_can).setSelected(true);
+                    } else {
+                        findViewById(R.id.iv_shou_can).setSelected(false);
+                    }
+                } else {
+                    ToastUtil.showShortToast(simpleGsonBean.msg);
+                }
+
+                hud.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                D.e("================");
+                hud.dismiss();
+                ToastUtil.showShortToast("网络超时");
+                super.onFailure(t, errorNo, strMsg);
+            }
+        });
+
+
+    }
+
     public void NoInputMethodManager() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
@@ -1519,6 +1635,8 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                         jsonObject2, "maxCloseDate");
                                 maxDays = JsonGetInfo.getJsonInt(jsonObject2,
                                         "maxDays");
+
+
                                 if (!"".equals(closeDate)
                                         && !"".equals(maxCloseDate)) {
                                     EditP3 popwin = new EditP3(
@@ -1583,6 +1701,10 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                             if (!"".equals(msg)) {
                                 Toast.makeText(FlowerDetailActivity.this, msg,
                                         Toast.LENGTH_SHORT).show();
+
+
+                                initData();//刷新界面
+
                             }
                             if ("1".equals(code)) {
                             } else {
@@ -1772,7 +1894,9 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
         // TODO Auto-generated method stub
-        initData();
+        if (arg1 == CHANGE_DATES) {
+            initData();
+        }
         super.onActivityResult(arg0, arg1, arg2);
     }
 

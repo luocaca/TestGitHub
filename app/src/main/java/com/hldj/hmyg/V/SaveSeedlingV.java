@@ -19,7 +19,7 @@ public interface SaveSeedlingV  {
 
     void initAutoLayout2(List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList);
 
-    void initAutoLayout(List<SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean> paramsListBean);
+    void initAutoLayout(List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen);
 
 
 

@@ -105,6 +105,7 @@
     <string name="finish_data">下架</string>
     <string name="stay_time">延期</string>
     <string name="car">购物车</string>
+    <string name="collect">收藏</string>
     <string name="add_car">加入购物车</string>
     <string name="sure_to_exit">是否确定退出？</string>
     <string name="close_str">关闭</string>
@@ -183,6 +184,7 @@
     <string name="eactivity_personal_profile">个人资料</string>
     <string name="eactivity_message_notification">消息通知</string>
     <string name="eactivity_invent_friends">分享APP</string>
+    <string name="share">分享</string>
     <string name="eactivity_custom_hot_online">客服热线</string>
     <string name="eactivity_user_feedback">用户反馈</string>
     <string name="manager_all">全部</string>

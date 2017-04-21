@@ -88,11 +88,42 @@ public class SaveSeedlingPresenter {
 //        }
 //    }
 
+
+    //第一行 标签乔木 灌木  庄景   地被  。。。。
     private static TagAdapter<String> mtypeListAdapter;
 
-    public static void initAutoLayout(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity Activity, TagFlowLayout.OnTagClickListener onTagClickListener) {
+//    public static void initAutoLayout(final TagFlowLayout mFlowLayout, List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen, final Activity Activity, TagFlowLayout.OnTagClickListener onTagClickListener) {
+//
+//        final List str_typeLists = getListNames(typeListBeen);
+//
+//        com.zhy.view.flowlayout.TagAdapter tagAdapter = new com.zhy.view.flowlayout.TagAdapter(str_typeLists) {
+//            @Override
+//            public View getView(FlowLayout parent, int position, Object o) {
+//                TextView tv = (TextView) Activity.getLayoutInflater().inflate(R.layout.tv, mFlowLayout, false);
+//                tv.setText(str_typeLists.get(position).toString());
+//                return tv;
+//            }
+//        };
+//
+//        mFlowLayout.setAdapter(tagAdapter);
+//
+//        mFlowLayout.setMaxSelectCount(1);
+//
+//        mFlowLayout.setOnTagClickListener(onTagClickListener);
+//
+//        tagAdapter.setSelectedList(1);
+//
+//        ;
+//
+//        D.e("=======选择之后====进行添加数据=========" + typeListBeen.get(1).getParamsList().toString());
+//
+//
+//    }
 
-        final List str_typeLists = getListNames(saveSeedingGsonBean);
+
+    public static void initAutoLayout(final TagFlowLayout mFlowLayout, List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen, int index, final Activity Activity, TagFlowLayout.OnTagClickListener onTagClickListener) {
+
+        final List str_typeLists = getListNames(typeListBeen);
 
         com.zhy.view.flowlayout.TagAdapter tagAdapter = new com.zhy.view.flowlayout.TagAdapter(str_typeLists) {
             @Override
@@ -109,59 +140,12 @@ public class SaveSeedlingPresenter {
 
         mFlowLayout.setOnTagClickListener(onTagClickListener);
 
+        if (index != -1) tagAdapter.setSelectedList(index);
 
-//        tagadapter = new com.zhy.view.flowlayout.TagAdapter<String>(
-//                str_typeLists) {
-//
-//            @Override
-//            public View getView(FlowLayout parent, int position, String s) {
-//                TextView tv = (TextView) getLayoutInflater()
-//                        .inflate(R.layout.tv,
-//                                mFlowLayout, false);
-//                tv.setText(s);
-//                return tv;
-//            }
-//        };
-//        mFlowLayout.setAdapter(tagadapter);//自动换行layout
-//        mFlowLayout
-//                .setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-//                    @Override
-//                    public boolean onTagClick(View view, int position, FlowLayout parent) {
-//                        firstSeedlingTypeId = typeLists.get(position).get("id").toString();
-//                        firstSeedlingTypeName = str_typeLists.get(position);
-//                        seedlingParams = typeLists.get(position).get("seedlingParams").toString();
-//                        tv_firstSeedlingTypeName.setText(firstSeedlingTypeName);
-//                        unitType = typeLists.get(position).get("defaultUnit").toString();
-//                        validity = typeLists.get(position).get("defaultValidity").toString();
-//                        if ("plant".equals(unitType)) {
-//                            tv_unitType.setText("株");
-//                        } else if ("crowd".equals(unitType)) {
-//                            tv_unitType.setText("丛");
-//                        } else if ("jin"
-//                                .equals(unitType)) {
-//                            tv_unitType
-//                                    .setText("斤");
-//                        } else if ("squaremeter"
-//                                .equals(unitType)) {
-//                            tv_unitType
-//                                    .setText("平方米");
-//                        } else if ("dai"
-//                                .equals(unitType)) {
-//                            tv_unitType
-//                                    .setText("袋");
-//                        } else if ("pen"
-//                                .equals(unitType)) {
-//                            tv_unitType
-//                                    .setText("盆");
-//                        } else {
-//                            tv_unitType.setText("");
-//                        }
-//                        tv_day.setText(validity
-//                                + "天");
-//                        Data.paramsDatas.clear();
-//                        return true;
-//                    }
-//                });
+
+        D.e("=======选择之后====进行添加数据=========" + typeListBeen.get(1).getParamsList().toString());
+
+
     }
 
 
@@ -177,12 +161,12 @@ public class SaveSeedlingPresenter {
 
     }
 
-    private static List getListNames(SaveSeedingGsonBean saveSeedingGsonBean) {
-        int mSize = saveSeedingGsonBean.getData().getTypeList().size();
+    private static List getListNames(List<SaveSeedingGsonBean.DataBean.TypeListBean> typeListBeen) {
+        int mSize = typeListBeen.size();
         List list = new ArrayList();
         if (mSize > 0) {
             for (int i = 0; i < mSize; i++) {
-                list.add(saveSeedingGsonBean.getData().getTypeList().get(i).getName());//获取所有名称
+                list.add(typeListBeen.get(i).getName());//获取所有名称
             }
         }
         return list;
@@ -190,9 +174,29 @@ public class SaveSeedlingPresenter {
     }
 
     //     * plantTypeList : [{"text":"地栽苗","value":"planted"},{"text":"移植苗","value":"transplant"},{"text":"假植苗","value":"heelin"},{"text":"容器苗","value":"container"}]
-    public static void initAutoLayout2(final TagFlowLayout mFlowLayout, SaveSeedingGsonBean saveSeedingGsonBean, final Activity saveSeedlingActivity, TagFlowLayout.OnTagClickListener onTagClickListener) {
+//    public static void initAutoLayout2(final TagFlowLayout mFlowLayout, List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList , final Activity saveSeedlingActivity, TagFlowLayout.OnTagClickListener onTagClickListener) {
+//
+//        com.zhy.view.flowlayout.TagAdapter tagAdapter = new com.zhy.view.flowlayout.TagAdapter(plantTypeList) {
+//            @Override
+//            public View getView(FlowLayout parent, int position, Object o) {
+//                TextView tv = (TextView) saveSeedlingActivity.getLayoutInflater().inflate(R.layout.tv, mFlowLayout, false);
+//                tv.setText(plantTypeList.get(position).getText());
+//                return tv;
+//            }
+//        };
+//
+//        mFlowLayout.setAdapter(tagAdapter);
+//
+//        mFlowLayout.setMaxSelectCount(1);
+//
+//        mFlowLayout.setOnTagClickListener(onTagClickListener);
+//
+//
+//    }
 
-        final List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList = saveSeedingGsonBean.getData().getPlantTypeList();
+
+    //     * plantTypeList : [{"text":"地栽苗","value":"planted"},{"text":"移植苗","value":"transplant"},{"text":"假植苗","value":"heelin"},{"text":"容器苗","value":"container"}]
+    public static void initAutoLayout2(final TagFlowLayout mFlowLayout, List<SaveSeedingGsonBean.DataBean.TypeListBean.PlantTypeListBean> plantTypeList, int index, final Activity saveSeedlingActivity, TagFlowLayout.OnTagClickListener onTagClickListener) {
 
         com.zhy.view.flowlayout.TagAdapter tagAdapter = new com.zhy.view.flowlayout.TagAdapter(plantTypeList) {
             @Override
@@ -209,17 +213,22 @@ public class SaveSeedlingPresenter {
 
         mFlowLayout.setOnTagClickListener(onTagClickListener);
 
+        if (index != -1) tagAdapter.setSelectedList(index); // 不为-1 则 不设置默认
+
 
     }
 
-    public void upLoad(ArrayList<Pic> dataList, ResultCallBack<UpImageBackGsonBean> resultCallBack) {
 
+    int a = 0;
+
+    public void upLoad(ArrayList<Pic> dataList, ResultCallBack<Pic> resultCallBack) {
+        a = 0 ;
         int list_size = dataList.size();
 
         FinalHttp finalHttp = new FinalHttp();
 
         for (int i = 0; i < list_size; i++) {
-            if (!StringUtil.isHttpUrlPicPath(dataList.get(i).getUrl())) {
+            if (!StringUtil.isHttpUrlPicPath(dataList.get(i).getUrl())) {//不是已经上传的图片
                 GetServerUrl.addHeaders(finalHttp, true);
                 finalHttp.addHeader("Content-Type", "application/octet-stream");
                 AjaxParams params1 = new AjaxParams();
@@ -236,24 +245,33 @@ public class SaveSeedlingPresenter {
                     public void onSuccess(String json) {
                         D.e("===========json=====上传图片成功==========" + json);
                         UpImageBackGsonBean imageBackGsonBean = GsonUtil.formateJson2Bean(json, UpImageBackGsonBean.class);
-                        resultCallBack.onSuccess(imageBackGsonBean);
+                        resultCallBack.onSuccess(new Pic(imageBackGsonBean.getData().getImage().getId(), false, imageBackGsonBean.getData().getImage().getOssMediumImagePath(), a));
 //                        urlPaths.add(a, new Pic(imageBackGsonBean.getData().getImage().getId(), false, imageBackGsonBean.getData().getImage().getOssMediumImagePath(), a));
                         D.e("==========暂时使用中等大小图片==============");
+                        a++;
                     }
 
                     @Override
                     public void onFailure(Throwable t, int errorNo, String strMsg) {
                         D.e("===========json=====失败==========" + errorNo + "  " + strMsg + " " + t.getMessage());
-
+                        resultCallBack.onFailure(t, errorNo, strMsg);
                     }
                 });
 
 
+            } else {
+//                UpImageBackGsonBean imageBackGsonBean = new UpImageBackGsonBean();
+//                imageBackGsonBean.getData().setImage();
+
+                dataList.get(i).setSort(a);
+                a++;
+                resultCallBack.onSuccess(dataList.get(i));//如果已经上传 就直接 传回出去
             }
+
         }
 
-    }
 
+    }
 
 
 }

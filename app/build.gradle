@@ -66,6 +66,8 @@ android {
     }
 }
 
+
+
 //    android{
 //        dataBinding { enabled = true }
 //    }
@@ -116,6 +118,6 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
 
-
-
+//    compile 'com.github.chenBingX:SuperTextView:v1.0'
+    compile 'com.github.lygttpod:SuperTextView:1.1.2'
 }

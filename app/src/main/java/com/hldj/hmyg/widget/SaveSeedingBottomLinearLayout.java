@@ -79,7 +79,7 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
     }
 
 
-    ViewHolder holder;
+    static ViewHolder holder;
 
     private SaveSeedingBottomLinearLayout.upLoadDatas upLoadDatas = new SaveSeedingBottomLinearLayout.upLoadDatas();
 
@@ -87,6 +87,21 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
     public SaveSeedingBottomLinearLayout.upLoadDatas getUpLoadDatas() {
         return upLoadDatas;
     }
+
+    //重新赋值----修改数据 重新上传时使用
+    public void setUpLoadDatas(SaveSeedingBottomLinearLayout.upLoadDatas upLoadDatas) {
+        this.upLoadDatas = upLoadDatas;
+        holder.cb_is_meet.setChecked(upLoadDatas.isMeet);
+        holder.et_remark.setText(upLoadDatas.remark);
+        holder.tv_save_seeding_unit.setText(upLoadDatas.unit);
+        initAddressView(holder.rootView, upLoadDatas.address);
+        holder.tv_save_seeding_price_max.setText(upLoadDatas.price_max);
+        holder.et_repertory_num.setText(upLoadDatas.repertory_num);//库存数量
+        holder.tv_save_seeding_useful.setText(upLoadDatas.validity);//有效期
+        holder.tv_save_seeding_price_min.setText(upLoadDatas.price_min);//最小价格
+
+    }
+
 
     ActionSheetDialog dialog = null;
 
@@ -225,14 +240,14 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
     }
 
     //用于上传的数据
-    public class upLoadDatas {
-        private String unit = "";//单位
-        private String validity = "";//有效期
-        private String price_min = "";//最小价格
-        private String price_max = "";//最大价格
-        private boolean isMeet; // 是否面议
-        private String repertory_num = "";//库存
-        private String remark = "";//备注
+    public static class upLoadDatas {
+        public String unit = "";//单位
+        public String validity = "";//有效期
+        public String price_min = "";//最小价格
+        public String price_max = "";//最大价格
+        public boolean isMeet; // 是否面议
+        public String repertory_num = "";//库存
+        public String remark = "";//备注
         public AdressListActivity.Address address = new AdressListActivity.Address();//苗源地
 
         public String getUnit() {
@@ -243,6 +258,8 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
 
             return holder.tv_save_seeding_unit.getTag().toString();
         }
+
+
 
         public String getValidity() {
             String str = holder.tv_save_seeding_useful.getText().toString();

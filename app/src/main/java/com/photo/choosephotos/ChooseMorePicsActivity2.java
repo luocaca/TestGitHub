@@ -1,10 +1,5 @@
 package com.photo.choosephotos;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.UUID;
-
-import android.R.integer;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -18,7 +13,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Thumbnails;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hldj.hmyg.ChoosePicsActivity;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.application.Data;
 import com.hldj.hmyg.application.PermissionUtils;
@@ -41,6 +34,10 @@ import com.photo.choosephotos.photo.PhotoAlbumActivity;
 import com.photo.choosephotos.photoviewer.photoviewerinterface.ViewPagerActivity;
 import com.photo.choosephotos.photoviewer.photoviewerinterface.ViewPagerDeleteActivity;
 import com.photo.choosephotos.util.PictureManageUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ChooseMorePicsActivity2 extends Activity implements
 		OnClickListener {

@@ -25,7 +25,6 @@ public class GsonUtil<T> {
             GsonBuilder gb = new GsonBuilder();
             gb.registerTypeAdapter(String.class, new StringConverter());
             gson = gb.create();
-
             //gson 非空统一解决
         }
         return gson;

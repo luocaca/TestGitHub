@@ -109,14 +109,17 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <!--tools:replace="icon, label， theme"-->
+    <!--tools:replace="android:icon, android:theme"-->
     <!--  android:theme="@style/NoActionBarThemeWhite"-->
     <application xmlns:tools="http://schemas.android.com/tools"
+
         android:name="com.hldj.hmyg.application.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/e"
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme"
-        tools:replace="android:icon, android:theme">
+        tools:replace="android:icon, android:theme  ">
         <activity
             android:name="com.example.sortlistview.ActivityAddFriends"
             android:screenOrientation="portrait"></activity>
@@ -843,10 +846,10 @@
 
 
         <!--<provider-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:authorities="com.hldj.hmyg.fileProvider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true" />-->
+        <!--android:name="android.support.v4.content.FileProvider"-->
+        <!--android:authorities="com.hldj.hmyg.fileProvider"-->
+        <!--android:exported="false"-->
+        <!--android:grantUriPermissions="true" />-->
 
 
     </application>

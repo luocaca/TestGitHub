@@ -208,10 +208,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="自定义空控件" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="自定义空控件" />-->
 
 
             <!--<include layout="@layout/activity_flower_detail_test_content_self_view" />-->

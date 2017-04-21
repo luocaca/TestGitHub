@@ -87,10 +87,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/iv_shou_can"
                         android:layout_width="@dimen/x17"
                         android:layout_height="@dimen/x17"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/gouwuche" />
+                        android:src="@drawable/shoucang_seletor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -148,11 +149,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/add_car"
+                android:text="@string/share"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/main_color"
                 android:textSize="@dimen/y9"
-                android:drawableLeft="@drawable/ic_winstyle_share"
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/ic_share"
 
                 />
 

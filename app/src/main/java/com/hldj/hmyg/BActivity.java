@@ -92,6 +92,9 @@ import me.maxwin.view.XListView;
 import me.maxwin.view.XListView.IXListViewListener;
 
 
+/**
+ * 商城界面
+ */
 @SuppressLint("NewApi")
 public class BActivity extends BaseSecondActivity implements
         IXListViewListener,
@@ -788,7 +791,7 @@ public class BActivity extends BaseSecondActivity implements
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject jsonObject3 = jsonArray
                                                 .getJSONObject(i);
-                                        HashMap<String, Object> hMap = new HashMap<String, Object>();
+                                        HashMap hMap = new HashMap();
                                         hMap.put("show_type", "seedling_list");
                                         hMap.put("id", JsonGetInfo
                                                 .getJsonString(jsonObject3,
@@ -853,6 +856,19 @@ public class BActivity extends BaseSecondActivity implements
                                         hMap.put("price", JsonGetInfo
                                                 .getJsonDouble(jsonObject3,
                                                         "price"));
+
+                                        hMap.put("minPrice", JsonGetInfo
+                                                .getJsonDouble(jsonObject3,
+                                                        "minPrice"));
+
+                                        hMap.put("isNego", JsonGetInfo
+                                                .getJsonDouble(jsonObject3,
+                                                        "isNeGo"));
+
+                                        hMap.put("maxPrice", JsonGetInfo
+                                                .getJsonDouble(jsonObject3,
+                                                        "maxPrice"));
+
                                         hMap.put("count", JsonGetInfo
                                                 .getJsonInt(jsonObject3,
                                                         "count"));

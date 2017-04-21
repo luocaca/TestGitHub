@@ -45,7 +45,7 @@ public class AutoAdd2DetailLinearLayout extends BaseLinearLayout {
     @Override
     protected int setContextView() {
         return R.layout.activity_flower_detail_test_content_self_view;
-    }
+}
 
     @Override
     public BaseLinearLayout initViewHolder(View viewRoot) {

@@ -1,21 +1,5 @@
 package com.hldj.hmyg.buyer;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
-import me.maxwin.view.XListView;
-import me.maxwin.view.XListView.IXListViewListener;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,9 +12,24 @@ import android.widget.Toast;
 
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.adapter.ManagerPurchaseListAdapter;
-import com.hldj.hmyg.application.MyApplication;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
+import me.maxwin.view.XListView;
+import me.maxwin.view.XListView.IXListViewListener;
 
 public class ManagerPurchaseListActivity extends NeedSwipeBackActivity
 		implements IXListViewListener,
@@ -95,153 +94,6 @@ public class ManagerPurchaseListActivity extends NeedSwipeBackActivity
 
 	}
 
-	private void initData() {
-		// TODO Auto-generated method stub
-		getdata = false;
-		FinalHttp finalHttp = new FinalHttp();
-		GetServerUrl.addHeaders(finalHttp,true);
-		AjaxParams params = new AjaxParams();
-		params.put("status", status);
-		params.put("pageSize", pageSize + "");
-		params.put("pageIndex", pageIndex + "");
-		finalHttp.post(GetServerUrl.getUrl() + "admin/purchase/list", params,
-				new AjaxCallBack<Object>() {
-
-					@Override
-					public void onSuccess(Object t) {
-						// TODO Auto-generated method stub
-
-						try {
-							JSONObject jsonObject = new JSONObject(t.toString());
-							String code = JsonGetInfo.getJsonString(jsonObject,
-									"code");
-							String msg = JsonGetInfo.getJsonString(jsonObject,
-									"msg");
-							if (!"".equals(msg)) {
-							}
-							if ("1".equals(code)) {
-								JSONObject jsonObject2 = jsonObject
-										.getJSONObject("data").getJSONObject(
-												"page");
-								int total = JsonGetInfo.getJsonInt(jsonObject2,
-										"total");
-								if (JsonGetInfo.getJsonArray(jsonObject2,
-										"data").length() > 0) {
-									JSONArray jsonArray = JsonGetInfo
-											.getJsonArray(jsonObject2, "data");
-									for (int i = 0; i < jsonArray.length(); i++) {
-										JSONObject jsonObject3 = jsonArray
-												.getJSONObject(i);
-										HashMap<String, Object> hMap = new HashMap<String, Object>();
-										hMap.put("id", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"id"));
-										hMap.put("createBy", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"createBy"));
-										hMap.put("createDate", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"createDate"));
-										hMap.put("cityCode", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"cityCode"));
-										hMap.put("cityName", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"cityName"));
-										hMap.put("prCode", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"prCode"));
-										hMap.put("ciCode", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"ciCode"));
-										hMap.put("coCode", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"coCode"));
-										hMap.put("twCode", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"twCode"));
-										hMap.put("num", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"num"));
-										hMap.put("projectName", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"projectName"));
-										hMap.put("receiptDate", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"receiptDate"));
-										hMap.put("validity", JsonGetInfo
-												.getJsonInt(jsonObject3,
-														"validity"));
-										hMap.put("publishDate", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"publishDate"));
-										hMap.put("closeDate", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"closeDate"));
-										hMap.put("needInvoice", JsonGetInfo
-												.getJsonBoolean(jsonObject3,
-														"needInvoice"));
-										hMap.put("buyerId", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"buyerId"));
-										hMap.put("status", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"status"));
-										hMap.put("statusName", JsonGetInfo
-												.getJsonString(jsonObject3,
-														"statusName"));
-										hMap.put("quoteCountJson", JsonGetInfo
-												.getJsonInt(jsonObject3,
-														"quoteCountJson"));
-										hMap.put("itemCount", JsonGetInfo
-												.getJsonInt(jsonObject3,
-														"itemCount"));
-										hMap.put("itemCountJson", JsonGetInfo
-												.getJsonInt(jsonObject3,
-														"itemCountJson"));
-										hMap.put("lastDays", JsonGetInfo
-												.getJsonInt(jsonObject3,
-														"lastDays"));
-										datas.add(hMap);
-										if (listAdapter != null) {
-											listAdapter.notifyDataSetChanged();
-										}
-									}
-
-									if (listAdapter == null) {
-										listAdapter = new ManagerPurchaseListAdapter(
-												ManagerPurchaseListActivity.this,
-												datas, mainView);
-										xListView.setAdapter(listAdapter);
-									}
-
-									pageIndex++;
-
-								}
-
-							} else {
-
-							}
-
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						super.onSuccess(t);
-					}
-
-					@Override
-					public void onFailure(Throwable t, int errorNo,
-							String strMsg) {
-						// TODO Auto-generated method stub
-						Toast.makeText(ManagerPurchaseListActivity.this,
-								R.string.error_net, Toast.LENGTH_SHORT).show();
-						super.onFailure(t, errorNo, strMsg);
-					}
-
-				});
-		getdata = true;
-	}
 
 	public class MultipleClickProcess implements OnClickListener {
 		private boolean flag = true;
@@ -435,6 +287,156 @@ public class ManagerPurchaseListActivity extends NeedSwipeBackActivity
 			initData();
 		}
 		onLoad();
+	}
+
+
+
+	private void initData() {
+		// TODO Auto-generated method stub
+		getdata = false;
+		FinalHttp finalHttp = new FinalHttp();
+		GetServerUrl.addHeaders(finalHttp,true);
+		AjaxParams params = new AjaxParams();
+		params.put("status", status);
+		params.put("pageSize", pageSize + "");
+		params.put("pageIndex", pageIndex + "");
+		finalHttp.post(GetServerUrl.getUrl() + "admin/purchase/list", params,
+				new AjaxCallBack<Object>() {
+
+					@Override
+					public void onSuccess(Object t) {
+						// TODO Auto-generated method stub
+
+						try {
+							JSONObject jsonObject = new JSONObject(t.toString());
+							String code = JsonGetInfo.getJsonString(jsonObject,
+									"code");
+							String msg = JsonGetInfo.getJsonString(jsonObject,
+									"msg");
+							if (!"".equals(msg)) {
+							}
+							if ("1".equals(code)) {
+								JSONObject jsonObject2 = jsonObject
+										.getJSONObject("data").getJSONObject(
+												"page");
+								int total = JsonGetInfo.getJsonInt(jsonObject2,
+										"total");
+								if (JsonGetInfo.getJsonArray(jsonObject2,
+										"data").length() > 0) {
+									JSONArray jsonArray = JsonGetInfo
+											.getJsonArray(jsonObject2, "data");
+									for (int i = 0; i < jsonArray.length(); i++) {
+										JSONObject jsonObject3 = jsonArray
+												.getJSONObject(i);
+										HashMap<String, Object> hMap = new HashMap<String, Object>();
+										hMap.put("id", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"id"));
+										hMap.put("createBy", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"createBy"));
+										hMap.put("createDate", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"createDate"));
+										hMap.put("cityCode", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"cityCode"));
+										hMap.put("cityName", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"cityName"));
+										hMap.put("prCode", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"prCode"));
+										hMap.put("ciCode", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"ciCode"));
+										hMap.put("coCode", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"coCode"));
+										hMap.put("twCode", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"twCode"));
+										hMap.put("num", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"num"));
+										hMap.put("projectName", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"projectName"));
+										hMap.put("receiptDate", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"receiptDate"));
+										hMap.put("validity", JsonGetInfo
+												.getJsonInt(jsonObject3,
+														"validity"));
+										hMap.put("publishDate", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"publishDate"));
+										hMap.put("closeDate", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"closeDate"));
+										hMap.put("needInvoice", JsonGetInfo
+												.getJsonBoolean(jsonObject3,
+														"needInvoice"));
+										hMap.put("buyerId", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"buyerId"));
+										hMap.put("status", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"status"));
+										hMap.put("statusName", JsonGetInfo
+												.getJsonString(jsonObject3,
+														"statusName"));
+										hMap.put("quoteCountJson", JsonGetInfo
+												.getJsonInt(jsonObject3,
+														"quoteCountJson"));
+										hMap.put("itemCount", JsonGetInfo
+												.getJsonInt(jsonObject3,
+														"itemCount"));
+										hMap.put("itemCountJson", JsonGetInfo
+												.getJsonInt(jsonObject3,
+														"itemCountJson"));
+										hMap.put("lastDays", JsonGetInfo
+												.getJsonInt(jsonObject3,
+														"lastDays"));
+										datas.add(hMap);
+										if (listAdapter != null) {
+											listAdapter.notifyDataSetChanged();
+										}
+									}
+
+									if (listAdapter == null) {
+										listAdapter = new ManagerPurchaseListAdapter(
+												ManagerPurchaseListActivity.this,
+												datas, mainView);
+										xListView.setAdapter(listAdapter);
+									}
+
+									pageIndex++;
+
+								}
+
+							} else {
+
+							}
+
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						super.onSuccess(t);
+					}
+
+					@Override
+					public void onFailure(Throwable t, int errorNo,
+										  String strMsg) {
+						// TODO Auto-generated method stub
+						Toast.makeText(ManagerPurchaseListActivity.this,
+								R.string.error_net, Toast.LENGTH_SHORT).show();
+						super.onFailure(t, errorNo, strMsg);
+					}
+
+				});
+		getdata = true;
 	}
 
 }

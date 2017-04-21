@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context="com.hldj.hmyg.FlowerDetailActivity" >
+    tools:context="com.hldj.hmyg.FlowerDetailActivity">
 
     <TextView
         android:id="@+id/tv_no_server_area"
@@ -86,17 +86,18 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/iv_shou_can"
                         android:layout_width="@dimen/x17"
                         android:layout_height="@dimen/x17"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/gouwuche" />
+                        android:src="@drawable/shoucang_seletor" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/x3"
-                        android:text="@string/car"
+                        android:text="@string/collect"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/main_color" />
                 </LinearLayout>
@@ -140,16 +141,17 @@
                 android:layout_height="match_parent"
                 android:background="@color/gray" />
 
-            <TextView
+            <com.hldj.hmyg.widget.DrawableCenterText
                 android:id="@+id/tv_add_car"
                 android:layout_width="0.0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/main_color"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawablePadding="4dp"
                 android:gravity="center"
-                android:text="@string/add_car"
+                android:text="@string/share"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white" />
+                android:textColor="@color/main_color" />
         </LinearLayout>
 
         <LinearLayout
@@ -202,12 +204,14 @@
                 android:textColor="@color/main_color" />
         </LinearLayout>
 
+
+        <!--未提交时显示-->
         <LinearLayout
             android:id="@+id/ll_manager_unsubmit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_03_01"
@@ -217,7 +221,8 @@
                 android:gravity="center"
                 android:text="@string/set_detail"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/main_color" />
+                android:textColor="@color/main_color"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout

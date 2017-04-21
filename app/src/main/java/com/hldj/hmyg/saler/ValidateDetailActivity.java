@@ -1,25 +1,11 @@
 package com.hldj.hmyg.saler;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-
-import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
-import net.tsz.afinal.FinalBitmap;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -33,7 +19,6 @@ import com.google.gson.Gson;
 import com.hldj.hmyg.GalleryImageActivity;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.application.Data;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicSerializableMaplist;
 import com.hldj.hmyg.bean.PicValiteIsUtils;
@@ -45,6 +30,20 @@ import com.zf.iosdialog.widget.ActionSheetDialog;
 import com.zf.iosdialog.widget.ActionSheetDialog.OnSheetItemClickListener;
 import com.zf.iosdialog.widget.ActionSheetDialog.SheetItemColor;
 import com.zzy.flowers.widget.popwin.EditP2;
+
+import net.tsz.afinal.FinalBitmap;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+
+import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 
 public class ValidateDetailActivity extends NeedSwipeBackActivity {
 

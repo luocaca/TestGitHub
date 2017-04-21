@@ -96,14 +96,14 @@
                 android:id="@+id/ll_auto_add_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
+                android:animateLayoutChanges="false"
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="此处显示  动态布局 " />
+                <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="此处显示  动态布局 " />-->
             </LinearLayout>
 
             <!--放 自动换行标签的控件-->

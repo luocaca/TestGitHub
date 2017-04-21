@@ -4,27 +4,27 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".SalerActivity" >
+    tools:context=".SalerActivity">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/gray_bg" >
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x175"
                 android:background="@drawable/gerenzhongxin_beij"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/y34" >
+                    android:layout_height="@dimen/y34">
 
                     <ImageView
                         android:id="@+id/iv_a_msg"
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_icon_persion_pic"
@@ -84,7 +84,8 @@
                 android:layout_height="@dimen/y37"
                 android:layout_marginTop="@dimen/y8"
                 android:background="@drawable/btn_my_list"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1px"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_yanmiao_00"
@@ -124,7 +125,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_00"
@@ -132,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_00"
@@ -168,7 +169,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_01"
@@ -176,7 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_01"
@@ -212,7 +213,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_02"
@@ -220,7 +221,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_02"
@@ -256,7 +257,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_03"
@@ -264,7 +265,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_03"
@@ -300,7 +301,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_04"
@@ -308,7 +309,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_04"
@@ -345,7 +346,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
                     android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_yanmiao_nei_05"
@@ -353,7 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_yanmiao_05"
@@ -382,7 +383,8 @@
                 android:layout_height="@dimen/y37"
                 android:layout_marginTop="@dimen/y8"
                 android:background="@drawable/btn_my_list"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -414,7 +416,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1px"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_daifukuan"
@@ -422,7 +425,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_daifahuo_00"
@@ -430,7 +433,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="@dimen/x24"
@@ -457,7 +460,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_daifahuo_01"
@@ -465,7 +468,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="@dimen/x24"
@@ -492,7 +495,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_daifahuo_02"
@@ -500,7 +503,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="@dimen/x24"
@@ -527,7 +530,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <cn.bingoogolapple.badgeview.BGABadgeLinearLayout
                         android:id="@+id/ll_daifahuo_03"
@@ -535,7 +538,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/y4"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="@dimen/x24"
@@ -561,7 +564,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/y8"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_01"
@@ -569,7 +572,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -586,7 +589,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="发布苗木"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -600,7 +603,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -617,7 +620,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="草稿箱"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -631,7 +634,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -648,7 +651,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="快速报价"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -662,7 +665,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -679,7 +682,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="我的报价"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -687,7 +690,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1px"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_04"
@@ -695,7 +698,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -712,7 +715,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="苗源地址"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -726,7 +729,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -743,7 +746,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="交易设置"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -757,7 +760,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -774,7 +777,7 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="店铺设置"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
 
                 <View
@@ -788,7 +791,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -805,16 +808,17 @@
                         android:layout_marginTop="@dimen/y4"
                         android:text="我的店铺"
                         android:textColor="@color/light_gray"
-                        android:textSize="@dimen/x15" />
+                        android:textSize="@dimen/x13" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:layout_marginTop="1px"
-                android:orientation="horizontal" >
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_09"
@@ -822,7 +826,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -852,7 +856,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -880,7 +884,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"
@@ -908,7 +912,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/btn_my_list"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/x24"

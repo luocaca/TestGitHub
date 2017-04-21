@@ -23,6 +23,7 @@ public class AutoAddRelative extends RelativeLayout {
     private ViewHolder_rd viewHolder_rd;
     private ViewHolder_top viewHolder_top;
     Context context;
+    boolean isChangeName = true; //是否改变 左边的名字
 
     public AutoAddRelative(Context context) {
         super(context);
@@ -40,6 +41,8 @@ public class AutoAddRelative extends RelativeLayout {
 
     public void setDatas(SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean paramsListBean) {
         viewHolder_add.tv_auto_add_left1.setText(paramsListBean.getName());
+
+
         requiredis = paramsListBean.isRequired();
         if (!requiredis)
             viewHolder_add.tv_auto_add_left2.setText("(选填)");//不是必须的话 写选填
@@ -54,6 +57,13 @@ public class AutoAddRelative extends RelativeLayout {
 
     public AutoAddRelative setDatas_rd(SaveSeedingGsonBean.DataBean.TypeListBean.ParamsListBean paramsListBean) {
         viewHolder_rd.tv_auto_add_left1.setText(paramsListBean.getName());
+        if (paramsListBean.getValue().equals("dbh")) {
+            if (isChangeName)
+                viewHolder_rd.initListener();
+            isChangeName = false;
+        }//如果是胸径 就不会自动改变左边的字
+
+
         requiredis = paramsListBean.isRequired();
         if (!requiredis)
             viewHolder_rd.tv_auto_add_left2.setText("(选填)");//不是必须的话 写选填
@@ -118,8 +128,6 @@ public class AutoAddRelative extends RelativeLayout {
      */
     public String getDiameterType() {
         if (getMTag().equals("dbh")) {
-
-
             if (viewHolder_rd.rb_auto_add_left.isChecked()) {
                 return "size30";
             }
@@ -141,6 +149,41 @@ public class AutoAddRelative extends RelativeLayout {
             }
         }
         return "";
+    }
+
+
+    /**
+     * 根据size 种类  动态选择中间按钮
+     *
+     * @param size
+     */
+    public void setDiameterTypeWithSize(String size) {
+        if (getMTag().equals("dbh")) {
+
+            switch (size) {
+                case "size30":
+                    viewHolder_rd.rb_auto_add_left.setChecked(true);
+                    break;
+                case "size100":
+                    viewHolder_rd.rb_auto_add_center.setChecked(true);
+                    break;
+                case "size130":
+                    viewHolder_rd.rb_auto_add_right.setChecked(true);
+                    break;
+            }
+        } else if (getMTag().equals("diameter")) {
+            switch (size) {
+                case "size0":
+                    viewHolder_rd.rb_auto_add_left.setChecked(true);
+                    break;
+                case "size10":
+                    viewHolder_rd.rb_auto_add_center.setChecked(true);
+                    break;
+                case "size30":
+                    viewHolder_rd.rb_auto_add_right.setChecked(true);
+                    break;
+            }
+        }
     }
 
 
@@ -205,13 +248,15 @@ public class AutoAddRelative extends RelativeLayout {
             this.rb_auto_add_left = (RadioButton) rootView.findViewById(R.id.rb_auto_add_left);
             this.rb_auto_add_center = (RadioButton) rootView.findViewById(R.id.rb_auto_add_center);
             this.rb_auto_add_right = (RadioButton) rootView.findViewById(R.id.rb_auto_add_right);
-            initListener();
+
+
         }
 
         private void initListener() {
             this.rb_auto_add_left.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     viewHolder_rd.tv_auto_add_left1.setText("地径");
                 }
             });
