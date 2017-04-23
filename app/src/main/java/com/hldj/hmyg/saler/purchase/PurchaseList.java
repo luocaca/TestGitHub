@@ -20,6 +20,7 @@ public class PurchaseList implements Serializable{
 	String twCode = "";
 	String num = "";
 	String projectName = "";
+  	String itemCountJson = "";
 	String receiptDate = "";
 	String validity = "";
 	String publishDate = "";
@@ -192,5 +193,13 @@ public class PurchaseList implements Serializable{
 	}
 	public void setItemNameList(ArrayList<String> itemNameList) {
 		this.itemNameList = itemNameList;
+	}
+
+	public String getItemCountJson() {
+		return itemCountJson;
+	}
+
+	public void setItemCountJson(String itemCountJson) {
+		this.itemCountJson = itemCountJson;
 	}
 }

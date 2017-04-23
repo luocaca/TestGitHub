@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dip"
-            android:scrollbars="none">
+            android:scrollbars="none" android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -164,7 +164,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="2.0dip"
                 android:paddingLeft="10.0dip"
-                android:paddingRight="10.0dip">
+                android:paddingRight="10.0dip"
+                android:layout_alignParentStart="true">
 
                 <TextView
                     android:id="@+id/tv_10"

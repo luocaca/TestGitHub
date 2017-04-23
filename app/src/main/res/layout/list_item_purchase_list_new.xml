@@ -6,6 +6,11 @@
     android:background="@drawable/btn_my_list"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10px"
+        android:background="#fff0f0f0" />
+
     <LinearLayout
         android:id="@+id/ll_item_broker"
         android:layout_width="match_parent"
@@ -90,78 +95,28 @@
                 android:singleLine="true"
                 android:text="jklfasfasfa"
                 android:textColor="#5A5A5A"
-                android:textSize="14.0sp" />
+                android:textSize="15.0sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10.0dip"
-            android:paddingRight="10.0dip"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_08"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:text="jklfasfkkkkasfa"
-                android:textColor="#5A5A5A"
-                android:textSize="14.0sp" />
-
-            <TextView
-                android:id="@+id/tv_09"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:text="jklfasfasfa"
-                android:textColor="#5A5A5A"
-                android:textSize="14.0sp"
-                android:visibility="visible" />
-        </LinearLayout>
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-5dip"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.hhl.library.FlowTagLayout
+                android:id="@+id/mobile_flow_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.hhl.library.FlowTagLayout
-                    android:id="@+id/mobile_flow_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp" />
-            </LinearLayout>
+                android:layout_marginLeft="5dp" />
         </HorizontalScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2.0dip"
-            android:paddingLeft="10.0dip"
-            android:paddingRight="10.0dip"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_05"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:text="jklfasfasfa"
-                android:textSize="14.0sp" />
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -196,24 +151,38 @@
                     android:visibility="visible" />
             </RelativeLayout>
 
-            <com.neopixl.pixlui.components.textview.TextView
-                android:id="@+id/tv_caozuo01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10.0dip"
-                android:gravity="center_vertical"
-                android:paddingBottom="2.5dip"
-                android:paddingLeft="5.0dip"
-                android:paddingRight="5.0dip"
-                android:paddingTop="2.5dip"
-                android:singleLine="true"
-                android:text="截止日期"
-                android:textColor="@color/gray"
-                android:textSize="12.0sp" />
+
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/xuxian" />
+        </LinearLayout>
+
+
+        <com.coorchice.library.SuperTextView
+            android:id="@+id/tv_caozuo01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.0dip"
+            android:gravity="center_vertical|right"
+            android:paddingBottom="2.5dip"
+            android:paddingLeft="5.0dip"
+            android:paddingRight="5.0dip"
+            android:paddingTop="2.5dip"
+            android:singleLine="true"
+            android:text="截止日期"
+            android:textColor="@color/gray"
+            android:textSize="13.0sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -314,10 +283,5 @@
                 android:textSize="11.0sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10px"
-        android:background="#fff0f0f0" />
 
 </LinearLayout>
