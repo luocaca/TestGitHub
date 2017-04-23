@@ -19,9 +19,8 @@ public class SPUtil {
      */
 
 
-
     public static final String Json_LoginGsonBean = "Json_LoginGsonBean";
-    public static final String  USER_ID = "UserID";
+    public static final String USER_ID = "UserID";
     public static final String Json_UserInfoGsonBean = "Json_UserInfoGsonBean";
 
 
@@ -118,6 +117,9 @@ public class SPUtil {
         }
         return null;
     }
+
+
+
 
     public static Object get(String spname, Context context, String key,
                              Object defaultObj) {

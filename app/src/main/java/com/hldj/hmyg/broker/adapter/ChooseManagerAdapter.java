@@ -1,8 +1,5 @@
 package com.hldj.hmyg.broker.adapter;
 
-import java.util.ArrayList;
-
-import net.tsz.afinal.FinalBitmap;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +28,13 @@ import com.hldj.hmyg.saler.StorageSaveActivity;
 import com.hldj.hmyg.saler.bean.ChooseManager;
 import com.white.utils.AndroidUtil;
 
+import net.tsz.afinal.FinalBitmap;
+
+import java.util.ArrayList;
+
+/**
+ * 苗木管理适配器
+ */
 public class ChooseManagerAdapter extends BaseAdapter {
 
 	private FinalBitmap fb;
@@ -98,7 +102,7 @@ public class ChooseManagerAdapter extends BaseAdapter {
 					Intent toManagerListActivity = new Intent(context,
 							ManagerListActivity.class);
 					context.startActivity(toManagerListActivity);
-				} else if ("3".equals(data.get(position).getId())) {
+				} else if ("3".equals(data.get(position).getId())) {  //草稿箱界面
 					Intent toStorageSaveActivity = new Intent(context,
 							StorageSaveActivity.class);
 					context.startActivity(toStorageSaveActivity);

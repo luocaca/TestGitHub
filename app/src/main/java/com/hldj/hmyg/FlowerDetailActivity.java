@@ -41,7 +41,8 @@ import com.hldj.hmyg.bean.SaveSeedingGsonBean;
 import com.hldj.hmyg.bean.SeedlingParm;
 import com.hldj.hmyg.bean.SimpleGsonBean;
 import com.hldj.hmyg.saler.SavePriceAndCountAndOutlineActivity;
-import com.hldj.hmyg.saler.SaveSeedlingActivity;
+import com.hldj.hmyg.saler.SaveSeedlingActivity_change_data;
+import com.hldj.hmyg.util.ConstantState;
 import com.hldj.hmyg.util.D;
 import com.hldj.hmyg.util.GsonUtil;
 import com.hldj.hmyg.widget.AutoAdd2DetailLinearLayout;
@@ -75,11 +76,11 @@ import java.util.ArrayList;
 import me.drakeet.materialdialog.MaterialDialog;
 import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 
-import static com.hldj.hmyg.FlowerDetailActivity.MultipleClickProcess.CHANGE_DATES;
+import static com.hldj.hmyg.util.ConstantState.LOGIN_SUCCEED;
 
 
 /**
- * 商城详情
+ * 商城详情  苗木详情展示
  */
 @SuppressLint({"ResourceAsColor", "Override"})
 public class FlowerDetailActivity extends NeedSwipeBackActivity {
@@ -206,97 +207,6 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
     private boolean isFirst; //第一次加载
 
 
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
-
-    /**
-     * 设置状态栏 黑色 并且图片置顶
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarAlpha(0.0f);
-            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
-
-
-        }
-
-
-//		getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN| View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR );
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-//		{
-//			// 透明状态栏
-//			getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//
-//		}
-    }
-
-
-    /**
-     * 设置状态栏 黑色 并且图片置顶
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setar1() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                );
-                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(Color.TRANSPARENT);
-
-//				window.setNavigationBarColor(Color.TRANSPARENT);
-            }
-//		getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN| View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR );
-//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-//		{
-//			// 透明状态栏
-//			getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//
-//		}
-        }
-    }
-
-    public void setToolBarAlfaScr() {
-        final AlphaTitleScrollView scroll = (AlphaTitleScrollView) findViewById(R.id.alfa_scroll);
-        LinearLayout title = (LinearLayout) findViewById(R.id.ll_detail_toolbar);
-        View head = findViewById(R.id.view_detail_top);
-        scroll.setTitleAndHead(title, head);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scroll.smoothScrollTo(0, 10);
-            }
-        }, 100);
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.e("onDestroy", "onDestroy: ");
-        findViewById(R.id.ll_detail_toolbar).setAlpha(0);
-        super.onDestroy();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -387,7 +297,8 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 //        ll_data = (LinearLayout) findViewById(R.id.ll_data);
         ll_store = (LinearLayout) findViewById(R.id.ll_store);
         ll_bohao = (LinearLayout) findViewById(R.id.ll_bohao);
-        ll_to_d3 = (LinearLayout) findViewById(R.id.ll_to_d3);
+        ll_to_d3 = (LinearLayout) findViewById(R.id.ll_to_d3);//店铺  跳转
+        ll_to_d3.setOnClickListener(multipleClickProcess);
         ll_to_d4 = (LinearLayout) findViewById(R.id.ll_to_d4);
         ll_to_d4.setOnClickListener(multipleClickProcess);
 
@@ -416,6 +327,97 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         }
         initData();
         visitsCount();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e("onDestroy", "onDestroy: ");
+        findViewById(R.id.ll_detail_toolbar).setAlpha(0);
+        super.onDestroy();
+    }
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
+    /**
+     * 设置状态栏 黑色 并且图片置顶
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarAlpha(0.0f);
+            tintManager.setStatusBarTintResource(R.color.transparent);//通知栏所需颜色
+
+
+        }
+
+
+//		getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN| View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR );
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+//		{
+//			// 透明状态栏
+//			getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//		}
+    }
+
+
+    /**
+     * 设置状态栏 黑色 并且图片置顶
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setar1() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                );
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+
+//				window.setNavigationBarColor(Color.TRANSPARENT);
+            }
+//		getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN| View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR );
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+//		{
+//			// 透明状态栏
+//			getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//		}
+        }
+    }
+
+    public void setToolBarAlfaScr() {
+        final AlphaTitleScrollView scroll = (AlphaTitleScrollView) findViewById(R.id.alfa_scroll);
+        LinearLayout title = (LinearLayout) findViewById(R.id.ll_detail_toolbar);
+        View head = findViewById(R.id.view_detail_top);
+        scroll.setTitleAndHead(title, head);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scroll.smoothScrollTo(0, 10);
+            }
+        }, 100);
 
     }
 
@@ -601,9 +603,15 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                                     //单位      元/ 株  盆     颗
                                     tv_unitTypeName.setText("/" + unitTypeName);
 
-                                    //打电话监听
-                                    iv_lianxi.setVisibility(View.VISIBLE);
-                                    iv_lianxi.setOnClickListener(callPhotoClick);
+
+                                    if (isLogin()) {//登录显示
+                                        //打电话监听
+                                        iv_lianxi.setVisibility(View.VISIBLE);
+                                        iv_lianxi.setOnClickListener(callPhotoClick);
+                                    } else {
+                                        //打电话监听
+                                        iv_lianxi.setVisibility(View.GONE);
+                                    }
 
                                     //价格
                                     price = JsonGetInfo.getJsonDouble(jsonObject2, "price");
@@ -942,13 +950,23 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
                                 {//商家信息
 
+
                                     JSONObject nurseryJson = JsonGetInfo.getJSONObject(jsonObject2, "nurseryJson");
                                     address_name = JsonGetInfo.getJsonString(nurseryJson, "cityName") + JsonGetInfo.getJsonString(nurseryJson, "detailAddress");
 
-                                    tv_store_name.setText(displayName);//商家信息    公司
-                                    tv_store_area.setText(fullName);// 所在地区
-                                    tv_store_phone.setText(displayPhone);//电话
-                                    tv_contanct_name.setText(publicName);//联系人
+
+                                    //登录后显示商家信息
+                                    if (isLogin()) {
+                                        ll_store.setVisibility(View.VISIBLE);
+                                        tv_store_name.setText(displayName);//商家信息    公司
+                                        tv_store_area.setText(fullName);// 所在地区
+                                        tv_store_phone.setText(displayPhone);//电话
+                                        tv_contanct_name.setText(publicName);//联系人
+                                    } else {
+                                        ll_store.setVisibility(View.GONE);
+                                        findViewById(R.id.tv_login_show).setVisibility(View.VISIBLE);
+                                    }
+
 
 //                                    tv_statusName.setText(fullName);
                                 }
@@ -1210,7 +1228,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
                         }
                         break;
 
-                    case R.id.ll_to_d3:
+                    case R.id.ll_to_d3://跳转到店铺
                         if (!"".equals(store_id)) {
                             Intent toStoreActivity = new Intent(
                                     FlowerDetailActivity.this, StoreActivity.class);
@@ -1225,7 +1243,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
                         if (!MyApplication.Userinfo.getBoolean("isLogin", false)) {
                             Intent toLoginActivity = new Intent(FlowerDetailActivity.this, LoginActivity.class);
-                            startActivityForResult(toLoginActivity, 4);
+                            startActivityForResult(toLoginActivity, LOGIN_SUCCEED);
                             overridePendingTransition(R.anim.slide_in_left,
                                     R.anim.slide_out_right);
                             return;
@@ -1240,32 +1258,29 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 //                        overridePendingTransition(R.anim.slide_in_left,
 //                                R.anim.slide_out_right);
                         break;
-                    case R.id.tv_add_car:
-                        if (MyApplication.Userinfo.getBoolean("isLogin", false) == false) {
-                            Intent toLoginActivity = new Intent(
-                                    FlowerDetailActivity.this, LoginActivity.class);
-                            startActivityForResult(toLoginActivity, 4);
-                            overridePendingTransition(R.anim.slide_in_left,
-                                    R.anim.slide_out_right);
+                    case R.id.tv_add_car://分享
+                        if (!isLogin()) {//没登录就直接登录
+                            toLogin();
                             return;
                         }
-                        if (isOwner == true) {
-                            Toast.makeText(FlowerDetailActivity.this, "自家商品不可购买",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (stock <= 0) {
-                            Toast.makeText(FlowerDetailActivity.this, "库存不足",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (!cartExist) {
-                            popwin = new EditP2(FlowerDetailActivity.this, ""
-                                    + stock, FlowerDetailActivity.this);
-                            popwin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                            popwin.showAtLocation(mainView, Gravity.BOTTOM
-                                    | Gravity.CENTER_HORIZONTAL, 0, 0);
-                        }
+                        share();
+//                        if (isOwner == true) {
+//                            Toast.makeText(FlowerDetailActivity.this, "自家商品不可购买",
+//                                    Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                        if (stock <= 0) {
+//                            Toast.makeText(FlowerDetailActivity.this, "库存不足",
+//                                    Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                        if (!cartExist) {
+//                            popwin = new EditP2(FlowerDetailActivity.this, ""
+//                                    + stock, FlowerDetailActivity.this);
+//                            popwin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//                            popwin.showAtLocation(mainView, Gravity.BOTTOM
+//                                    | Gravity.CENTER_HORIZONTAL, 0, 0);
+//                        }
 
                         break;
                     default:
@@ -1279,7 +1294,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
         public void saveSeedling() {
             if (!"".equals(id)) {
-                Intent toSaveSeedlingActivity = new Intent(FlowerDetailActivity.this, SaveSeedlingActivity.class);
+                Intent toSaveSeedlingActivity = new Intent(FlowerDetailActivity.this, SaveSeedlingActivity_change_data.class);
                 Bundle bundleObject = new Bundle();
                 bundleObject.putSerializable("saveSeedingGsonBean", saveSeedingGsonBean);
                 toSaveSeedlingActivity.putExtras(bundleObject);
@@ -1333,8 +1348,6 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
             }
         }
 
-
-        public static final int CHANGE_DATES = 200;
 
         public void savePriceAndCountAndOutline() {
             if (!"".equals(id)) {
@@ -1471,6 +1484,12 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         }
     }
 
+    private void share() {
+        D.e("============此处执行分享代码===========");
+
+
+    }
+
     private void add2Collect() {
 
         D.e("============store_id==========" + store_id);
@@ -1478,12 +1497,11 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         FinalHttp finalHttp = new FinalHttp();
         GetServerUrl.addHeaders(finalHttp, true);
         AjaxParams params = new AjaxParams();
-        params.put("sourceId", store_id);
+        params.put("sourceId", id);
         params.put("type", "seedling");
 
 
-
-         hud.show();
+        hud.show();
 
 
         finalHttp.post(GetServerUrl.getUrl() + "admin/collect/save", params, new AjaxCallBack<String>() {
@@ -1891,10 +1909,11 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         };
     }
 
+
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
         // TODO Auto-generated method stub
-        if (arg1 == CHANGE_DATES) {
+        if (arg1 == LOGIN_SUCCEED) {
             initData();
         }
         super.onActivityResult(arg0, arg1, arg2);
@@ -1906,7 +1925,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
      */
     OnClickListener callPhotoClick = v -> {
 
-        if (MyApplication.Userinfo.getBoolean("isLogin", false)) {
+        if (isLogin()) {
             boolean requesCallPhonePermissions = new PermissionUtils(FlowerDetailActivity.this).requesCallPhonePermissions(200);
             if (requesCallPhonePermissions) {
                 CallPhone(displayPhone);
@@ -1922,5 +1941,18 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
 
 
     AutoAdd2DetailLinearLayout.UploadDatas uploadDatas = new AutoAdd2DetailLinearLayout.UploadDatas();
+
+
+    public void toLogin() {
+
+        Intent toLoginActivity = new Intent(FlowerDetailActivity.this, LoginActivity.class);
+        startActivityForResult(toLoginActivity, ConstantState.LOGIN_SUCCEED);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public boolean isLogin() {
+        return MyApplication.Userinfo.getBoolean("isLogin", false);
+    }
+
 
 }

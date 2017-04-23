@@ -154,7 +154,7 @@
     <string name="tab_a_text">首页</string>
     <string name="tab_b_text">商城</string>
     <string name="tab_c_text">发布</string>
-    <string name="tab_d_text">购物车</string>
+    <string name="tab_d_text">收藏夹</string>
     <string name="tab_e_text">我的</string>
     <string name="store_setting">店铺设置</string>
     <string name="store_domain">店铺域名：</string>

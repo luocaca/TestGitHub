@@ -106,6 +106,8 @@ public class ActionSheetDialog {
 
     List<itemBean> itemBeen = new ArrayList<>();
 
+
+
     public ActionSheetDialog initItemsAndAddListener(final onItemClickListener onItemClickListener) {
 
         if (itemBeen.size() == 0) {
@@ -142,7 +144,7 @@ public class ActionSheetDialog {
         void onItemClick(itemBean ib);
     }
 
-   public   static class itemBean {
+    public static class itemBean {
         public String key = "";
 
         public String value = "";
@@ -230,7 +232,7 @@ public class ActionSheetDialog {
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(index-1);
+                    listener.onClick(index - 1);
                     dialog.dismiss();
                 }
             });

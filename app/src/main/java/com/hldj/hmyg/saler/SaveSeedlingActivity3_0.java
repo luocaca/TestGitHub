@@ -574,16 +574,17 @@ public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
         }
 
         private static final String DB_CREATE = "create table savetable(_id integer primary key autoincrement,img text,title text,time text,money text,storage_save_id text)";
+        private static final String DB_CREATE_NEW = "create table savetable(_id integer primary key autoincrement,json text)";
 
         @Override
         public void onCreate(SQLiteDatabase _db) {
-            _db.execSQL(DB_CREATE);
+            _db.execSQL(DB_CREATE_NEW);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase _db, int _oldVersion,
                               int _newVersion) {
-            _db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
+            _db.execSQL("DROP TABLE IF EXISTS " + DB_CREATE_NEW);
             onCreate(_db);
         }
     }
@@ -606,7 +607,6 @@ public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
                             SaveSeedingGsonBean saveSeedingGsonBean = GsonUtil.formateJson2Bean(t.toString(), SaveSeedingGsonBean.class);
                             saveSeedingGsonBean.getData().getPlantTypeList();
                             saveSeedingGsonBean.getData().getTypeList();
-
 
 
                             JSONObject jsonObject = new JSONObject(t.toString());
@@ -1237,7 +1237,7 @@ public class SaveSeedlingActivity3_0 extends NeedSwipeBackActivity implements
                                                             "image");
                                                     urlPaths.set(
                                                             a,
-                                                            new Pic( JsonGetInfo  .getJsonString(  image,  "id"),
+                                                            new Pic(JsonGetInfo.getJsonString(image, "id"),
                                                                     false,
                                                                     JsonGetInfo
                                                                             .getJsonString(

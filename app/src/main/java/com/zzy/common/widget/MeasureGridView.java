@@ -12,7 +12,7 @@ import com.hldj.hmyg.adapter.PublishFlowerInfoPhotoAdapter;
 import com.hldj.hmyg.application.PermissionUtils;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.saler.FlowerInfoPhotoChoosePopwin2;
-import com.hldj.hmyg.saler.SaveSeedlingActivity;
+import com.hldj.hmyg.saler.SaveSeedlingActivityBase;
 import com.hldj.hmyg.util.TakePhotoUtil;
 import com.hy.utils.ToastUtil;
 import com.zzy.flowers.activity.photoalbum.EditGalleryImageActivity;
@@ -54,7 +54,7 @@ public class MeasureGridView extends GridView {
 
     static PhotoGvOnItemClickListener gvOnItemClickListener;
 
-    public void init(Context context, ArrayList<Pic> urlPaths, SaveSeedlingActivity.ViewHolder viewHolder, FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener listener) {
+    public void init(Context context, ArrayList<Pic> urlPaths, SaveSeedlingActivityBase.ViewHolder viewHolder, FlowerInfoPhotoChoosePopwin2.onPhotoStateChangeListener listener) {
 
 
         adapter = new PublishFlowerInfoPhotoAdapter(context, urlPaths);

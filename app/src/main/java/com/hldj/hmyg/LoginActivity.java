@@ -144,6 +144,7 @@ public class LoginActivity extends BaseActivity {
 
 
     }
+
     //获取个人信息
     public void getUserInfo(LoginGsonBean loginGsonBean) {
         D.e("========登录成功，返回id===========" + loginGsonBean.toString());
@@ -151,7 +152,7 @@ public class LoginActivity extends BaseActivity {
         LoginPresenter.getUserInfo(loginGsonBean.getData().getUserId(), new ResultCallBack<UserInfoGsonBean>() {
             @Override
             public void onSuccess(UserInfoGsonBean userInfoGsonBean) {
-                D.e("个人信息获取成功"+userInfoGsonBean.toString());
+                D.e("个人信息获取成功" + userInfoGsonBean.toString());
 
                 finish();
 
@@ -427,7 +428,10 @@ public class LoginActivity extends BaseActivity {
                     JpushUtil.setAlias(id);
                     //设置 极光推送
                     if ("LoginActivity".equals(activity)) {
+                        setResult(ConstantState.LOGIN_SUCCEED);
                         finish();
+
+
                     } else if ("SetProfileActivity".equals(activity.getClass().getName())) {
                         D.e("=========SetProfileActivity===============不消失=====================");
                     }

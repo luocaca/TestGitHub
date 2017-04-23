@@ -189,6 +189,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.hldj.hmyg.DActivity_new"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.hldj.hmyg.DActivity2"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
@@ -375,6 +379,15 @@
         <activity
             android:name="com.hldj.hmyg.saler.SaveSeedlingActivity"
             android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.hldj.hmyg.saler.SaveSeedlingActivity_show_history"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hldj.hmyg.saler.SaveSeedlingActivity_change_data"
+            android:screenOrientation="portrait" />
+
+
         <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"-->
         <activity
             android:name="com.hldj.hmyg.saler.SubscribeManagerListActivity"

@@ -69,6 +69,10 @@ public class SaveSeedingGsonBean implements Serializable{
             return seedling;
         }
 
+        public void setSeedling(SeedlingBean seedling) {
+            this.seedling = seedling;
+        }
+
 
         public static class SeedlingBean implements Serializable {
 
@@ -2482,6 +2486,7 @@ public class SaveSeedingGsonBean implements Serializable{
                  * ossAppLargeImagePath : http://images.hmeg.cn/upload/image/201704/645e35ff421940158333f9b8b627ad1b.jpg@!450_600
                  */
 
+                private String local_url ="" ;
                 private String id;
                 private String imageType;
                 private String name;
@@ -2598,6 +2603,15 @@ public class SaveSeedingGsonBean implements Serializable{
 
                 public void setOssAppLargeImagePath(String ossAppLargeImagePath) {
                     this.ossAppLargeImagePath = ossAppLargeImagePath;
+                }
+
+                public String getLocal_url() {
+                    return local_url;
+                }
+
+                public ImagesJsonBean setLocal_url(String local_url) {
+                    this.local_url = local_url;
+                    return this ;
                 }
             }
 

@@ -207,7 +207,7 @@ public class MainActivity extends TabActivity implements
         tabHost.addTab(tabHost.newTabSpec("3").setIndicator("3")
                 .setContent(new Intent(this, CActivity2.class)));
         tabHost.addTab(tabHost.newTabSpec("4").setIndicator("4")
-                .setContent(new Intent(this, DActivity5.class)));
+                .setContent(new Intent(this, DActivity_new.class)));//跳转到收藏夹  界面
         tabHost.addTab(tabHost.newTabSpec("5").setIndicator("5")
                 .setContent(new Intent(this, EActivity.class)));
         radioderGroup = (RadioGroup) findViewById(R.id.rg_tab);

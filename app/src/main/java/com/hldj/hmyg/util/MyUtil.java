@@ -17,6 +17,22 @@ import com.white.utils.SystemSetting;
 public class MyUtil {
 
 
+
+    public static int formateString2Int(String string)
+    {
+        int num = 0 ;
+
+        if (TextUtils.isEmpty(string))
+        {
+            num = 0 ;
+        }
+        else
+        {
+            num = Integer.parseInt(string);
+        }
+        return num ;
+    }
+
     public static int getScreenHeight(boolean islandscape, Context context) {
         if (islandscape) {
             return getScreenWidth(false, context);

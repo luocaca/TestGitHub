@@ -38,6 +38,7 @@ public class GetServerUrl {
 
     // 测试,xingguo.huang@qq.com
 //   static String API_03 = "http://test.hmeg.cn:93/";
+
    static String API_03 = "http://test.api.hmeg.cn/";
     //http://test.api.hmeg.cn
 //   static String API_03 = "http://192.168.1.146:8091/api/";//罗伟电脑 服务器地址

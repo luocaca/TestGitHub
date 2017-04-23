@@ -105,6 +105,10 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
 
     ActionSheetDialog dialog = null;
 
+    public void setTagWithName(String tag) {
+
+    }
+
     public class ViewHolder {
         public View rootView;
         public EditText tv_save_seeding_price_min;
@@ -259,6 +263,14 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
             return holder.tv_save_seeding_unit.getTag().toString();
         }
 
+        public String getUnitName() {
+
+            if (null == holder.tv_save_seeding_unit.getTag()) {
+                return "plant";//默认为株
+            }
+
+            return holder.tv_save_seeding_unit.getText().toString();
+        }
 
 
         public String getValidity() {
@@ -322,5 +334,28 @@ public class SaveSeedingBottomLinearLayout extends LinearLayout {
             "170", "171", "172", "173", "174", "175", "176", "177", "178",
             "179", "180"};
 
+
+    public String getTagByName(String name) {
+        String tag = "plant";
+        if (name.equals("株")) {
+            tag = "plant";
+        }
+        if (name.equals("丛")) {
+            tag = "crowd";
+        }
+        if (name.equals("斤")) {
+            tag = "jin";
+        }
+        if (name.equals("平方米")) {
+            tag = "squaremeter";
+        }
+        if (name.equals("袋")) {
+            tag = "dai";
+        }
+        if (name.equals("盆")) {
+            tag = "pen";
+        }
+        return tag;
+    }
 
 }

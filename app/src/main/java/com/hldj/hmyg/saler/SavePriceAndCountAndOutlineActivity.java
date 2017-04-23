@@ -37,7 +37,8 @@ import java.io.ByteArrayOutputStream;
 
 import me.imid.swipebacklayout.lib.app.NeedSwipeBackActivity;
 
-import static com.hldj.hmyg.FlowerDetailActivity.MultipleClickProcess.CHANGE_DATES;
+import static com.hldj.hmyg.util.ConstantState.CHANGE_DATES;
+
 
 public class SavePriceAndCountAndOutlineActivity extends NeedSwipeBackActivity {
     private String[] days = {"30", "90", "180"};
