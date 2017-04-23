@@ -1,4 +1,4 @@
-package com.hldj.hmyg.broker.adapter;
+package com.hldj.hmyg.base;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -26,7 +26,7 @@ public class ViewHolders {
 	}
 
 	public static ViewHolders getCommonViewHolder(Context context,
-			View convertView, int layoutId, ViewGroup parent, int position) {
+                                                  View convertView, int layoutId, ViewGroup parent, int position) {
 		if (convertView == null) {
 			return new ViewHolders(context, convertView, layoutId, parent,
 					position);

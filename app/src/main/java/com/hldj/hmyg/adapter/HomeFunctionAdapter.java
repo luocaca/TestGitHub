@@ -1,8 +1,5 @@
 package com.hldj.hmyg.adapter;
 
-import java.util.ArrayList;
-
-import net.tsz.afinal.FinalBitmap;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -22,8 +19,11 @@ import com.amap.api.car.example.FindFlowerActivity;
 import com.hldj.hmyg.BActivity;
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.bean.HomeFunction;
-import com.hldj.hmyg.buyer.StorePurchaseListActivity;
 import com.hldj.hmyg.saler.purchase.PurchasePyMapActivity;
+
+import net.tsz.afinal.FinalBitmap;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -86,7 +86,7 @@ public class HomeFunctionAdapter extends BaseAdapter {
 					context.startActivity(toBActivity);
 					((Activity) context).overridePendingTransition(
 							R.anim.slide_in_left, R.anim.slide_out_right);
-				} else if ("2".equals(data.get(position).getId())) {
+				} else if ("2".equals(data.get(position).getId())) {//快速报价
 					// Intent toStorePurchaseListActivity = new Intent(context,
 					// StorePurchaseListActivity.class);
 					// context.startActivity(toStorePurchaseListActivity);

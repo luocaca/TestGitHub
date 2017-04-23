@@ -1,8 +1,5 @@
 package com.hldj.hmyg.broker.adapter;
 
-import java.util.ArrayList;
-
-import net.tsz.afinal.FinalBitmap;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -13,19 +10,21 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hldj.hmyg.R;
 import com.hldj.hmyg.broker.MarketDetailActivity;
-import com.hldj.hmyg.broker.MyMarketListActivity;
 import com.hldj.hmyg.broker.bean.MarketPrice;
 import com.hy.utils.ValueGetInfo;
 
+import net.tsz.afinal.FinalBitmap;
+
+import java.util.ArrayList;
+
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  */
 @SuppressLint("ResourceAsColor")
 public class MyMarketListAdapter extends BaseAdapter {
@@ -108,7 +107,7 @@ public class MyMarketListAdapter extends BaseAdapter {
 						+ data.get(position).getQualityGradeName().toString() + ")");
 			}
 		}
-		
+
 		tv_10.setText("地区：" + data.get(position).getCityName().toString());
 		tv_07.setText(ValueGetInfo.doubleTrans1(data.get(position).getPrice()));
 		inflate.setOnClickListener(new OnClickListener() {

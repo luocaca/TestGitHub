@@ -58,5 +58,7 @@
 
     <dimen name="loadingbar_icon">40dp</dimen>
     <dimen name="title_top_default">45dp</dimen>
+    <dimen name="stv_small_size">50dp</dimen>
+    <dimen name="stv_normal_size">70dp</dimen>
 
 </resources>

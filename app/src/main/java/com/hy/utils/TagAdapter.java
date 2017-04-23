@@ -1,8 +1,5 @@
 package com.hy.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +9,9 @@ import android.widget.TextView;
 
 import com.hhl.library.OnInitSelectedPosition;
 import com.hldj.hmyg.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HanHailong on 15/10/19.

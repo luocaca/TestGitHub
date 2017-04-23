@@ -328,7 +328,7 @@ public class FlowerDetailActivity extends NeedSwipeBackActivity {
         show_type = getIntent().getStringExtra("show_type");
         id = getIntent().getStringExtra("id");
         multipleClickProcess = new MultipleClickProcess();
-        mainView = (View) findViewById(R.id.mainView);
+        mainView = findViewById(R.id.mainView);
         ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
 
         btn_back.setOnClickListener(v -> {

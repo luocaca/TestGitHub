@@ -355,7 +355,7 @@ public class SaveSeedlingActivity extends NeedSwipeBackActivity implements SaveS
 
 
             //
-            viewHolder.bottom_ll.getHolder().tv_save_seeding_useful.setText(typeListBeen.get(position).getDefaultValidity() );
+            viewHolder.bottom_ll.getHolder().tv_save_seeding_useful.setText(typeListBeen.get(position).getDefaultValidity()+"" );
 
             return true;
         });

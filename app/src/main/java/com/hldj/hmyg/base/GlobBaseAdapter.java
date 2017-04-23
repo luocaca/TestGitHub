@@ -1,4 +1,4 @@
-package com.hldj.hmyg.broker.adapter;
+package com.hldj.hmyg.base;
 
 import android.content.Context;
 import android.view.LayoutInflater;

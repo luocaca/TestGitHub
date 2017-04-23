@@ -1,35 +1,11 @@
 package com.hldj.hmyg.broker;
 
-import info.hoang8f.android.segmented.SegmentedGroup;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-import me.drakeet.materialdialog.MaterialDialog;
-import me.kaede.tagview.OnTagDeleteListener;
-import me.kaede.tagview.Tag;
-import me.kaede.tagview.TagView;
-import me.maxwin.view.XListView;
-import me.maxwin.view.XListView.IXListViewListener;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,7 +13,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -48,17 +23,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hldj.hmyg.R;
-import com.hldj.hmyg.application.MyApplication;
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.broker.adapter.MyMarketListAdapter;
 import com.hldj.hmyg.broker.bean.MarketPrice;
 import com.hldj.hmyg.broker.bean.SellectPrice;
-import com.hldj.hmyg.jimiao.SellectMiaoActivity;
 import com.hldj.hmyg.saler.bean.ParamsList;
 import com.hy.utils.GetServerUrl;
 import com.hy.utils.JsonGetInfo;
 import com.mrwujay.cascade.activity.BaseSecondActivity;
 import com.mrwujay.cascade.activity.GetCodeByName;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import me.drakeet.materialdialog.MaterialDialog;
+import me.kaede.tagview.OnTagDeleteListener;
+import me.kaede.tagview.Tag;
+import me.kaede.tagview.TagView;
+import me.maxwin.view.XListView;
+import me.maxwin.view.XListView.IXListViewListener;
 
 @SuppressLint("NewApi")
 public class MyMarketListActivity extends BaseSecondActivity implements

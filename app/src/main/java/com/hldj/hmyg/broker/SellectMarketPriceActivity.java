@@ -1,28 +1,6 @@
 package com.hldj.hmyg.broker;
 
-import info.hoang8f.android.segmented.SegmentedGroup;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-import me.next.tagview.TagCloudView.OnTagClickListener;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -34,7 +12,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +47,6 @@ import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.bean.PicSerializableMaplist;
 import com.hldj.hmyg.bean.PicValiteIsUtils;
 import com.hldj.hmyg.broker.bean.SellectPrice;
-import com.hldj.hmyg.buy.bean.StorageSave;
 import com.hldj.hmyg.saler.AdressListActivity;
 import com.hldj.hmyg.saler.ChooseParamsActivity;
 import com.hldj.hmyg.saler.UpdataImageActivity;
@@ -95,6 +71,26 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zzy.common.widget.wheelview.popwin.CustomDaysPickPopwin;
 import com.zzy.common.widget.wheelview.popwin.CustomDaysPickPopwin.DayChangeListener;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import me.next.tagview.TagCloudView.OnTagClickListener;
 
 public class SellectMarketPriceActivity extends BaseSecondActivity implements
 		OnTagClickListener, KeyBordStateListener, OnCheckedChangeListener,
@@ -276,7 +272,7 @@ public class SellectMarketPriceActivity extends BaseSecondActivity implements
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		MultipleClickProcess multipleClickProcess = new MultipleClickProcess();
 		ImageView btn_back = (ImageView) findViewById(R.id.btn_back);
-		mainView = (View) findViewById(R.id.ll_mainView);
+		mainView =  findViewById(R.id.ll_mainView);
 		com.yunpay.app.KeyboardLayout3 resizeLayout = (com.yunpay.app.KeyboardLayout3) findViewById(R.id.ll_mainView);
 		// 获得要控制隐藏和显示的区域
 		resizeLayout.setKeyBordStateListener(this);// 设置回调方法

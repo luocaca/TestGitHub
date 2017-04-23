@@ -1,14 +1,12 @@
 package com.hldj.hmyg.broker.bean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import com.hldj.hmyg.bean.Pic;
 import com.hldj.hmyg.saler.bean.ParamsList;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class MarketPrice implements Serializable {
-	
-	
 
 	/**
 	 * 
@@ -73,7 +71,8 @@ public class MarketPrice implements Serializable {
 	String priceDate="";
 	String cityCode="";
 	String cityName="";
-	
+	private String num="";
+
 	ArrayList<ParamsList> paramsLists=new ArrayList<ParamsList>();
 	ArrayList<String> str_plantTypeLists = new ArrayList<String>();
 	ArrayList<String> str_plantTypeList_ids_s = new ArrayList<String>();
@@ -270,6 +269,13 @@ public class MarketPrice implements Serializable {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-	
-	
+
+
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
+	}
 }
