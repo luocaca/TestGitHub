@@ -1313,7 +1313,7 @@ public class PurchasePyMapActivity extends BaseSecondActivity implements
             if (data.get(position).getQuoteCountJson() > 0) {
                 StringFormatUtil fillColor = new StringFormatUtil(context, "已有"
                         + data.get(position).getItemCountJson()+ "条品种", data
-                        .get(position).getQuoteCountJson() + "", R.color.red)
+                        .get(position).getItemCountJson() + "", R.color.red)
                         .fillColor();
                 tv_10.setText(fillColor.getResult());
             } else {
@@ -1323,20 +1323,16 @@ public class PurchasePyMapActivity extends BaseSecondActivity implements
             tv_caozuo01.setText("截止时间：" + data.get(position).getCloseDate());
 
 
-            inflate.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Intent intent = new Intent(context,
-                            StorePurchaseListActivity.class);
-                    intent.putExtra("purchaseFormId", data.get(position)
-                            .getPurchaseFormId());
-                    intent.putExtra("title", data.get(position).getNum());
-                    context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(
-                            R.anim.slide_in_left, R.anim.slide_out_right);
-                }
+            inflate.setOnClickListener(v -> {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(context,
+                        StorePurchaseListActivity.class);
+                intent.putExtra("purchaseFormId", data.get(position)
+                        .getPurchaseFormId());
+                intent.putExtra("title", data.get(position).getNum());
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(
+                        R.anim.slide_in_left, R.anim.slide_out_right);
             });
 
             return inflate;
